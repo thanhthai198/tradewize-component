@@ -1,22 +1,8 @@
-import { NativeModules, Platform } from 'react-native';
+import ButtonBase from './ButtonBase';
+import RadioButton from './RadioButton';
+import ButtonSwitchToggle from './ButtonSwitchToggle';
+import TabView, { type TabItem } from './TabView';
+import ScrollTabView, { type TabItem as ScrollTabItem } from './ScrollTabView';
 
-const LINKING_ERROR =
-  `The package 'tradewize' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo Go\n';
-
-const TradeWizeComponent = NativeModules.TradeWizeComponent
-  ? NativeModules.TradeWizeComponent
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
-
-export function multiply(a: number, b: number): Promise<number> {
-  return TradeWizeComponent.multiply(a, b);
-}
+export { ButtonBase, RadioButton, ButtonSwitchToggle, TabView, ScrollTabView };
+export type { TabItem, ScrollTabItem };

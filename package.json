@@ -185,5 +185,9 @@
     "type": "legacy-module",
     "languages": "kotlin-swift",
     "version": "0.46.0"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.17.20",
+    "lodash": "^4.17.21"
   }
 }
