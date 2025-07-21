@@ -1,6 +1,7 @@
 {
   "name": "tradewize",
   "version": "0.1.0",
+  "private": true,
   "description": "tradewize",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
