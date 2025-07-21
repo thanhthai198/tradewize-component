@@ -1,7 +1,6 @@
 {
   "name": "tradewize",
   "version": "0.1.0",
-  "private": true,
   "description": "tradewize",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
@@ -93,9 +92,6 @@
     "react": "*",
     "react-native": "*"
   },
-  "workspaces": [
-    "example"
-  ],
   "packageManager": "yarn@3.6.1",
   "jest": {
     "preset": "react-native",
