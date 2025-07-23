@@ -1,6 +1,6 @@
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { useState } from 'react';
-import CheckBox from '../../src/CheckBox';
+import { CheckBox } from '../../src/CheckBox';
 
 export default function App() {
   const [isChecked, setIsChecked] = useState(false);
