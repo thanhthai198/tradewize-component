@@ -50,5 +50,5 @@ interface ButtonBaseProps extends TouchableOpacityProps {
     borderWidth?: number;
     borderStyle?: 'solid' | 'dotted' | 'dashed';
 }
-declare const ButtonBase: React.FC<ButtonBaseProps>;
-export default ButtonBase;
+export declare const ButtonBase: React.FC<ButtonBaseProps>;
+export {};

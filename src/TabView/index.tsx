@@ -7,7 +7,7 @@ import {
   Animated,
 } from 'react-native';
 import type { ScrollViewProps, ViewStyle } from 'react-native';
-import ButtonBase from '../ButtonBase';
+import { ButtonBase } from '../ButtonBase';
 
 export interface TabItem {
   key: string;
@@ -77,7 +77,7 @@ export interface TabViewProps {
   contentContainerStyle?: ViewStyle;
 }
 
-const TabView: React.FC<TabViewProps> = ({
+export const TabView: React.FC<TabViewProps> = ({
   // Basic props
   tabs,
   initialTabIndex = 0,
@@ -386,5 +386,3 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
 });
-
-export default TabView;

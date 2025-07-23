@@ -87,7 +87,7 @@ interface ButtonBaseProps extends TouchableOpacityProps {
   borderStyle?: 'solid' | 'dotted' | 'dashed';
 }
 
-const ButtonBase: React.FC<ButtonBaseProps> = ({
+export const ButtonBase: React.FC<ButtonBaseProps> = ({
   // Basic props
   title,
   children,
@@ -367,5 +367,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default ButtonBase;

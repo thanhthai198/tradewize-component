@@ -37,5 +37,4 @@ export interface TabViewProps {
     tabBarContainerStyle?: ViewStyle;
     contentContainerStyle?: ViewStyle;
 }
-declare const TabView: React.FC<TabViewProps>;
-export default TabView;
+export declare const TabView: React.FC<TabViewProps>;

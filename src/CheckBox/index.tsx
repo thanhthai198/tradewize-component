@@ -3,7 +3,7 @@ import { Text, StyleSheet, View } from 'react-native';
 import type { ViewStyle, TextStyle, GestureResponderEvent } from 'react-native';
 import type { TouchableOpacityProps } from 'react-native';
 import { debounce } from 'lodash';
-import ButtonBase from '../ButtonBase';
+import { ButtonBase } from '../ButtonBase';
 
 // Enhanced type definitions
 export type CheckBoxVariant =
@@ -109,7 +109,7 @@ interface CheckBoxProps extends TouchableOpacityProps {
   customIndeterminateIcon?: React.ReactNode;
 }
 
-const CheckBox: React.FC<CheckBoxProps> = ({
+export const CheckBox: React.FC<CheckBoxProps> = ({
   // Basic props
   label,
   children,
@@ -522,5 +522,3 @@ const styles = StyleSheet.create({
     borderRadius: 1,
   },
 });
-
-export default CheckBox;

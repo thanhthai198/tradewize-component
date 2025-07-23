@@ -38,5 +38,4 @@ export interface ButtonSwitchToggleProps {
     customTrack?: React.ReactNode;
     customThumb?: React.ReactNode;
 }
-declare const ButtonSwitchToggle: React.FC<ButtonSwitchToggleProps>;
-export default ButtonSwitchToggle;
+export declare const ButtonSwitchToggle: React.FC<ButtonSwitchToggleProps>;

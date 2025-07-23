@@ -5,14 +5,9 @@ import React, {
   useEffect,
   useMemo,
 } from 'react';
-import {
-  View,
-  StyleSheet,
-  Animated,
-  TouchableOpacity,
-  Vibration,
-} from 'react-native';
+import { View, StyleSheet, Animated, Vibration } from 'react-native';
 import type { ViewStyle } from 'react-native';
+import { ButtonBase } from '../ButtonBase';
 
 export interface ButtonSwitchToggleProps {
   // Basic props
@@ -205,7 +200,7 @@ const useSwitchColors = (
   ]);
 };
 
-const ButtonSwitchToggle: React.FC<ButtonSwitchToggleProps> = ({
+export const ButtonSwitchToggle: React.FC<ButtonSwitchToggleProps> = ({
   // Basic props
   value = false,
   onValueChange,
@@ -316,23 +311,21 @@ const ButtonSwitchToggle: React.FC<ButtonSwitchToggleProps> = ({
 
   // Memoized styles for better performance
   const switchStyle = useMemo(
-    (): ViewStyle[] => [
-      styles.switch,
-      {
-        width: switchWidth,
-        height: switchHeight,
-        backgroundColor,
-        borderRadius: switchHeight / 2,
-        ...(shadow && {
-          shadowColor,
-          shadowOffset,
-          shadowOpacity,
-          shadowRadius,
-          elevation: shadowRadius,
-        }),
-      },
-      ...(style ? [style] : []),
-    ],
+    (): ViewStyle => ({
+      ...styles.switch,
+      width: switchWidth,
+      height: switchHeight,
+      backgroundColor,
+      borderRadius: switchHeight / 2,
+      ...(shadow && {
+        shadowColor,
+        shadowOffset,
+        shadowOpacity,
+        shadowRadius,
+        elevation: shadowRadius,
+      }),
+      ...style,
+    }),
     [
       switchWidth,
       switchHeight,
@@ -347,23 +340,21 @@ const ButtonSwitchToggle: React.FC<ButtonSwitchToggleProps> = ({
   );
 
   const thumbStyle = useMemo(
-    (): ViewStyle[] => [
-      styles.thumb,
-      {
-        width: thumbDiameter,
-        height: thumbDiameter,
-        borderRadius: thumbDiameter / 2,
-        backgroundColor: currentThumbColor,
-        transform: [
-          {
-            translateX: translateX.interpolate({
-              inputRange: [0, maxTranslateX],
-              outputRange: [0, maxTranslateX],
-            }),
-          },
-        ],
-      },
-    ],
+    (): ViewStyle => ({
+      ...styles.thumb,
+      width: thumbDiameter,
+      height: thumbDiameter,
+      borderRadius: thumbDiameter / 2,
+      backgroundColor: currentThumbColor,
+      transform: [
+        {
+          translateX: translateX.interpolate({
+            inputRange: [0, maxTranslateX],
+            outputRange: [0, maxTranslateX],
+          }),
+        },
+      ],
+    }),
     [thumbDiameter, currentThumbColor, translateX, maxTranslateX]
   );
 
@@ -375,18 +366,14 @@ const ButtonSwitchToggle: React.FC<ButtonSwitchToggleProps> = ({
       accessibilityHint:
         accessibilityHint ||
         `Double tap to ${currentValue ? 'turn off' : 'turn on'}`,
-      accessibilityRole: 'switch' as const,
-      accessibilityState: { checked: currentValue },
-      accessibilityActions: [
-        { name: 'activate', label: currentValue ? 'Turn off' : 'Turn on' },
-      ],
+      accessibilityRole: 'button' as const,
     }),
     [accessibilityLabel, accessibilityHint, currentValue]
   );
 
   return (
     <View style={[styles.container, containerStyle]}>
-      <TouchableOpacity
+      <ButtonBase
         onPress={handleToggle}
         disabled={disabled || loading}
         activeOpacity={0.8}
@@ -396,7 +383,7 @@ const ButtonSwitchToggle: React.FC<ButtonSwitchToggleProps> = ({
         {customTrack || (
           <Animated.View style={thumbStyle}>{customThumb}</Animated.View>
         )}
-      </TouchableOpacity>
+      </ButtonBase>
     </View>
   );
 };
@@ -419,5 +406,3 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
 });
-
-export default ButtonSwitchToggle;

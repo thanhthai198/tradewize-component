@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, StyleSheet, Animated, Easing } from 'react-native';
 import type { ViewStyle } from 'react-native';
-import ButtonBase from '../ButtonBase';
+import { ButtonBase } from '../ButtonBase';
 
 export interface RadioButtonProps {
   // Basic props
@@ -43,7 +43,7 @@ export interface RadioButtonProps {
   accessibilityHint?: string;
 }
 
-const RadioButton: React.FC<RadioButtonProps> = ({
+export const RadioButton: React.FC<RadioButtonProps> = ({
   value,
   label,
   selected = false,
@@ -295,5 +295,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
 });
-
-export default RadioButton;

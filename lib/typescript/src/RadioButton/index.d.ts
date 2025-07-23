@@ -24,5 +24,4 @@ export interface RadioButtonProps {
     accessibilityLabel?: string;
     accessibilityHint?: string;
 }
-declare const RadioButton: React.FC<RadioButtonProps>;
-export default RadioButton;
+export declare const RadioButton: React.FC<RadioButtonProps>;

@@ -75,5 +75,5 @@ interface CheckBoxProps extends TouchableOpacityProps {
     indeterminate?: boolean;
     customIndeterminateIcon?: React.ReactNode;
 }
-declare const CheckBox: React.FC<CheckBoxProps>;
-export default CheckBox;
+export declare const CheckBox: React.FC<CheckBoxProps>;
+export {};
