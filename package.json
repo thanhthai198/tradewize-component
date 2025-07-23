@@ -52,14 +52,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://elliotthomesreports.com.git"
+    "url": "git+https://github.com/thanhthai198/tradewize-component.git"
   },
   "author": "tradewize <feroz.ahmed@prediction3d.com> (https://elliotthomesreports.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://elliotthomesreports.com/issues"
+    "url": "https://github.com/thanhthai198/tradewize-component.git/issues"
   },
-  "homepage": "https://elliotthomesreports.com#readme",
+  "homepage": "https://github.com/thanhthai198/tradewize-component.git#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
