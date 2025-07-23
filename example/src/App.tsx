@@ -1,18 +1,9 @@
-import { StyleSheet, SafeAreaView } from 'react-native';
-import { useState } from 'react';
-import { CheckBox } from '../../src/CheckBox';
+import { StyleSheet, SafeAreaView, Text } from 'react-native';
 
 export default function App() {
-  const [isChecked, setIsChecked] = useState(false);
   return (
     <SafeAreaView style={styles.container}>
-      <CheckBox
-        // label="Accept terms"
-        checked={isChecked}
-        onValueChange={setIsChecked}
-        width={10}
-        height={10}
-      />
+      <Text>Hello World</Text>
     </SafeAreaView>
   );
 }
