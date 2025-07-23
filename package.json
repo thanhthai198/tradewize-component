@@ -43,8 +43,7 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "release": "release-it",
-    "build:types": "tsc --project tsconfig.build.json",
-    "prepare": "yarn build:types && bob build"
+    "prepare": "bob build"
   },
   "keywords": [
     "react-native",
