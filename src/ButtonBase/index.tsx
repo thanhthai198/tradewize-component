@@ -6,7 +6,12 @@ import {
   ActivityIndicator,
   View,
 } from 'react-native';
-import type { ViewStyle, TextStyle, GestureResponderEvent } from 'react-native';
+import type {
+  ViewStyle,
+  TextStyle,
+  GestureResponderEvent,
+  StyleProp,
+} from 'react-native';
 import type { TouchableOpacityProps } from 'react-native';
 import { debounce } from 'lodash';
 
@@ -53,9 +58,9 @@ interface ButtonBaseProps extends TouchableOpacityProps {
   alignSelf?: 'auto' | 'flex-start' | 'flex-end' | 'center' | 'stretch';
 
   // Custom styles
-  style?: ViewStyle;
-  textStyle?: TextStyle;
-  containerStyle?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
 
   // Functionality props
   debounceTime?: number;
@@ -94,7 +99,7 @@ export const ButtonBase: React.FC<ButtonBaseProps> = ({
   onPress,
   disabled = false,
   loading = false,
-  disableColorChange = false,
+  disableColorChange = true,
 
   // Styling props
   variant,
@@ -258,20 +263,16 @@ export const ButtonBase: React.FC<ButtonBaseProps> = ({
       })(),
       borderStyle,
     },
-    ...(fullWidth ? [styles.fullWidth] : []),
-    ...(shadow
-      ? [
-          {
-            shadowColor,
-            shadowOffset,
-            shadowOpacity,
-            shadowRadius,
-            elevation: shadowRadius,
-          },
-        ]
-      : []),
-    ...(style ? [style] : []),
-  ];
+    fullWidth && styles.fullWidth,
+    shadow && {
+      shadowColor,
+      shadowOffset,
+      shadowOpacity,
+      shadowRadius,
+      elevation: shadowRadius,
+    },
+    style,
+  ] as ViewStyle[];
 
   const textStyleCombined: TextStyle[] = [
     styles.text,
@@ -285,10 +286,10 @@ export const ButtonBase: React.FC<ButtonBaseProps> = ({
         }
         return textColor || variantStyles.textColor;
       })(),
-      ...(sizeStyles.fontSize && { fontSize: sizeStyles.fontSize }),
+      fontSize: sizeStyles.fontSize,
     },
-    ...(textStyle ? [textStyle] : []),
-  ];
+    ...(textStyle ? (Array.isArray(textStyle) ? textStyle : [textStyle]) : []),
+  ] as TextStyle[];
 
   const renderContent = () => {
     // If children are provided, render them directly

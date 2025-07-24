@@ -12,7 +12,9 @@
   "dependencies": {
     "@react-native/new-app-screen": "0.80.1",
     "react": "19.1.0",
-    "react-native": "0.80.1"
+    "react-native": "0.80.1",
+    "react-native-safe-area-context": "^5.5.2",
+    "react-native-vision-camera": "^4.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -21,10 +23,14 @@
     "@react-native-community/cli": "19.0.0",
     "@react-native-community/cli-platform-android": "19.0.0",
     "@react-native-community/cli-platform-ios": "19.0.0",
+    "@react-native-community/slider": "4.5.7",
     "@react-native/babel-preset": "0.80.1",
     "@react-native/metro-config": "0.80.1",
     "@react-native/typescript-config": "0.80.1",
-    "react-native-builder-bob": "^0.40.12"
+    "react-native-builder-bob": "^0.40.12",
+    "react-native-gesture-handler": "^2.25.0",
+    "react-native-modal": "14.0.0-rc.1",
+    "react-native-reanimated": "^3.19.0"
   },
   "engines": {
     "node": ">=18"

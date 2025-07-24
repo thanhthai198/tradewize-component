@@ -1,10 +1,20 @@
-import { StyleSheet, SafeAreaView, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { CameraModal } from '../../src/Camera';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Hello World</Text>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <CameraModal
+          visible={true}
+          onClose={() => {}}
+          mode="photo"
+          onPhotoCaptured={(log) => console.log(log)}
+          onVideoRecorded={(log) => console.log(log)}
+        />
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

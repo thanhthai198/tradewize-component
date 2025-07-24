@@ -2,16 +2,19 @@
 
 Một thư viện component React Native toàn diện với các component UI được thiết kế đẹp và dễ sử dụng.
 
+Cần cài các thư viện
+react-native-reanimated, react-native-safe-area-context, react-native-vision-camera, react-native-gesture-handler, @react-native-community/slider
+
 ## 📦 Cài đặt
 
 ```bash
-npm install git+https://github.com/thanhthai198/tradewize-component.git
+npm install git+https://github.com/thanhthai198/tradewize-component.git react-native-safe-area-context react-native-vision-camera react-native-reanimated  react-native-gesture-handler @react-native-community/slider
 ```
 
 hoặc sử dụng yarn:
 
 ```bash
-yarn add git+https://github.com/thanhthai198/tradewize-component.git
+yarn add git+https://github.com/thanhthai198/tradewize-component.git react-native-safe-area-context react-native-vision-camera react-native-reanimated react-native-gesture-handler @react-native-community/slider
 ```
 
 ## 🚀 Các Component có sẵn

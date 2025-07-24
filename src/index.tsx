@@ -15,6 +15,15 @@ import {
   type CollapseSize,
   type CollapseIconPosition,
 } from './Collaspe';
+import {
+  CameraComponent,
+  CameraModal,
+  type CameraModalProps,
+  type CameraProps,
+  type PhotoFile,
+  type VideoFile,
+} from './Camera';
+import { getScreenWidth, getScreenHeight } from './utils';
 
 export {
   ButtonBase,
@@ -26,6 +35,10 @@ export {
   OutlinedInput,
   FlatInput,
   Collapse,
+  CameraComponent,
+  CameraModal,
+  getScreenWidth,
+  getScreenHeight,
 };
 export type {
   TabItem,
@@ -37,4 +50,8 @@ export type {
   CollapseVariant,
   CollapseSize,
   CollapseIconPosition,
+  CameraProps,
+  PhotoFile,
+  VideoFile,
+  CameraModalProps,
 };

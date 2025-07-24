@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ViewStyle, TextStyle, GestureResponderEvent } from 'react-native';
+import type { ViewStyle, TextStyle, GestureResponderEvent, StyleProp } from 'react-native';
 import type { TouchableOpacityProps } from 'react-native';
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'success' | 'warning';
 export type ButtonSize = 'small' | 'medium' | 'large' | 'xlarge';
@@ -26,9 +26,9 @@ interface ButtonBaseProps extends TouchableOpacityProps {
     loadingBorderColor?: string;
     fullWidth?: boolean;
     alignSelf?: 'auto' | 'flex-start' | 'flex-end' | 'center' | 'stretch';
-    style?: ViewStyle;
-    textStyle?: TextStyle;
-    containerStyle?: ViewStyle;
+    style?: StyleProp<ViewStyle>;
+    textStyle?: StyleProp<TextStyle>;
+    containerStyle?: StyleProp<ViewStyle>;
     debounceTime?: number;
     activeOpacity?: number;
     leftIcon?: React.ReactNode;
