@@ -5910,6 +5910,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"events@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "events@npm:3.3.0"
+  checksum: f6f487ad2198aa41d878fa31452f1a3c00958f46e9019286ff4787c84aac329332ab45c9cdc8c445928fc6d7ded294b9e005a7fce9426488518017831b272780
+  languageName: node
+  linkType: hard
+
 "execa@npm:8.0.0":
   version: 8.0.0
   resolution: "execa@npm:8.0.0"
@@ -7009,7 +7016,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"invariant@npm:^2.2.4":
+"invariant@npm:2.2.4, invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
   dependencies:
@@ -10356,6 +10363,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-video@npm:6.16.1":
+  version: 6.16.1
+  resolution: "react-native-video@npm:6.16.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 40de297ed35527bf2cd77827c9842d51e84df78fbd0a7697235f8d0ca02de2b1a4562e9d3323391d514a9591a5078b10b26eac501ee7eb9a2a7c0c2ae45a90f5
+  languageName: node
+  linkType: hard
+
 "react-native-vision-camera@npm:4.7.1, react-native-vision-camera@npm:^4.7.1":
   version: 4.7.1
   resolution: "react-native-vision-camera@npm:4.7.1"
@@ -10373,6 +10390,38 @@ __metadata:
     react-native-worklets-core:
       optional: true
   checksum: d3389d27a7f201c62ee47e6d1e9f3d1096f0d47b7e8e2509bb6cf0d2c2d2213d72217f64094d5e7bb5149e6b1678606ec1a2e4478701fe9a45586d774a134524
+  languageName: node
+  linkType: hard
+
+"react-native-webview@npm:13.15.0":
+  version: 13.15.0
+  resolution: "react-native-webview@npm:13.15.0"
+  dependencies:
+    escape-string-regexp: ^4.0.0
+    invariant: 2.2.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 1c843206108358faef5cd8e25834de729a90319c3fa3f765923536fdd99b86b07a3e850b89ebe6503725a022dd9dddd5de76ef6e102d290cc5935dcf9c60198d
+  languageName: node
+  linkType: hard
+
+"react-native-youtube-iframe@npm:2.4.1":
+  version: 2.4.1
+  resolution: "react-native-youtube-iframe@npm:2.4.1"
+  dependencies:
+    events: ^3.3.0
+  peerDependencies:
+    react: ">=16.8.6"
+    react-native: ">=0.60"
+    react-native-web-webview: ">=1.0.2"
+    react-native-webview: ">=7.0.0"
+  peerDependenciesMeta:
+    react-native-web-webview:
+      optional: true
+    react-native-webview:
+      optional: true
+  checksum: 2080baee54492cd0afa056e8d868164a8a6fe16615fff1a351eee351313a318dbf8a6b582afb311cfef3c33e61612dfa750ce6a743078be18d213d73230f62e2
   languageName: node
   linkType: hard
 
@@ -11801,7 +11850,10 @@ __metadata:
     react-native-modal: 14.0.0-rc.1
     react-native-reanimated: ^3.19.0
     react-native-safe-area-context: ^5.5.2
+    react-native-video: 6.16.1
     react-native-vision-camera: ^4.7.1
+    react-native-webview: 13.15.0
+    react-native-youtube-iframe: 2.4.1
   languageName: unknown
   linkType: soft
 
@@ -11833,7 +11885,10 @@ __metadata:
     react-native-modal: 14.0.0-rc.1
     react-native-reanimated: 3.19.0
     react-native-safe-area-context: 5.5.2
+    react-native-video: 6.16.1
     react-native-vision-camera: 4.7.1
+    react-native-webview: 13.15.0
+    react-native-youtube-iframe: 2.4.1
     release-it: ^17.10.0
     turbo: ^1.10.7
     typescript: ^5.2.2
@@ -11845,7 +11900,10 @@ __metadata:
     react-native-modal: ">=13.0.1"
     react-native-reanimated: ">=3.19.0"
     react-native-safe-area-context: ">=5.5.2"
+    react-native-video: ">=6.16.0"
     react-native-vision-camera: ">=4.7.0"
+    react-native-webview: ">=13.13.5"
+    react-native-youtube-iframe: ">=2.4.0"
   languageName: unknown
   linkType: soft
 
