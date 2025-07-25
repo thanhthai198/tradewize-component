@@ -1,6 +1,6 @@
 import React from 'react';
 import type { LanguageCode } from '../types';
-interface VideoModalProps {
+export interface VideoModalProps {
     visible: boolean;
     onClose: () => void;
     source: string;
@@ -29,4 +29,3 @@ interface VideoModalProps {
     }) => void;
 }
 export declare const VideoModal: React.FC<VideoModalProps>;
-export {};

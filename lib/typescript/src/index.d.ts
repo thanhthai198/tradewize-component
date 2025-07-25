@@ -12,5 +12,6 @@ import { type OutlinedInputProps, type FlatInputProps } from './Input';
 import { type CollapseProps, type CollapseVariant, type CollapseSize, type CollapseIconPosition } from './Collaspe';
 import { CameraComponent, CameraModal, type CameraModalProps, type CameraProps, type PhotoFile, type VideoFile } from './Camera';
 import { getScreenWidth, getScreenHeight } from './utils';
-export { ButtonBase, RadioButton, ButtonSwitchToggle, TabView, ScrollTabView, InputBase, OutlinedInput, FlatInput, Collapse, CameraComponent, CameraModal, getScreenWidth, getScreenHeight, };
-export type { TabItem, ScrollTabViewProps, InputBaseProps, OutlinedInputProps, FlatInputProps, CollapseProps, CollapseVariant, CollapseSize, CollapseIconPosition, CameraProps, PhotoFile, VideoFile, CameraModalProps, };
+import { VideoPlayer, VideoModal, type VideoModalProps, type VideoPlayerProps } from './VideoPlayer';
+export { ButtonBase, RadioButton, ButtonSwitchToggle, TabView, ScrollTabView, InputBase, OutlinedInput, FlatInput, Collapse, CameraComponent, CameraModal, getScreenWidth, getScreenHeight, VideoPlayer, VideoModal, };
+export type { TabItem, ScrollTabViewProps, InputBaseProps, OutlinedInputProps, FlatInputProps, CollapseProps, CollapseVariant, CollapseSize, CollapseIconPosition, CameraProps, PhotoFile, VideoFile, CameraModalProps, VideoPlayerProps, VideoModalProps, };
