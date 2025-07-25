@@ -1,3 +1,5 @@
+import type { SubtitleEntry } from '../types';
 declare const getScreenWidth: () => number;
 declare const getScreenHeight: () => number;
-export { getScreenWidth, getScreenHeight };
+declare const parseVtt: (vtt: string) => SubtitleEntry[];
+export { getScreenWidth, getScreenHeight, parseVtt };
