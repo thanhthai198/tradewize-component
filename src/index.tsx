@@ -24,6 +24,12 @@ import {
   type VideoFile,
 } from './Camera';
 import { getScreenWidth, getScreenHeight } from './utils';
+import {
+  VideoPlayer,
+  VideoModal,
+  type VideoModalProps,
+  type VideoPlayerProps,
+} from './VideoPlayer';
 
 export {
   ButtonBase,
@@ -39,6 +45,8 @@ export {
   CameraModal,
   getScreenWidth,
   getScreenHeight,
+  VideoPlayer,
+  VideoModal,
 };
 export type {
   TabItem,
@@ -54,4 +62,6 @@ export type {
   PhotoFile,
   VideoFile,
   CameraModalProps,
+  VideoPlayerProps,
+  VideoModalProps,
 };

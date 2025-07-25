@@ -9,7 +9,7 @@ import {
   Animated,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
-import { VideoPlayer } from './index';
+import { VideoPlayer } from './VideoComponent';
 import { getScreenHeight } from '../utils';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -25,7 +25,7 @@ const formatTime = (seconds: number): string => {
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 };
 
-interface VideoModalProps {
+export interface VideoModalProps {
   visible: boolean;
   onClose: () => void;
   source: string;
