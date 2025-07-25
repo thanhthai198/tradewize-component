@@ -10,35 +10,57 @@ import { VideoModal } from './VideoModal';
 
 export const VideoModalExample: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedVideo, setSelectedVideo] = useState('');
+  const [selectedVideo, setSelectedVideo] = useState<{
+    id: string;
+    title: string;
+    source: string;
+    subtitle: { [key: string]: string };
+  } | null>(null);
 
-  const videos = [
+  const videos: {
+    id: string;
+    title: string;
+    source: string;
+    subtitle: { [key: string]: string };
+  }[] = [
     {
       id: '1',
       title: 'Sample MP4 Video',
-      source: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+      source:
+        'https://vz-61273662-7e2.b-cdn.net/7b7bad11-089b-4f5f-8dd7-086385c6eda9/playlist.m3u8',
+      subtitle: {
+        es: 'https://thanhthai198.github.io/my_cdn/subtitle/videoTest/es.vtt',
+        en: 'https://thanhthai198.github.io/my_cdn/subtitle/videoTest/en.vtt',
+      },
     },
     {
       id: '2',
       title: 'YouTube Video',
-      source: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      source: 'https://www.youtube.com/watch?v=xsXYb6Oi2-w',
+      subtitle: {
+        es: 'https://thanhthai198.github.io/my_cdn/subtitle/videoTest/es.vtt',
+      },
     },
     {
       id: '3',
       title: 'Another Sample Video',
       source:
         'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+      subtitle: {
+        es: 'https://thanhthai198.github.io/my_cdn/subtitle/videoTest/es.vtt',
+        en: 'https://thanhthai198.github.io/my_cdn/subtitle/videoTest/en.vtt',
+      },
     },
   ];
 
   const openVideoModal = (video: (typeof videos)[0]) => {
-    setSelectedVideo(video.source);
+    setSelectedVideo(video);
     setModalVisible(true);
   };
 
   const closeVideoModal = () => {
     setModalVisible(false);
-    setSelectedVideo('');
+    setSelectedVideo(null);
   };
 
   return (
@@ -61,12 +83,14 @@ export const VideoModalExample: React.FC = () => {
       <VideoModal
         visible={modalVisible}
         onClose={closeVideoModal}
-        source={selectedVideo}
+        subtitle={selectedVideo?.subtitle || {}}
+        source={selectedVideo?.source || ''}
         title="Video Player"
         autoPlay={true}
-        onError={(error) => console.error('Video error:', error)}
+        // onError={(error) => console.error('Video error:', error)}
         onLoad={() => console.log('Video loaded')}
         onEnd={() => console.log('Video ended')}
+        initialSubtitle="en"
       />
     </SafeAreaView>
   );
