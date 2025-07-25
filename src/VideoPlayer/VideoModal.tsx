@@ -89,24 +89,29 @@ export const VideoModal: React.FC<VideoModalProps> = ({
   const [showLanguageSelector, setShowLanguageSelector] =
     useState<boolean>(false);
 
-  const handleClose = useCallback(() => {
+  const resetState = useCallback(() => {
     setProgress(0);
     setCurrentTime(0);
+    setDuration(0);
+    setSubtitles([]);
+    setCurrentSubtitle('');
+  }, []);
+
+  const handleClose = useCallback(() => {
+    resetState();
     onClose();
-  }, [onClose]);
+  }, [onClose, resetState]);
 
   const handleBackdropPress = useCallback(() => {
-    onClose();
-  }, [onClose]);
+    handleClose();
+  }, [handleClose]);
 
   const handleVideoEnd = useCallback(() => {
     onEnd?.();
     if (autoCloseOnEnd) {
-      setTimeout(() => {
-        onClose();
-      }, 300);
+      handleClose();
     }
-  }, [onEnd, autoCloseOnEnd, onClose]);
+  }, [onEnd, autoCloseOnEnd, handleClose]);
 
   const handleVideoError = useCallback(
     (err: any, loading: boolean) => {
