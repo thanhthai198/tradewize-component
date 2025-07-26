@@ -17,6 +17,13 @@ hoặc sử dụng yarn:
 yarn add git+https://github.com/thanhthai198/tradewize-component.git react-native-safe-area-context react-native-vision-camera react-native-reanimated react-native-gesture-handler @react-native-community/slider
 ```
 
+Đối với android
+Vào android/settings.gradle thêm
+
+# include ':tradewizecomponent'
+
+# project(':tradewizecomponent').projectDir = new File(rootProject.projectDir, '../node_modules/tradewize/android')
+
 ## 🚀 Các Component có sẵn
 
 Thư viện này bao gồm các component sau:
