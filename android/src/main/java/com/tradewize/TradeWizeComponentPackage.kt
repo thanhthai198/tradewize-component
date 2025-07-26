@@ -1,4 +1,4 @@
-package com.tradewize
+package com.tradewizeComponent
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule
