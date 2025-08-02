@@ -15,6 +15,7 @@ import { getScreenHeight } from '../utils';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { LanguageCode, SubtitleEntry } from '../types';
 import { loadSubtitles } from '../helper';
+import { ButtonBase } from '../ButtonBase';
 
 // Helper function to format time
 const formatTime = (seconds: number): string => {
@@ -83,7 +84,6 @@ export const VideoModal: React.FC<VideoModalProps> = ({
   const [hasSubtitles, setHasSubtitles] = useState(true);
   const [subtitleLoaded, setSubtitleLoaded] = useState(false);
   const [error, setError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentSubtitleLanguage, setCurrentSubtitleLanguage] =
     useState<LanguageCode>(initialSubtitle);
   const [showLanguageSelector, setShowLanguageSelector] =
@@ -115,7 +115,6 @@ export const VideoModal: React.FC<VideoModalProps> = ({
 
   const handleVideoError = useCallback(
     (err: any, loading: boolean) => {
-      setIsLoading(!loading);
       setError(true);
       onError?.(err, loading);
     },
@@ -153,7 +152,6 @@ export const VideoModal: React.FC<VideoModalProps> = ({
   const handleVideoLoad = useCallback(
     (loading: boolean) => {
       setError(false);
-      setIsLoading(!loading);
       onLoad?.(loading);
     },
     [onLoad]
@@ -335,7 +333,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
           )}
 
           {/* Close Button Overlay */}
-          {(showSkipButton || error) && !isLoading && (
+          {(showSkipButton || error) && (
             <Animated.View
               style={[
                 styles.closeButtonOverlay,
@@ -345,7 +343,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                 },
               ]}
             >
-              <TouchableOpacity
+              <ButtonBase
                 onPress={handleClose}
                 hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
               >
@@ -354,7 +352,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                     {error ? txtCloseButton : txtSkipButton}
                   </Text>
                 </View>
-              </TouchableOpacity>
+              </ButtonBase>
             </Animated.View>
           )}
         </View>

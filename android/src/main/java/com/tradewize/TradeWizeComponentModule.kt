@@ -1,4 +1,4 @@
-package com.tradewizeComponent
+package com.tradewizecomponent
 
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule

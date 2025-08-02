@@ -75,7 +75,7 @@ interface ButtonBaseProps extends TouchableOpacityProps {
   // Accessibility props
   accessibilityLabel?: string;
   accessibilityHint?: string;
-  accessibilityRole?: 'button' | 'link' | 'none' | 'checkbox';
+  accessibilityRole?: any;
 
   // Animation props
   pressable?: boolean;

@@ -10,10 +10,11 @@ import Slider from '@react-native-community/slider';
 import { SnapScrollView } from './CameraModeSelector';
 import { ButtonBase } from '../ButtonBase';
 import { getScreenHeight } from '../utils';
+import RNFS from 'react-native-fs';
 
 export interface CameraProps {
-  onPhotoCaptured?: (photo: PhotoFile) => void;
-  onVideoRecorded?: (video: VideoFile) => void;
+  onPhotoCaptured?: (photo: PhotoFile & { size: number }) => void;
+  onVideoRecorded?: (video: VideoFile & { size: number }) => void;
   onError?: (error: string) => void;
   onClose?: () => void;
   flashMode?: 'off' | 'on';
@@ -141,7 +142,13 @@ export const CameraComponent: React.FC<CameraProps> = ({
         flash: currentFlashMode,
       });
 
-      onPhotoCaptured?.(photo);
+      const getSize = await RNFS.stat(photo.path);
+      const img = {
+        ...photo,
+        size: getSize?.size,
+      };
+
+      onPhotoCaptured?.(img);
     } catch (error) {
       onError?.('Failed to capture photo');
     } finally {
@@ -157,8 +164,14 @@ export const CameraComponent: React.FC<CameraProps> = ({
       setIsPaused(false);
       setRecordingDuration(0);
       await camera.current.startRecording({
-        onRecordingFinished: (video) => {
-          onVideoRecorded?.(video);
+        onRecordingFinished: async (video) => {
+          const path = video.path.replace('file://', '');
+          const stat = await RNFS.stat(path);
+          const videoFile = {
+            ...video,
+            size: stat?.size,
+          };
+          onVideoRecorded?.(videoFile);
           setIsRecording(false);
           setIsPaused(false);
           setRecordingDuration(0);

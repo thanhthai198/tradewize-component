@@ -4,17 +4,18 @@ Một thư viện component React Native toàn diện với các component UI đ
 
 Cần cài các thư viện
 react-native-reanimated, react-native-safe-area-context, react-native-vision-camera, react-native-gesture-handler, @react-native-community/slider
+@expo/react-native-action-sheet, react-native-keyboard-controller, react-native-lightbox-v2, react-native-parsed-text
 
 ## 📦 Cài đặt
 
 ```bash
-npm install git+https://github.com/thanhthai198/tradewize-component.git react-native-safe-area-context react-native-vision-camera react-native-reanimated  react-native-gesture-handler @react-native-community/slider
+npm install git+https://github.com/thanhthai198/tradewize-component.git react-native-safe-area-context react-native-vision-camera react-native-reanimated  react-native-gesture-handler @react-native-community/slider @expo/react-native-action-sheet react-native-keyboard-controller react-native-lightbox-v2 react-native-parsed-text
 ```
 
 hoặc sử dụng yarn:
 
 ```bash
-yarn add git+https://github.com/thanhthai198/tradewize-component.git react-native-safe-area-context react-native-vision-camera react-native-reanimated react-native-gesture-handler @react-native-community/slider
+yarn add git+https://github.com/thanhthai198/tradewize-component.git react-native-safe-area-context react-native-vision-camera react-native-reanimated react-native-gesture-handler @react-native-community/slider @expo/react-native-action-sheet react-native-keyboard-controller react-native-lightbox-v2 react-native-parsed-text
 ```
 
 Đối với android
@@ -38,6 +39,8 @@ Thư viện này bao gồm các component sau:
 - **TabView** - Component tab view
 - **ScrollTabView** - Tab view với khả năng scroll
 - **Collapse** - Component có thể thu gọn
+- **GiftChat** - Component chat
+- **ShowVideo** - Component Video Show không hỗ trợ ytb
 
 ## 📖 Cách sử dụng
 

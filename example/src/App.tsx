@@ -1,12 +1,280 @@
+import { useCallback, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { GiftedChat } from '../../src/GiftedChat';
 
-import { VideoModalExample } from '../../src/VideoPlayer/VideoModalExample';
 export default function App() {
+  const [messages, setMessages] = useState<any>([]);
+
+  useEffect(() => {
+    setMessages([
+      {
+        isLast: true,
+        _id: 55551,
+        text: 'dfdf',
+        createdAt: new Date('2025-07-30T10:00:00.000Z'),
+        user: {
+          _id: 1,
+          name: 'React Native',
+        },
+      },
+      {
+        _id: 2,
+        text: 'This is a quick reply. Do you love Gifted Chat? (radio) KEEP IT',
+        createdAt: new Date(),
+        quickReplies: {
+          type: 'radio', // or 'checkbox',
+          keepIt: true,
+          values: [
+            {
+              title: '😋 Yes',
+              value: 'yes',
+            },
+            {
+              title: '📷 Yes, let me show you with a picture!',
+              value: 'yes_picture',
+            },
+            {
+              title: '😞 Nope. What?',
+              value: 'no',
+            },
+          ],
+        },
+        user: {
+          _id: 2,
+          name: 'React Native',
+        },
+      },
+      {
+        _id: 3,
+        text: 'This is a quick reply. Do you love Gifted Chat? (radio) KEEP IT',
+        createdAt: new Date(),
+        quickReplies: {
+          type: 'radio', // or 'checkbox',
+          keepIt: true,
+          values: [
+            {
+              title: '😋 Yes',
+              value: 'yes',
+            },
+            {
+              title: '📷 Yes, let me show you with a picture!',
+              value: 'yes_picture',
+            },
+            {
+              title: '😞 Nope. What?',
+              value: 'no',
+            },
+          ],
+        },
+        user: {
+          _id: 2,
+          name: 'React Native',
+        },
+      },
+      {
+        _id: 4,
+        text: 'This is a quick reply. Do you love Gifted Chat? (checkbox)',
+        createdAt: new Date(),
+        file: [
+          {
+            uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+            typeFile: 'video',
+          },
+          {
+            uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+            typeFile: 'video',
+          },
+          {
+            uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+            typeFile: 'video',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+        ],
+        quickReplies: {
+          type: 'checkbox', // or 'radio',
+          values: [
+            {
+              title: 'Yes',
+              value: 'yes',
+            },
+            {
+              title: 'Yes, let me show you with a picture!',
+              value: 'yes_picture',
+            },
+            {
+              title: 'Nope. What?',
+              value: 'no',
+            },
+          ],
+        },
+        user: {
+          _id: 2,
+          name: 'React Native',
+        },
+      },
+      {
+        _id: 23,
+        text: 'This is a quick reply. Do you love Gifted Chat? (checkbox)',
+        createdAt: new Date(),
+        quickReplies: {
+          type: 'checkbox', // or 'radio',
+          values: [
+            {
+              title: 'Yes',
+              value: 'yes',
+            },
+            {
+              title: 'Yes, let me show you with a picture!',
+              value: 'yes_picture',
+            },
+            {
+              title: 'Nope. What?',
+              value: 'no',
+            },
+          ],
+        },
+        user: {
+          _id: 1,
+          name: 'React Native1',
+        },
+      },
+      {
+        _id: 1222,
+        text: 'This is a quick reply. Do you love Gifted Chat? (radio) KEEP IT',
+        createdAt: new Date('2025-07-30T10:00:00.000Z'),
+        file: [
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+        ],
+        quickReplies: {
+          type: 'radio', // or 'checkbox',
+          keepIt: true,
+          values: [
+            {
+              title: '😋 Yes',
+              value: 'yes',
+            },
+            {
+              title: '📷 Yes, let me show you with a picture!',
+              value: 'yes_picture',
+            },
+            {
+              title: '😞 Nope. What?',
+              value: 'no',
+            },
+          ],
+        },
+        user: {
+          _id: 2,
+          name: 'React Native',
+        },
+      },
+    ]);
+  }, []);
+
+  const onSend = useCallback((messages: any) => {
+    setMessages((previousMessages: any) =>
+      GiftedChat.append(previousMessages, messages)
+    );
+  }, []);
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <VideoModalExample />
+        <GiftedChat
+          messages={messages}
+          onSend={(messages: any) => onSend(messages)}
+          user={{
+            _id: 1,
+          }}
+          alwaysShowSend
+        />
       </SafeAreaView>
     </SafeAreaProvider>
   );
