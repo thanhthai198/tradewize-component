@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleSheet, View, type GestureResponderEvent } from 'react-native';
 import { ButtonBase } from '../ButtonBase';
 

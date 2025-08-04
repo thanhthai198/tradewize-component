@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { GiftedChat } from '../../src/GiftedChat';
+import React from 'react';
 
 export default function App() {
   const [messages, setMessages] = useState<any>([]);

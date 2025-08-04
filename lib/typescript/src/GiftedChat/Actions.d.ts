@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import { type StyleProp, type ViewStyle, type TextStyle } from 'react-native';
 export interface ActionsProps {
     options?: {
@@ -11,4 +11,4 @@ export interface ActionsProps {
     containerStyle?: StyleProp<ViewStyle>;
     onPressActionButton?(): void;
 }
-export declare function Actions({ options, optionTintColor, icon, wrapperStyle, iconTextStyle, onPressActionButton, containerStyle, }: ActionsProps): import("react/jsx-runtime").JSX.Element;
+export declare function Actions({ options, optionTintColor, icon, wrapperStyle, iconTextStyle, onPressActionButton, containerStyle, }: ActionsProps): React.JSX.Element;

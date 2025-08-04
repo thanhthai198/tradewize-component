@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useMemo } from 'react';
+import React, { forwardRef, useCallback, useMemo } from 'react';
 import { type LayoutChangeEvent, View } from 'react-native';
 import { type IMessage } from '../../../types';
 import Message, { type MessageProps } from '../../../Message';

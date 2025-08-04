@@ -1,4 +1,4 @@
-import { type ReactNode, useCallback } from 'react';
+import React, { type ReactNode, useCallback } from 'react';
 import {
   StyleSheet,
   Text,

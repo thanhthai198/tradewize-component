@@ -1,3 +1,4 @@
+import React from 'react';
 import { TextInput } from 'react-native';
 import { type InputBaseProps } from '../InputBase';
 export interface FlatInputProps extends Omit<InputBaseProps, 'variant'> {
@@ -7,4 +8,4 @@ export interface FlatInputProps extends Omit<InputBaseProps, 'variant'> {
     errorBorderColor?: string;
     borderRadius?: number;
 }
-export declare const FlatInput: import("react").ForwardRefExoticComponent<FlatInputProps & import("react").RefAttributes<TextInput>>;
+export declare const FlatInput: React.ForwardRefExoticComponent<FlatInputProps & React.RefAttributes<TextInput>>;

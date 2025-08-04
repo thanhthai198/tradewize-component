@@ -1,3 +1,4 @@
+import React from 'react';
 import { type LayoutChangeEvent } from 'react-native';
 import type { FileMessage, IMessage } from './types';
 interface MessageFileProps {
@@ -12,5 +13,5 @@ interface MessageFileProps {
     onSaveThumbnail?: (file: FileMessage[]) => void;
     isShowAll?: boolean;
 }
-export declare function MessageFile({ onPressFile, messageWidth, currentMessage, isReaction, onLayout, onSaveThumbnail, isShowAll, }: MessageFileProps): import("react/jsx-runtime").JSX.Element | null;
+export declare function MessageFile({ onPressFile, messageWidth, currentMessage, isReaction, onLayout, onSaveThumbnail, isShowAll, }: MessageFileProps): React.JSX.Element | null;
 export {};

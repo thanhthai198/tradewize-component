@@ -1,3 +1,4 @@
+import React from 'react';
 import { type ViewStyle, type TextStyle } from 'react-native';
 import { type LeftRightStyle, type IMessage } from './types';
 export interface TimeProps<TMessage extends IMessage> {
@@ -7,4 +8,4 @@ export interface TimeProps<TMessage extends IMessage> {
     timeTextStyle?: LeftRightStyle<TextStyle>;
     timeFormat?: string;
 }
-export declare function Time<TMessage extends IMessage = IMessage>({ position, containerStyle, currentMessage, timeFormat, timeTextStyle, }: TimeProps<TMessage>): import("react/jsx-runtime").JSX.Element | null;
+export declare function Time<TMessage extends IMessage = IMessage>({ position, containerStyle, currentMessage, timeFormat, timeTextStyle, }: TimeProps<TMessage>): React.JSX.Element | null;

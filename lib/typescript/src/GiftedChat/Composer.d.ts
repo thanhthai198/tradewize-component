@@ -1,3 +1,4 @@
+import React from 'react';
 import { TextInput, type TextInputProps } from 'react-native';
 export interface ComposerProps {
     composerHeight?: number;
@@ -17,4 +18,4 @@ export interface ComposerProps {
     }): void;
     onPressPickMedia?: (type: 'camera' | 'pick') => void;
 }
-export declare const Composer: import("react").ForwardRefExoticComponent<ComposerProps & import("react").RefAttributes<TextInput>>;
+export declare const Composer: React.ForwardRefExoticComponent<ComposerProps & React.RefAttributes<TextInput>>;

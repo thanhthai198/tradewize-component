@@ -1,3 +1,4 @@
+import React from 'react';
 import type { FileMessage } from './types';
 import type { IMessage } from './types';
 interface MediaAllShowProps {
@@ -6,5 +7,5 @@ interface MediaAllShowProps {
     fileMediaAll: IMessage | null;
     onPressFile?: (file: FileMessage) => void;
 }
-export declare function MediaAllShow({ isVisible, onClose, fileMediaAll, onPressFile, }: MediaAllShowProps): import("react/jsx-runtime").JSX.Element;
+export declare function MediaAllShow({ isVisible, onClose, fileMediaAll, onPressFile, }: MediaAllShowProps): React.JSX.Element;
 export {};

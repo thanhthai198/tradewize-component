@@ -1,1 +1,2 @@
-export declare function MessageAudio(): import("react/jsx-runtime").JSX.Element;
+import React from 'react';
+export declare function MessageAudio(): React.JSX.Element;

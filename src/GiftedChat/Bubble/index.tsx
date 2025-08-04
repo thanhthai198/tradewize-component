@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-shadow */
+import React, { useCallback, useRef, useState } from 'react';
 import type { JSX } from 'react';
-import { useCallback, useRef, useState } from 'react';
 import {
   findNodeHandle,
   Text,

@@ -1,3 +1,4 @@
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -6,8 +7,6 @@ import {
   type LayoutChangeEvent,
 } from 'react-native';
 import type { FileMessage, IMessage } from './types';
-import { useCallback, useEffect, useState } from 'react';
-import { useMemo } from 'react';
 import { generateThumbnails } from './utils';
 import FastImage from 'react-native-fast-image';
 import Color from './Color';

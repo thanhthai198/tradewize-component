@@ -12,4 +12,4 @@ export interface QuickRepliesProps<TMessage extends IMessage = IMessage> {
     onQuickReply?(reply: Reply[]): void;
     renderQuickReplySend?(): React.ReactNode;
 }
-export declare function QuickReplies({ currentMessage, nextMessage, color, quickReplyStyle, quickReplyTextStyle, quickReplyContainerStyle, onQuickReply, sendText, renderQuickReplySend, }: QuickRepliesProps<IMessage>): import("react/jsx-runtime").JSX.Element | null;
+export declare function QuickReplies({ currentMessage, nextMessage, color, quickReplyStyle, quickReplyTextStyle, quickReplyContainerStyle, onQuickReply, sendText, renderQuickReplySend, }: QuickRepliesProps<IMessage>): React.JSX.Element | null;

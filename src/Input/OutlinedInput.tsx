@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { TextInput } from 'react-native';
 import { InputBase, type InputBaseProps } from '../InputBase';
 

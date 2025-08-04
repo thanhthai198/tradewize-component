@@ -1,3 +1,4 @@
+import React from 'react';
 import { type IMessage, type User } from './types';
 export declare const EMOJI_REACTIONS: string[];
 export interface MessageWithReactionProps {
@@ -14,4 +15,4 @@ export interface MessageWithReactionProps {
     };
     user: User;
 }
-export declare const MessageWithReaction: ({ isVisible, onClose, message, position, user, }: MessageWithReactionProps) => import("react/jsx-runtime").JSX.Element;
+export declare const MessageWithReaction: ({ isVisible, onClose, message, position, user, }: MessageWithReactionProps) => React.JSX.Element;

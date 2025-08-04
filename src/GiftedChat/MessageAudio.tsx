@@ -1,3 +1,4 @@
+import React from 'react';
 import Color from './Color';
 import { View, Text } from 'react-native';
 

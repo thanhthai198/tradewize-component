@@ -1,3 +1,4 @@
+import React from 'react';
 import { type IMessage } from '../../../types';
 import { type DaysPositions } from '../../types';
 import { type ItemProps } from './types';
@@ -18,5 +19,5 @@ export declare const useRelativeScrolledPositionToBottomOfDay: (listHeight: {
 }, containerHeight: {
     value: number;
 }, dayBottomMargin: number, dayTopOffset: number, createdAt?: number) => import("react-native-reanimated").DerivedValue<number>;
-declare const Item: <TMessage extends IMessage>(props: ItemProps<TMessage>) => import("react/jsx-runtime").JSX.Element;
+declare const Item: <TMessage extends IMessage>(props: ItemProps<TMessage>) => React.JSX.Element;
 export default Item;

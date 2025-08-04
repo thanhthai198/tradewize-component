@@ -1,3 +1,4 @@
+import React from 'react';
 import type { DayProps } from './types';
 export * from './types';
-export declare function Day({ dateFormat, dateFormatCalendar, createdAt, containerStyle, wrapperStyle, textStyle, }: DayProps): import("react/jsx-runtime").JSX.Element | null;
+export declare function Day({ dateFormat, dateFormatCalendar, createdAt, containerStyle, wrapperStyle, textStyle, }: DayProps): React.JSX.Element | null;

@@ -1,3 +1,4 @@
+import React from 'react';
 import { type GestureResponderEvent } from 'react-native';
 interface ButtonContainerVideoProps {
     isRecording?: boolean;
@@ -6,5 +7,5 @@ interface ButtonContainerVideoProps {
     pauseRecording?: ((event: GestureResponderEvent) => void) | undefined;
     startRecording?: ((event: GestureResponderEvent) => void) | undefined;
 }
-export declare const ButtonContainerVideo: ({ isRecording, isPaused, resumeRecording, pauseRecording, startRecording, }: ButtonContainerVideoProps) => import("react/jsx-runtime").JSX.Element;
+export declare const ButtonContainerVideo: ({ isRecording, isPaused, resumeRecording, pauseRecording, startRecording, }: ButtonContainerVideoProps) => React.JSX.Element;
 export {};

@@ -1,3 +1,4 @@
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -13,7 +14,6 @@ import Color from './Color';
 import { ButtonBase } from '../ButtonBase';
 import FastImage from 'react-native-fast-image';
 import { MessageText } from './MessageText';
-import { useCallback, useMemo, useState } from 'react';
 import { Time } from './Time';
 import { MessageFile } from './MessageFile';
 import { getScreenHeight, getScreenWidth } from '../utils';

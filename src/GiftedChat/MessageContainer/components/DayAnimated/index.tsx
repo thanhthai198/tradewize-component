@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { type LayoutChangeEvent } from 'react-native';
 import Animated, {
   interpolate,

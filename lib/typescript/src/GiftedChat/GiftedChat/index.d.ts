@@ -1,3 +1,4 @@
+import React from 'react';
 import { Actions } from '../Actions';
 import { Avatar } from '../Avatar';
 import Bubble from '../Bubble';
@@ -15,7 +16,7 @@ import { SystemMessage } from '../SystemMessage';
 import { Time } from '../Time';
 import * as utils from '../utils';
 import { type GiftedChatProps } from './types';
-declare function GiftedChatWrapper<TMessage extends IMessage = IMessage>(props: GiftedChatProps<TMessage>): import("react/jsx-runtime").JSX.Element;
+declare function GiftedChatWrapper<TMessage extends IMessage = IMessage>(props: GiftedChatProps<TMessage>): React.JSX.Element;
 declare namespace GiftedChatWrapper {
     var append: <TMessage extends IMessage>(currentMessages: TMessage[] | undefined, messages: TMessage[], inverted?: boolean) => TMessage[];
     var prepend: <TMessage extends IMessage>(currentMessages: TMessage[] | undefined, messages: TMessage[], inverted?: boolean) => TMessage[];

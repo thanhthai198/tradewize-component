@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import { type ReactNode, useCallback } from 'react';
+import React, { type ReactNode, useCallback } from 'react';
 import {
   type ImageStyle,
   type LayoutChangeEvent,

@@ -1,3 +1,4 @@
+import React from 'react';
 import { type GestureResponderEvent } from 'react-native';
 interface SnapScrollViewProps {
     mode: 'photo' | 'video' | 'both';
@@ -11,5 +12,5 @@ interface SnapScrollViewProps {
     capturePhoto?: ((event: GestureResponderEvent) => void) | undefined;
     toggleCameraPosition?: ((event: GestureResponderEvent) => void) | undefined;
 }
-export declare const SnapScrollView: (props: SnapScrollViewProps) => import("react/jsx-runtime").JSX.Element;
+export declare const SnapScrollView: (props: SnapScrollViewProps) => React.JSX.Element;
 export {};

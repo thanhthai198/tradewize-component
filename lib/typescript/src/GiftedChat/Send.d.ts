@@ -14,4 +14,4 @@ export interface SendProps<TMessage extends IMessage> {
     iconSend?: ImageSourcePropType;
     onSend?(messages: Partial<TMessage> | Partial<TMessage>[], shouldResetInputToolbar: boolean): void;
 }
-export declare const Send: <TMessage extends IMessage = IMessage>({ text, containerStyle, children, alwaysShowSend, disabled, sendButtonProps, onSend, iconStyle, iconSend, }: SendProps<TMessage>) => import("react/jsx-runtime").JSX.Element | null;
+export declare const Send: <TMessage extends IMessage = IMessage>({ text, containerStyle, children, alwaysShowSend, disabled, sendButtonProps, onSend, iconStyle, iconSend, }: SendProps<TMessage>) => React.JSX.Element | null;

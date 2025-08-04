@@ -25,4 +25,4 @@ export interface InputToolbarProps<TMessage extends IMessage> {
     onRemoveFile?: (file: FileMessage) => void;
     onPressFile?: (file: FileMessage) => void;
 }
-export declare function InputToolbar<TMessage extends IMessage = IMessage>(props: InputToolbarProps<TMessage>): import("react/jsx-runtime").JSX.Element;
+export declare function InputToolbar<TMessage extends IMessage = IMessage>(props: InputToolbarProps<TMessage>): React.JSX.Element;

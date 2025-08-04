@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import { type ImageStyle, type LayoutChangeEvent, type TextStyle, type ViewStyle } from 'react-native';
 import { type IMessage, type LeftRightStyle, type User } from './types';
 export interface AvatarProps<TMessage extends IMessage> {
@@ -16,4 +16,4 @@ export interface AvatarProps<TMessage extends IMessage> {
     onLongPressAvatar?: (user: User) => void;
     onLayout?: (e: LayoutChangeEvent) => void;
 }
-export declare function Avatar<TMessage extends IMessage = IMessage>(props: AvatarProps<TMessage>): import("react/jsx-runtime").JSX.Element | null;
+export declare function Avatar<TMessage extends IMessage = IMessage>(props: AvatarProps<TMessage>): React.JSX.Element | null;
