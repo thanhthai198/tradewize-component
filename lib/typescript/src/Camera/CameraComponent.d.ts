@@ -1,8 +1,12 @@
 import React from 'react';
 import type { PhotoFile, VideoFile } from 'react-native-vision-camera';
 export interface CameraProps {
-    onPhotoCaptured?: (photo: PhotoFile) => void;
-    onVideoRecorded?: (video: VideoFile) => void;
+    onPhotoCaptured?: (photo: PhotoFile & {
+        size: number;
+    }) => void;
+    onVideoRecorded?: (video: VideoFile & {
+        size: number;
+    }) => void;
     onError?: (error: string) => void;
     onClose?: () => void;
     flashMode?: 'off' | 'on';

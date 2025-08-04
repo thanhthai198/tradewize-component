@@ -3,19 +3,37 @@
 Một thư viện component React Native toàn diện với các component UI được thiết kế đẹp và dễ sử dụng.
 
 Cần cài các thư viện
-react-native-reanimated, react-native-safe-area-context, react-native-vision-camera, react-native-gesture-handler, @react-native-community/slider
-@expo/react-native-action-sheet, react-native-keyboard-controller, react-native-lightbox-v2, react-native-parsed-text
+"@expo/react-native-action-sheet": ">=4.1.1",
+"@react-native-community/blur": ">=4.4.1",
+"@react-native-community/slider": ">=4.5.7",
+"react": "_",
+"react-native": "_",
+"react-native-create-thumbnail": ">=2.1.1",
+"react-native-fast-image": ">=8.6.3",
+"react-native-fs": ">=2.20.0",
+"react-native-gesture-handler": ">=2.25.0",
+"react-native-image-crop-picker": ">=0.42.0",
+"react-native-image-viewing": ">=0.2.2",
+"react-native-keyboard-controller": ">=1.17.5",
+"react-native-modal": ">=13.0.1",
+"react-native-parsed-text": ">=0.0.22",
+"react-native-reanimated": ">=3.19.0",
+"react-native-safe-area-context": ">=5.5.2",
+"react-native-video": ">=6.16.0",
+"react-native-vision-camera": ">=4.7.0",
+"react-native-webview": ">=13.13.5",
+"react-native-youtube-iframe": ">=2.4.0"
 
 ## 📦 Cài đặt
 
 ```bash
-npm install git+https://github.com/thanhthai198/tradewize-component.git react-native-safe-area-context react-native-vision-camera react-native-reanimated  react-native-gesture-handler @react-native-community/slider @expo/react-native-action-sheet react-native-keyboard-controller react-native-lightbox-v2 react-native-parsed-text
+npm install git+https://github.com/thanhthai198/tradewize-component.git
 ```
 
 hoặc sử dụng yarn:
 
 ```bash
-yarn add git+https://github.com/thanhthai198/tradewize-component.git react-native-safe-area-context react-native-vision-camera react-native-reanimated react-native-gesture-handler @react-native-community/slider @expo/react-native-action-sheet react-native-keyboard-controller react-native-lightbox-v2 react-native-parsed-text
+yarn add git+https://github.com/thanhthai198/tradewize-component.git
 ```
 
 Đối với android

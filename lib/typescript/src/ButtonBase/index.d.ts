@@ -37,7 +37,7 @@ interface ButtonBaseProps extends TouchableOpacityProps {
     customLoadingComponent?: React.ReactNode;
     accessibilityLabel?: string;
     accessibilityHint?: string;
-    accessibilityRole?: 'button' | 'link' | 'none' | 'checkbox';
+    accessibilityRole?: any;
     pressable?: boolean;
     shadow?: boolean;
     shadowColor?: string;
