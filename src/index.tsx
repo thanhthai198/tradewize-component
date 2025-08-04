@@ -31,6 +31,8 @@ import {
   type VideoPlayerProps,
 } from './VideoPlayer';
 
+export * from './GiftedChat';
+
 export {
   ButtonBase,
   RadioButton,
