@@ -6,8 +6,6 @@ Cần cài các thư viện
 "@expo/react-native-action-sheet": ">=4.1.1",
 "@react-native-community/blur": ">=4.4.1",
 "@react-native-community/slider": ">=4.5.7",
-"react": "_",
-"react-native": "_",
 "react-native-create-thumbnail": ">=2.1.1",
 "react-native-fast-image": ">=8.6.3",
 "react-native-fs": ">=2.20.0",
