@@ -21,26 +21,8 @@ export default function App() {
       },
       {
         _id: 2,
-        text: 'This is a quick reply. Do you love Gifted Chat? (radio) KEEP IT',
+        text: 'Th',
         createdAt: new Date(),
-        quickReplies: {
-          type: 'radio', // or 'checkbox',
-          keepIt: true,
-          values: [
-            {
-              title: '😋 Yes',
-              value: 'yes',
-            },
-            {
-              title: '📷 Yes, let me show you with a picture!',
-              value: 'yes_picture',
-            },
-            {
-              title: '😞 Nope. What?',
-              value: 'no',
-            },
-          ],
-        },
         user: {
           _id: 2,
           name: 'React Native',
@@ -50,24 +32,6 @@ export default function App() {
         _id: 3,
         text: 'This is a quick reply. Do you love Gifted Chat? (radio) KEEP IT',
         createdAt: new Date(),
-        quickReplies: {
-          type: 'radio', // or 'checkbox',
-          keepIt: true,
-          values: [
-            {
-              title: '😋 Yes',
-              value: 'yes',
-            },
-            {
-              title: '📷 Yes, let me show you with a picture!',
-              value: 'yes_picture',
-            },
-            {
-              title: '😞 Nope. What?',
-              value: 'no',
-            },
-          ],
-        },
         user: {
           _id: 2,
           name: 'React Native',
@@ -175,23 +139,6 @@ export default function App() {
             typeFile: 'image',
           },
         ],
-        quickReplies: {
-          type: 'checkbox', // or 'radio',
-          values: [
-            {
-              title: 'Yes',
-              value: 'yes',
-            },
-            {
-              title: 'Yes, let me show you with a picture!',
-              value: 'yes_picture',
-            },
-            {
-              title: 'Nope. What?',
-              value: 'no',
-            },
-          ],
-        },
         user: {
           _id: 2,
           name: 'React Native',
@@ -199,25 +146,8 @@ export default function App() {
       },
       {
         _id: 23,
-        text: 'This is a quick reply. Do you love Gifted Chat? (checkbox)',
+        text: 'Th',
         createdAt: new Date(),
-        quickReplies: {
-          type: 'checkbox', // or 'radio',
-          values: [
-            {
-              title: 'Yes',
-              value: 'yes',
-            },
-            {
-              title: 'Yes, let me show you with a picture!',
-              value: 'yes_picture',
-            },
-            {
-              title: 'Nope. What?',
-              value: 'no',
-            },
-          ],
-        },
         user: {
           _id: 1,
           name: 'React Native1',
@@ -227,30 +157,13 @@ export default function App() {
         _id: 1222,
         text: 'This is a quick reply. Do you love Gifted Chat? (radio) KEEP IT',
         createdAt: new Date('2025-07-30T10:00:00.000Z'),
+        reactionEmoji: '👍',
         file: [
           {
             uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
             typeFile: 'image',
           },
         ],
-        quickReplies: {
-          type: 'radio', // or 'checkbox',
-          keepIt: true,
-          values: [
-            {
-              title: '😋 Yes',
-              value: 'yes',
-            },
-            {
-              title: '📷 Yes, let me show you with a picture!',
-              value: 'yes_picture',
-            },
-            {
-              title: '😞 Nope. What?',
-              value: 'no',
-            },
-          ],
-        },
         user: {
           _id: 2,
           name: 'React Native',

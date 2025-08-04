@@ -5,10 +5,11 @@ import {
   Pressable,
   Text,
   type LayoutChangeEvent,
+  type TextStyle,
 } from 'react-native';
 
 import Modal from 'react-native-modal';
-import { type IMessage, type User } from './types';
+import { type IMessage, type LeftRightStyle, type User } from './types';
 import { BlurView } from '@react-native-community/blur';
 import Color from './Color';
 import { ButtonBase } from '../ButtonBase';
@@ -32,6 +33,8 @@ export interface MessageWithReactionProps {
     pageY: number;
   };
   user: User;
+  onReactionEmoji?: (emoji: string, messageId: string) => void;
+  onActionReaction?: (message: IMessage, action: string) => void;
 }
 
 export const MessageWithReaction = ({
@@ -40,6 +43,8 @@ export const MessageWithReaction = ({
   message,
   position,
   user,
+  onReactionEmoji,
+  onActionReaction,
 }: MessageWithReactionProps) => {
   delete message.quickReplies;
   const [isExceedsScreenHeight, setIsExceedsScreenHeight] = useState(false);
@@ -156,10 +161,26 @@ export const MessageWithReaction = ({
     },
     [position.pageY, position.height]
   );
+  const timeTextStyle: LeftRightStyle<TextStyle> = useMemo(() => {
+    return {
+      left: {
+        alignSelf: 'flex-start',
+      },
+      right: {
+        alignSelf: 'flex-end',
+      },
+    };
+  }, []);
 
   const renderTime = useMemo(
-    () => <Time currentMessage={message} position="left" />,
-    [message]
+    () => (
+      <Time
+        currentMessage={message}
+        position="left"
+        timeTextStyle={timeTextStyle}
+      />
+    ),
+    [message, timeTextStyle]
   );
 
   const renderMessage = useMemo(
@@ -167,16 +188,18 @@ export const MessageWithReaction = ({
     [message]
   );
 
-  const renderFile = useMemo(
-    () => (
-      <MessageFile
-        isReaction
-        currentMessage={message}
-        messageWidth={{ width: position.width + 36, _id: '' }}
-      />
-    ),
-    [position.width, message]
-  );
+  const renderFile = useMemo(() => {
+    if (message?.file?.length && message?.file?.length > 0) {
+      return (
+        <MessageFile
+          isReaction
+          currentMessage={message}
+          messageWidth={{ width: position.width + 36, _id: '' }}
+        />
+      );
+    }
+    return null;
+  }, [position.width, message]);
 
   return (
     <Modal
@@ -202,7 +225,10 @@ export const MessageWithReaction = ({
         {EMOJI_REACTIONS?.map((emoji) => (
           <Pressable
             key={emoji}
-            onPress={() => {}}
+            onPress={() => {
+              onClose();
+              onReactionEmoji?.(emoji, message?._id?.toString());
+            }}
             style={styles.reactionIconItem}
           >
             <Text style={styles.reactionIconText}>{emoji}</Text>
@@ -224,6 +250,10 @@ export const MessageWithReaction = ({
             { width: getScreenWidth() * 0.5 },
             styles.btnBorderAction,
           ]}
+          onPress={() => {
+            onClose();
+            onActionReaction?.(message, 'reply');
+          }}
         >
           <Text style={styles.btnActionText}>Reply</Text>
           <FastImage
@@ -231,14 +261,26 @@ export const MessageWithReaction = ({
             source={require('../assets/reply.png')}
           />
         </ButtonBase>
-        <ButtonBase style={[styles.btnAction]}>
+        <ButtonBase
+          style={[styles.btnAction]}
+          onPress={() => {
+            onClose();
+            onActionReaction?.(message, 'copy');
+          }}
+        >
           <Text style={styles.btnActionText}>Copy</Text>
           <FastImage
             style={styles.icon}
             source={require('../assets/copy.png')}
           />
         </ButtonBase>
-        <ButtonBase style={[styles.btnAction, styles.btnActionOther]}>
+        <ButtonBase
+          style={[styles.btnAction, styles.btnActionOther]}
+          onPress={() => {
+            onClose();
+            onActionReaction?.(message, 'other');
+          }}
+        >
           <Text style={styles.btnActionText}>Other</Text>
           <FastImage
             style={styles.icon}

@@ -61,6 +61,7 @@ export interface IMessage {
     pending?: boolean;
     quickReplies?: QuickReplies;
     isLast?: boolean;
+    reactionEmoji?: string;
 }
 export type IChatMessage = IMessage;
 export interface MessageVideoProps<TMessage extends IMessage> {

@@ -63,6 +63,7 @@ export interface GiftedChatProps<TMessage extends IMessage> extends Partial<Mess
     quickReplyContainerStyle?: StyleProp<ViewStyle>;
     isCustomViewBottom?: boolean;
     infiniteScroll?: boolean;
+    labelReaction?: string;
     timeTextStyle?: LeftRightStyle<TextStyle>;
     actionSheet?(): {
         showActionSheetWithOptions: (options: ActionSheetOptions, callback: (buttonIndex: number) => void | Promise<void>) => void;
@@ -109,4 +110,5 @@ export interface GiftedChatProps<TMessage extends IMessage> extends Partial<Mess
     renderQuickReplySend?(): React.ReactNode;
     scrollToBottomComponent?(): React.ReactNode;
     shouldUpdateMessage?(props: MessageProps<TMessage>, nextProps: MessageProps<TMessage>): boolean;
+    onReactionEmoji?(emoji: string, messageId: string): void;
 }

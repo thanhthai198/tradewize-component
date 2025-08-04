@@ -17,6 +17,7 @@ import { type FileMessage, type IMessage } from './types';
 import { getScreenWidth } from '../utils';
 import FastImage from 'react-native-fast-image';
 import { formatDurationSmart } from './utils';
+import { ButtonBase } from '../ButtonBase';
 
 export interface InputToolbarProps<TMessage extends IMessage> {
   options?: { [key: string]: () => void };
@@ -36,6 +37,9 @@ export interface InputToolbarProps<TMessage extends IMessage> {
   fileMedia?: FileMessage[];
   onRemoveFile?: (file: FileMessage) => void;
   onPressFile?: (file: FileMessage) => void;
+  messageReaction?: IMessage & { isReply: boolean };
+  clearMessageReaction?: () => void;
+  labelReaction?: string;
 }
 
 export function InputToolbar<TMessage extends IMessage = IMessage>(
@@ -56,6 +60,9 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
     fileMedia,
     onRemoveFile,
     onPressFile,
+    messageReaction,
+    clearMessageReaction,
+    labelReaction,
   } = props;
 
   const actionsFragment = useMemo(() => {
@@ -174,6 +181,27 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
 
   return (
     <View style={[styles.container, containerStyle]}>
+      {messageReaction && (
+        <View style={styles.messageReaction}>
+          <View style={styles.messageReactionContainer}>
+            <Text style={styles.messageReactionText}>{labelReaction}</Text>
+            <Text numberOfLines={2} style={styles.messageReactionContent}>
+              {messageReaction.text}
+            </Text>
+          </View>
+
+          <ButtonBase
+            activeOpacity={0.7}
+            variant="ghost"
+            title="X"
+            onPress={() => {
+              clearMessageReaction?.();
+            }}
+            style={styles.messageReactionCloseButton}
+            textStyle={styles.messageReactionClose}
+          />
+        </View>
+      )}
       <View style={[styles.primary, props.primaryStyle]}>
         {actionsFragment}
         {composerFragment}
@@ -194,8 +222,8 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: Color.defaultColor,
     backgroundColor: Color.white,
+    paddingTop: 8,
     paddingHorizontal: 16,
-    paddingVertical: 8,
   },
   primary: {
     flexDirection: 'row',
@@ -259,5 +287,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: 100,
+  },
+  messageReactionContainer: {
+    flex: 1,
+  },
+  messageReaction: {
+    backgroundColor: Color.white,
+    paddingVertical: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  messageReactionText: {
+    color: Color.black,
+    fontSize: 14,
+    fontWeight: 'bold',
+    lineHeight: 20,
+  },
+  messageReactionContent: {
+    color: Color.black,
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  messageReactionClose: {
+    color: Color.black,
+    fontSize: 18,
+    fontWeight: '500',
+  },
+  messageReactionCloseButton: {
+    width: getScreenWidth() * 0.07,
+    height: getScreenWidth() * 0.07,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
   },
 });

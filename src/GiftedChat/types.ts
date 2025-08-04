@@ -70,6 +70,7 @@ export interface IMessage {
   pending?: boolean;
   quickReplies?: QuickReplies;
   isLast?: boolean;
+  reactionEmoji?: string;
 }
 
 export type IChatMessage = IMessage;

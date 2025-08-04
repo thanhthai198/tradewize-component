@@ -24,5 +24,10 @@ export interface InputToolbarProps<TMessage extends IMessage> {
     fileMedia?: FileMessage[];
     onRemoveFile?: (file: FileMessage) => void;
     onPressFile?: (file: FileMessage) => void;
+    messageReaction?: IMessage & {
+        isReply: boolean;
+    };
+    clearMessageReaction?: () => void;
+    labelReaction?: string;
 }
 export declare function InputToolbar<TMessage extends IMessage = IMessage>(props: InputToolbarProps<TMessage>): React.JSX.Element;

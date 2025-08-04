@@ -24,6 +24,7 @@ import stylesCommon from '../styles';
 import styles from './styles';
 import { MessageFile } from '../MessageFile';
 import { ButtonBase } from '../../ButtonBase';
+import Color from '../Color';
 
 export * from './types';
 
@@ -289,6 +290,32 @@ const Bubble = <TMessage extends IMessage = IMessage>(
     return null;
   }, [props]);
 
+  const renderReactionEmoji = useCallback(() => {
+    if (currentMessage?.reactionEmoji) {
+      return (
+        <View
+          style={{
+            backgroundColor: Color.white,
+            position: 'absolute',
+            width: 32,
+            height: 20,
+            borderRadius: 12,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderWidth: 1,
+            borderColor: Color.leftBubbleBackground,
+            bottom: -30,
+            zIndex: 10,
+            right: 2,
+          }}
+        >
+          <Text>{currentMessage.reactionEmoji}</Text>
+        </View>
+      );
+    }
+    return null;
+  }, [currentMessage]);
+
   const renderBubbleContent = useCallback(() => {
     return (
       <View>
@@ -296,6 +323,7 @@ const Bubble = <TMessage extends IMessage = IMessage>(
         {renderMessageFile()}
         {renderMessageAudio()}
         {renderMessageText()}
+        {renderReactionEmoji()}
         {props.isCustomViewBottom && renderCustomView()}
       </View>
     );
@@ -305,6 +333,7 @@ const Bubble = <TMessage extends IMessage = IMessage>(
     renderMessageText,
     props.isCustomViewBottom,
     renderMessageFile,
+    renderReactionEmoji,
   ]);
 
   return (

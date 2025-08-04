@@ -116,6 +116,8 @@ export interface GiftedChatProps<TMessage extends IMessage>
   isCustomViewBottom?: boolean;
   /* infinite scroll up when reach the top of messages container, automatically call onLoadEarlier function if exist */
   infiniteScroll?: boolean;
+  /* Label reaction */
+  labelReaction?: string;
   timeTextStyle?: LeftRightStyle<TextStyle>;
   /* Custom action sheet */
   actionSheet?(): {
@@ -204,4 +206,6 @@ export interface GiftedChatProps<TMessage extends IMessage>
     props: MessageProps<TMessage>,
     nextProps: MessageProps<TMessage>
   ): boolean;
+  //phần này để làm reaction emoji
+  onReactionEmoji?(emoji: string, messageId: string): void;
 }

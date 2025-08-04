@@ -17,6 +17,7 @@ import {
   Platform,
   TextInput,
   View,
+  Clipboard,
   type LayoutChangeEvent,
 } from 'react-native';
 import { Actions } from '../Actions';
@@ -96,6 +97,8 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
     minComposerHeight = MIN_COMPOSER_HEIGHT,
     maxComposerHeight = MAX_COMPOSER_HEIGHT,
     isKeyboardInternallyHandled = true,
+    onReactionEmoji = null,
+    labelReaction,
   } = props;
 
   const actionSheetRef = useRef<ActionSheetProviderRef>(null);
@@ -130,6 +133,10 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
   const [fileMediaAllLocal, setFileMediaAllLocal] = useState<IMessage | null>(
     null
   );
+  const [arrMessage, setArrMessage] = useState<TMessage[]>(messages);
+  const [messageReaction, setMessageReaction] = useState<
+    (IMessage & { isReply: boolean }) | null
+  >(null);
 
   const [isModalReaction, setIsModalReaction] = useState<boolean>(false);
   const [messageSelected, setMessageSelected] = useState<{
@@ -265,7 +272,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
             inverted,
             keyboardShouldPersistTaps,
           }}
-          messages={messages}
+          messages={arrMessage}
           forwardRef={messageContainerRef}
           isTyping={isTyping}
           onLongPressReaction={(message, position) => {
@@ -294,7 +301,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
   }, [
     isInitialized,
     isTyping,
-    messages,
+    arrMessage,
     props,
     inverted,
     keyboardShouldPersistTaps,
@@ -457,6 +464,9 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
 
     return (
       <InputToolbar
+        labelReaction={labelReaction}
+        messageReaction={messageReaction as IMessage & { isReply: boolean }}
+        clearMessageReaction={() => setMessageReaction(null)}
         onRemoveFile={(file: FileMessage) => {
           const newFileMedia = fileMedia.filter((item) => item.id !== file.id);
           setFileMedia(newFileMedia);
@@ -487,7 +497,42 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
     onPressPickMedia,
     fileMedia,
     handlePressFile,
+    messageReaction,
+    labelReaction,
   ]);
+
+  const handleReactionEmoji = useCallback(
+    (emoji: string, messageId: string) => {
+      const newArrMessage = arrMessage?.map((item) => {
+        if (item?._id?.toString() === messageId) {
+          return { ...item, reactionEmoji: emoji };
+        }
+        return item;
+      });
+      setArrMessage(newArrMessage);
+      onReactionEmoji?.(emoji, messageId);
+    },
+    [arrMessage, onReactionEmoji]
+  );
+
+  const handleActionReaction = useCallback(
+    (message: IMessage, action: string) => {
+      switch (action) {
+        case 'reply':
+          setMessageReaction({ ...message, isReply: true });
+          break;
+        case 'copy':
+          Clipboard.setString(message.text || '');
+          break;
+        case 'other':
+          // setMessageReaction({ ...message, isOther: true });
+          break;
+        default:
+          setMessageReaction(null);
+      }
+    },
+    []
+  );
 
   const contextValues = useMemo(
     () => ({
@@ -505,6 +550,10 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
   useEffect(() => {
     if (props.text != null) setText(props.text);
   }, [props.text]);
+
+  useEffect(() => {
+    setArrMessage(messages);
+  }, [messages]);
 
   useAnimatedReaction(
     () => -keyboard.height.value,
@@ -579,6 +628,8 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                 autoPlay={true}
               />
               <MessageWithReaction
+                onReactionEmoji={handleReactionEmoji}
+                onActionReaction={handleActionReaction}
                 user={user as User}
                 isVisible={isModalReaction}
                 onClose={() => setIsModalReaction(false)}
