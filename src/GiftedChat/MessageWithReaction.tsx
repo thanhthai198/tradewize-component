@@ -168,6 +168,7 @@ export const MessageWithReaction = ({
       },
       right: {
         alignSelf: 'flex-end',
+        color: Color.black,
       },
     };
   }, []);
@@ -176,11 +177,11 @@ export const MessageWithReaction = ({
     () => (
       <Time
         currentMessage={message}
-        position="left"
+        position={isMyMessage ? 'right' : 'left'}
         timeTextStyle={timeTextStyle}
       />
     ),
-    [message, timeTextStyle]
+    [message, timeTextStyle, isMyMessage]
   );
 
   const renderMessage = useMemo(
@@ -301,7 +302,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
     borderRadius: 16,
     backgroundColor: Color.white,
-    minWidth: getScreenWidth() * 0.15,
+    minWidth: getScreenWidth() * 0.19,
   },
   layout: {
     backgroundColor: Color.white,

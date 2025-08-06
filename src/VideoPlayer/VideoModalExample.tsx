@@ -29,8 +29,8 @@ export const VideoModalExample: React.FC = () => {
       source:
         'https://vz-61273662-7e2.b-cdn.net/7b7bad11-089b-4f5f-8dd7-086385c6eda9/playlist.m3u8',
       subtitle: {
-        es: 'https://thanhthai198.github.io/my_cdn/subtitle/videoTest/es.vtt',
-        en: 'https://thanhthai198.github.io/my_cdn/subtitle/videoTest/en.vtt',
+        es: 'https://thanhthai198.github.io/my_cdn/subtitle/interview/es.vtt',
+        en: 'https://thanhthai198.github.io/my_cdn/subtitle/interview/en.vtt',
       },
     },
     {

@@ -11,6 +11,8 @@ import { generateThumbnails } from './utils';
 import FastImage from 'react-native-fast-image';
 import Color from './Color';
 import { ButtonBase } from '../ButtonBase';
+import { getScreenWidth } from '../utils';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 const GAP_MEDIA = 3;
 
@@ -45,66 +47,87 @@ export function MessageFile({
     ({ item, index }: { item: FileMessage; index: number }) => {
       const sizeMedia = Number(messageWidth?.width) / 4.65 - GAP_MEDIA * 3.65;
       const sizeMediaShowAll = Number(messageWidth?.width) / 4 - GAP_MEDIA * 3;
+      const size = isShowAll
+        ? sizeMediaShowAll
+        : sizeMedia < getScreenWidth() * 0.1
+          ? getScreenWidth() * 0.15
+          : sizeMedia;
+
       return (
-        <ButtonBase
-          onPress={() =>
-            onPressFile?.(item, arrMedia?.length > 8 && index === 7, {
-              ...currentMessage,
-              file: arrMedia,
-            })
-          }
-          disabled={
-            isReaction || (item?.isLoading && item?.typeFile === 'video')
-          }
-          style={[
-            styles.mediaItem,
-            {
-              width: isShowAll ? sizeMediaShowAll : sizeMedia,
-              height: isShowAll ? sizeMediaShowAll : sizeMedia,
-            },
-          ]}
-        >
-          <FastImage
-            source={{ uri: item.thumbnailPreview || item.uri }}
-            style={styles.image}
-          />
+        <View>
+          <ButtonBase
+            onPress={() =>
+              onPressFile?.(item, arrMedia?.length > 8 && index === 7, {
+                ...currentMessage,
+                file: arrMedia,
+              })
+            }
+            disabled={
+              isReaction || (item?.isLoading && item?.typeFile === 'video')
+            }
+            style={[
+              styles.mediaItem,
+              {
+                width: size,
+                height: size,
+              },
+            ]}
+          >
+            <FastImage
+              source={{ uri: item.thumbnailPreview || item.uri }}
+              style={styles.image}
+            />
 
-          {item?.typeFile === 'video' && (
-            <View
-              style={[
-                styles.playIcon,
-                {
-                  width: sizeMedia * 0.5,
-                  height: sizeMedia * 0.5,
-                  borderRadius: (sizeMedia * 0.5) / 2,
-                },
-              ]}
-            >
-              {item?.isLoading ? (
-                <ActivityIndicator size="small" color={Color.defaultBlue} />
-              ) : (
-                <FastImage
-                  source={require('../assets/play.png')}
-                  style={[
-                    styles.iconPlay,
-                    {
-                      width: (sizeMedia * 0.5) / 2,
-                      height: (sizeMedia * 0.5) / 2,
-                    },
-                  ]}
-                />
-              )}
+            {item?.typeFile === 'video' && (
+              <View
+                style={[
+                  styles.playIcon,
+                  {
+                    width: sizeMedia * 0.5,
+                    height: sizeMedia * 0.5,
+                    borderRadius: (sizeMedia * 0.5) / 2,
+                  },
+                ]}
+              >
+                {item?.isLoading ? (
+                  <ActivityIndicator size="small" color={Color.defaultBlue} />
+                ) : (
+                  <FastImage
+                    source={require('../assets/play.png')}
+                    style={[
+                      styles.iconPlay,
+                      {
+                        width: (sizeMedia * 0.5) / 2,
+                        height: (sizeMedia * 0.5) / 2,
+                      },
+                    ]}
+                  />
+                )}
+              </View>
+            )}
+
+            {arrMedia?.length > 8 && index === 7 && !isShowAll && (
+              <View style={styles.reactionIcon}>
+                <Text style={styles.reactionIconText}>
+                  + {arrMedia?.length - 8 > 99 ? '99+' : arrMedia?.length - 8}
+                </Text>
+              </View>
+            )}
+          </ButtonBase>
+
+          {!item?.isLoading && item?.progress && item?.progress < 100 && (
+            <View style={[styles.progress, { width: size, height: size }]}>
+              <AnimatedCircularProgress
+                size={size * 0.3}
+                width={3}
+                fill={item?.progress || 0}
+                tintColor={Color.white}
+                // onAnimationComplete={() => console.log('onAnimationComplete')}
+                backgroundColor={Color.defaultColor}
+              />
             </View>
           )}
-
-          {arrMedia?.length > 8 && index === 7 && !isShowAll && (
-            <View style={styles.reactionIcon}>
-              <Text style={styles.reactionIconText}>
-                + {arrMedia?.length - 8 > 99 ? '99+' : arrMedia?.length - 8}
-              </Text>
-            </View>
-          )}
-        </ButtonBase>
+        </View>
       );
     },
     [messageWidth, onPressFile, isReaction, arrMedia, currentMessage, isShowAll]
@@ -220,5 +243,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     lineHeight: 22,
+  },
+  progress: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
   },
 });

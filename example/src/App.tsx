@@ -18,6 +18,12 @@ export default function App() {
           _id: 1,
           name: 'React Native',
         },
+        file: [
+          {
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
+            typeFile: 'image',
+          },
+        ],
       },
       {
         _id: 2,

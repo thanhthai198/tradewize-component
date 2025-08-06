@@ -55,6 +55,7 @@ export interface FileMessage {
   width?: number;
   height?: number;
   duration?: number;
+  progress?: number;
 }
 
 export interface IMessage {
