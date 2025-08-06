@@ -1,66 +1,95 @@
-# TradeWize Component Library
+# 🚀 TradeWize Component Library
 
-Một thư viện component React Native toàn diện với các component UI được thiết kế đẹp và dễ sử dụng.
+> Một thư viện component React Native toàn diện với các component UI được thiết kế đẹp và dễ sử dụng.
 
-Cần cài các thư viện
-"@expo/react-native-action-sheet": ">=4.1.1",
-"@react-native-community/blur": ">=4.4.1",
-"@react-native-community/slider": ">=4.5.7",
-"react-native-create-thumbnail": ">=2.1.1",
-"react-native-fast-image": ">=8.6.3",
-"react-native-fs": ">=2.20.0",
-"react-native-gesture-handler": ">=2.25.0",
-"react-native-image-crop-picker": ">=0.42.0",
-"react-native-image-viewing": ">=0.2.2",
-"react-native-keyboard-controller": ">=1.17.5",
-"react-native-modal": ">=13.0.1",
-"react-native-parsed-text": ">=0.0.22",
-"react-native-reanimated": ">=3.19.0",
-"react-native-safe-area-context": ">=5.5.2",
-"react-native-video": ">=6.16.0",
-"react-native-vision-camera": ">=4.7.0",
-"react-native-webview": ">=13.13.5",
-"react-native-youtube-iframe": ">=2.4.0"
+[![npm version](https://img.shields.io/badge/npm-latest-blue.svg)](https://www.npmjs.com/package/tradewize)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![React Native](https://img.shields.io/badge/React%20Native-0.70+-blue.svg)](https://reactnative.dev/)
 
-## 📦 Cài đặt
+## 📋 Table of Contents
+
+- [📦 Installation](#-installation)
+- [🔧 Dependencies](#-dependencies)
+- [🎯 Available Components](#-available-components)
+- [📖 Usage Examples](#-usage-examples)
+- [🎨 Customization](#-customization)
+- [📱 Responsive Design](#-responsive-design)
+- [♿ Accessibility](#-accessibility)
+- [🔧 TypeScript Support](#-typescript-support)
+- [📄 License](#-license)
+
+## 📦 Installation
+
+### Using npm
 
 ```bash
 npm install git+https://github.com/thanhthai198/tradewize-component.git
 ```
 
-hoặc sử dụng yarn:
+### Using yarn
 
 ```bash
 yarn add git+https://github.com/thanhthai198/tradewize-component.git
 ```
 
-Đối với android
-Vào android/settings.gradle thêm
+### Android Setup
 
-# include ':tradewizecomponent'
+Thêm vào file `android/settings.gradle`:
 
-# project(':tradewizecomponent').projectDir = new File(rootProject.projectDir, '../node_modules/tradewize/android')
+```gradle
+include ':tradewizecomponent'
+project(':tradewizecomponent').projectDir = new File(rootProject.projectDir, '../node_modules/tradewize/android')
+```
 
-## 🚀 Các Component có sẵn
+## 🔧 Dependencies
 
-Thư viện này bao gồm các component sau:
+Thư viện này yêu cầu các dependencies sau:
 
-- **ButtonBase** - Button component linh hoạt với nhiều variant
-- **InputBase** - Component input cơ bản
-- **FlatInput** - Input component với style phẳng
-- **OutlinedInput** - Input component với viền outline
-- **RadioButton** - Component radio button
-- **CheckBox** - Component checkbox
-- **ButtonSwitchToggle** - Component toggle switch
-- **TabView** - Component tab view
-- **ScrollTabView** - Tab view với khả năng scroll
-- **Collapse** - Component có thể thu gọn
-- **GiftChat** - Component chat
-- **ShowVideo** - Component Video Show không hỗ trợ ytb
+```json
+{
+  "@expo/react-native-action-sheet": ">=4.1.1",
+  "@react-native-community/blur": ">=4.4.1",
+  "@react-native-community/slider": ">=4.5.7",
+  "react-native-create-thumbnail": ">=2.1.1",
+  "react-native-fast-image": ">=8.6.3",
+  "react-native-fs": ">=2.20.0",
+  "react-native-gesture-handler": ">=2.25.0",
+  "react-native-image-crop-picker": ">=0.42.0",
+  "react-native-image-viewing": ">=0.2.2",
+  "react-native-keyboard-controller": ">=1.17.5",
+  "react-native-modal": ">=13.0.1",
+  "react-native-parsed-text": ">=0.0.22",
+  "react-native-reanimated": ">=3.19.0",
+  "react-native-safe-area-context": ">=5.5.2",
+  "react-native-video": ">=6.16.0",
+  "react-native-vision-camera": ">=4.7.0",
+  "react-native-webview": ">=13.13.5",
+  "react-native-youtube-iframe": ">=2.4.0",
+  "react-native-svg": ">=15.12.1",
+  "react-native-circular-progress": ">=1.4.1"
+}
+```
 
-## 📖 Cách sử dụng
+## 🎯 Available Components
 
-### Import các component
+| Component              | Description                                  | Status |
+| ---------------------- | -------------------------------------------- | ------ |
+| **ButtonBase**         | Button component linh hoạt với nhiều variant | ✅     |
+| **InputBase**          | Component input cơ bản                       | ✅     |
+| **FlatInput**          | Input component với style phẳng              | ✅     |
+| **OutlinedInput**      | Input component với viền outline             | ✅     |
+| **RadioButton**        | Component radio button                       | ✅     |
+| **CheckBox**           | Component checkbox                           | ✅     |
+| **ButtonSwitchToggle** | Component toggle switch                      | ✅     |
+| **TabView**            | Component tab view                           | ✅     |
+| **ScrollTabView**      | Tab view với khả năng scroll                 | ✅     |
+| **Collapse**           | Component có thể thu gọn                     | ✅     |
+| **GiftChat**           | Component chat                               | ✅     |
+| **ShowVideo**          | Component Video Show (không hỗ trợ YouTube)  | ✅     |
+
+## 📖 Usage Examples
+
+### Import Components
 
 ```jsx
 import {
@@ -77,20 +106,20 @@ import {
 } from 'tradewize';
 ```
 
-### 1. ButtonBase Component
+### 1. 🎯 ButtonBase Component
 
 Component button toàn diện với nhiều tính năng nâng cao.
 
 ```jsx
 import { ButtonBase } from 'tradewize';
 
-// Button cơ bản
+// Basic Button
 <ButtonBase
   title="Click me"
   onPress={() => console.log('Pressed!')}
 />
 
-// Button với variant khác nhau
+// Button with different variants
 <ButtonBase
   title="Success Button"
   variant="success"
@@ -103,14 +132,14 @@ import { ButtonBase } from 'tradewize';
   onPress={handleDelete}
 />
 
-// Button với loading state
+// Button with loading state
 <ButtonBase
   title="Loading..."
   loading={true}
   onPress={handleSubmit}
 />
 
-// Button với icon
+// Button with icon
 <ButtonBase
   title="Save"
   leftIcon="save"
@@ -118,11 +147,11 @@ import { ButtonBase } from 'tradewize';
 />
 ```
 
-**Các variant có sẵn:** `primary`, `secondary`, `outline`, `ghost`, `danger`, `success`, `warning`
+**Available Variants:** `primary`, `secondary`, `outline`, `ghost`, `danger`, `success`, `warning`
 
-**Các size có sẵn:** `small`, `medium`, `large`, `xlarge`
+**Available Sizes:** `small`, `medium`, `large`, `xlarge`
 
-### 2. Input Components
+### 2. 📝 Input Components
 
 #### FlatInput
 
@@ -167,7 +196,7 @@ const [username, setUsername] = useState('');
 />;
 ```
 
-### 3. TabView Component
+### 3. 📑 TabView Component
 
 Component tab view linh hoạt với khả năng tùy chỉnh cao.
 
@@ -200,7 +229,7 @@ const tabs = [
 />;
 ```
 
-### 4. ScrollTabView Component
+### 4. 📜 ScrollTabView Component
 
 Tab view với khả năng scroll ngang.
 
@@ -227,7 +256,7 @@ const scrollTabs = [
 />;
 ```
 
-### 5. Collapse Component
+### 5. 📦 Collapse Component
 
 Component có thể thu gọn nội dung.
 
@@ -239,7 +268,7 @@ import { Collapse } from 'tradewize';
 </Collapse>;
 ```
 
-### 6. RadioButton Component
+### 6. 🔘 RadioButton Component
 
 Component radio button.
 
@@ -263,7 +292,7 @@ const [selectedValue, setSelectedValue] = useState('option1');
 />
 ```
 
-### 7. CheckBox Component
+### 7. ☑️ CheckBox Component
 
 Component checkbox.
 
@@ -279,7 +308,7 @@ const [isChecked, setIsChecked] = useState(false);
 />;
 ```
 
-### 8. ButtonSwitchToggle Component
+### 8. 🔄 ButtonSwitchToggle Component
 
 Component toggle switch.
 
@@ -295,7 +324,7 @@ const [isEnabled, setIsEnabled] = useState(false);
 />;
 ```
 
-## 🎨 Tùy chỉnh Style
+## 🎨 Customization
 
 Tất cả các component đều hỗ trợ tùy chỉnh style thông qua props:
 
@@ -380,10 +409,22 @@ const MyComponent: React.FC = () => {
 };
 ```
 
+## 🤝 Contributing
+
+Chúng tôi rất hoan nghênh mọi đóng góp! Vui lòng đọc [CONTRIBUTING.md](CONTRIBUTING.md) để biết thêm chi tiết.
+
 ## 📄 License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-Made with ❤️ by TradeWize Team
+<div align="center">
+
+**Made with ❤️ by TradeWize Team**
+
+[![GitHub stars](https://img.shields.io/github/stars/thanhthai198/tradewize-component?style=social)](https://github.com/thanhthai198/tradewize-component)
+[![GitHub forks](https://img.shields.io/github/forks/thanhthai198/tradewize-component?style=social)](https://github.com/thanhthai198/tradewize-component)
+[![GitHub issues](https://img.shields.io/github/issues/thanhthai198/tradewize-component)](https://github.com/thanhthai198/tradewize-component/issues)
+
+</div>
