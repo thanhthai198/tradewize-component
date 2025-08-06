@@ -58,8 +58,6 @@ export function MessageFile({
         ? Math.max(0, Math.min(100, progressNum))
         : 0;
       const safeSize = Number.isFinite(size) ? size : 120;
-      console.log('safeSize', safeSize);
-      console.log('safeProgress', safeProgress);
 
       return (
         <View>
@@ -100,16 +98,20 @@ export function MessageFile({
                 {item?.isLoading ? (
                   <ActivityIndicator size="small" color={Color.defaultBlue} />
                 ) : (
-                  <FastImage
-                    source={require('../assets/play.png')}
-                    style={[
-                      styles.iconPlay,
-                      {
-                        width: (sizeMedia * 0.5) / 2,
-                        height: (sizeMedia * 0.5) / 2,
-                      },
-                    ]}
-                  />
+                  <>
+                    {(!safeProgress || safeProgress >= 100) && (
+                      <FastImage
+                        source={require('../assets/play.png')}
+                        style={[
+                          styles.iconPlay,
+                          {
+                            width: (sizeMedia * 0.5) / 2,
+                            height: (sizeMedia * 0.5) / 2,
+                          },
+                        ]}
+                      />
+                    )}
+                  </>
                 )}
               </View>
             )}
@@ -123,7 +125,7 @@ export function MessageFile({
             )}
           </ButtonBase>
 
-          {!item?.isLoading && safeProgress < 100 && (
+          {!item?.isLoading && safeProgress && safeProgress < 100 && (
             <View
               style={[styles.progress, { width: safeSize, height: safeSize }]}
             >
