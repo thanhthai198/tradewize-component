@@ -40,6 +40,8 @@ export interface InputToolbarProps<TMessage extends IMessage> {
   messageReaction?: IMessage & { isReply: boolean };
   clearMessageReaction?: () => void;
   labelReaction?: string;
+  onFocusInput?: () => void;
+  onBlurInput?: () => void;
 }
 
 export function InputToolbar<TMessage extends IMessage = IMessage>(
@@ -63,6 +65,8 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
     messageReaction,
     clearMessageReaction,
     labelReaction,
+    onFocusInput,
+    onBlurInput,
   } = props;
 
   const actionsFragment = useMemo(() => {
@@ -97,10 +101,12 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
           ref={props?.inputRef}
           {...(props as ComposerProps)}
           onPressPickMedia={props.onPressPickMedia}
+          onFocus={onFocusInput}
+          onBlur={onBlurInput}
         />
       )
     );
-  }, [renderComposer, props]);
+  }, [renderComposer, props, onFocusInput, onBlurInput]);
 
   const renderFileMedia = useMemo(() => {
     if (!fileMedia?.length) return null;

@@ -111,4 +111,6 @@ export interface GiftedChatProps<TMessage extends IMessage> extends Partial<Mess
     scrollToBottomComponent?(): React.ReactNode;
     shouldUpdateMessage?(props: MessageProps<TMessage>, nextProps: MessageProps<TMessage>): boolean;
     onReactionEmoji?(emoji: string, messageId: string): void;
+    onFocusInput?: () => void;
+    onBlurInput?: () => void;
 }

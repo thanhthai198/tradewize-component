@@ -88,7 +88,9 @@ export function MessageFile({
               <View
                 style={[
                   styles.playIcon,
-                  {
+                  (safeProgress <= 0 ||
+                    safeProgress >= 100 ||
+                    item?.isLoading) && {
                     width: sizeMedia * 0.5,
                     height: sizeMedia * 0.5,
                     borderRadius: (sizeMedia * 0.5) / 2,
@@ -99,7 +101,7 @@ export function MessageFile({
                   <ActivityIndicator size="small" color={Color.defaultBlue} />
                 ) : (
                   <>
-                    {(!safeProgress || safeProgress >= 100) && (
+                    {(safeProgress <= 0 || safeProgress >= 100) && (
                       <FastImage
                         source={require('../assets/play.png')}
                         style={[
@@ -125,7 +127,7 @@ export function MessageFile({
             )}
           </ButtonBase>
 
-          {!item?.isLoading && safeProgress && safeProgress < 100 && (
+          {!item?.isLoading && safeProgress > 0 && safeProgress < 100 && (
             <View
               style={[styles.progress, { width: safeSize, height: safeSize }]}
             >

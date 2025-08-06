@@ -74,7 +74,8 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
     // "random" function from here: https://stackoverflow.com/a/8084248/3452513
     // we do not use uuid since it would add extra native dependency (https://www.npmjs.com/package/react-native-get-random-values)
     // lib's user can decide which algorithm to use and pass it as a prop
-    messageIdGenerator = () => (Math.random() + 1).toString(36).substring(7),
+    messageIdGenerator = () =>
+      (Math.random() + 1).toString(36).substring(7) + dayjs().valueOf(),
 
     user = {},
     onSend,
@@ -99,6 +100,8 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
     isKeyboardInternallyHandled = true,
     onReactionEmoji = null,
     labelReaction,
+    onFocusInput,
+    onBlurInput,
   } = props;
 
   const actionSheetRef = useRef<ActionSheetProviderRef>(null);
@@ -331,8 +334,11 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
   ]);
 
   const _onSend = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     (messages: TMessage[] = [], shouldResetInputToolbar = false) => {
       if (!Array.isArray(messages)) messages = [messages];
+
+      if (!messages[0]?.text && fileMedia?.length <= 0) return;
 
       const newMessages: TMessage[] = messages.map((message) => {
         return {
@@ -464,6 +470,8 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
 
     return (
       <InputToolbar
+        onFocusInput={onFocusInput}
+        onBlurInput={onBlurInput}
         labelReaction={labelReaction}
         messageReaction={messageReaction as IMessage & { isReply: boolean }}
         clearMessageReaction={() => setMessageReaction(null)}
@@ -499,6 +507,8 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
     handlePressFile,
     messageReaction,
     labelReaction,
+    onFocusInput,
+    onBlurInput,
   ]);
 
   const handleReactionEmoji = useCallback(

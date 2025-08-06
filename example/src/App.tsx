@@ -180,6 +180,8 @@ export default function App() {
   }, []);
 
   const onSend = useCallback((messages: any) => {
+    console.log('messages', messages);
+
     setMessages((previousMessages: any) =>
       GiftedChat.append(previousMessages, messages)
     );
@@ -195,6 +197,12 @@ export default function App() {
             _id: 1,
           }}
           alwaysShowSend
+          onFocusInput={() => {
+            console.log('focus input');
+          }}
+          onBlurInput={() => {
+            console.log('blur input');
+          }}
         />
       </SafeAreaView>
     </SafeAreaProvider>

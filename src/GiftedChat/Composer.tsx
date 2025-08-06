@@ -40,6 +40,8 @@ export interface ComposerProps {
   onTextChanged?(text: string): void;
   onInputSizeChanged?(layout: { width: number; height: number }): void;
   onPressPickMedia?: (type: 'camera' | 'pick') => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export const Composer = forwardRef(
@@ -58,8 +60,10 @@ export const Composer = forwardRef(
       textInputProps,
       textInputStyle,
       onPressPickMedia,
+      onFocus,
+      onBlur,
     }: ComposerProps,
-    _ref: React.Ref<TextInput>
+    ref: React.Ref<TextInput>
   ) => {
     const dimensionsRef: any = useRef<{ width: number; height: number }>(null);
     const [isFocused, setIsFocused] = useState(false);
@@ -165,6 +169,7 @@ export const Composer = forwardRef(
           ]}
         >
           <TextInput
+            ref={ref}
             testID={placeholder}
             accessible
             accessibilityLabel={placeholder}
@@ -197,10 +202,14 @@ export const Composer = forwardRef(
             enablesReturnKeyAutomatically
             underlineColorAndroid="transparent"
             keyboardAppearance={keyboardAppearance}
-            onFocus={() => setIsFocused(true)}
+            onFocus={() => {
+              setIsFocused(true);
+              onFocus?.();
+            }}
             onBlur={() => {
               setIsFocused(false);
               setIsPickerOpen(false);
+              onBlur?.();
             }}
             {...textInputProps}
           />

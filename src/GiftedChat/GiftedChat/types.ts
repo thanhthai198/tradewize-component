@@ -208,4 +208,8 @@ export interface GiftedChatProps<TMessage extends IMessage>
   ): boolean;
   //phần này để làm reaction emoji
   onReactionEmoji?(emoji: string, messageId: string): void;
+  // phần này để làm focus input
+  onFocusInput?: () => void;
+  // phần này để làm blur input
+  onBlurInput?: () => void;
 }

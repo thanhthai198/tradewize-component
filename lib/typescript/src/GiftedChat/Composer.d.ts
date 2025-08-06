@@ -17,5 +17,7 @@ export interface ComposerProps {
         height: number;
     }): void;
     onPressPickMedia?: (type: 'camera' | 'pick') => void;
+    onFocus?: () => void;
+    onBlur?: () => void;
 }
 export declare const Composer: React.ForwardRefExoticComponent<ComposerProps & React.RefAttributes<TextInput>>;
