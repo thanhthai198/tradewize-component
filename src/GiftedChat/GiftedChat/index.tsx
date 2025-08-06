@@ -54,10 +54,10 @@ import ImageView from 'react-native-image-viewing';
 
 import stylesCommon from '../styles';
 import styles from './styles';
-import { VideoModal } from '../../VideoPlayer';
+import { VideoModal } from 'tradewize';
 import { MessageWithReaction } from '../MessageWithReaction';
 import { MediaAllShow } from '../MediaAllShow';
-import { CameraModal } from '../../Camera';
+import { CameraModal } from 'tradewize';
 import { generateThumbnails } from '../utils';
 import ImageCropPicker from 'react-native-image-crop-picker';
 
@@ -632,86 +632,88 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
             >
               {renderMessages}
               {inputToolbarFragment}
-              <ImageView
-                images={fileSelected ? [{ uri: fileSelected.uri }] : []}
-                imageIndex={0}
-                visible={isImageViewerVisible}
-                onRequestClose={() => setIsImageViewerVisible(false)}
-              />
-              <VideoModal
-                visible={isShowVideoModal}
-                onClose={() => setIsShowVideoModal(false)}
-                subtitle={{}}
-                source={fileSelected?.uri || ''}
-                autoPlay={true}
-              />
-              <MessageWithReaction
-                onReactionEmoji={handleReactionEmoji}
-                onActionReaction={handleActionReaction}
-                user={user as User}
-                isVisible={isModalReaction}
-                onClose={() => setIsModalReaction(false)}
-                message={messageSelected?.message || ({} as TMessage)}
-                position={messageSelected?.position || ({} as any)}
-              />
-              <MediaAllShow
-                fileMediaAll={fileMediaAllLocal}
-                isVisible={isMediaAllShow}
-                onClose={() => setIsMediaAllShow(false)}
-                onPressFile={(file) => {
-                  setIsMediaAllShow(false);
-                  setTimeout(() => {
-                    handlePressFile(file);
-                  }, 350);
-                }}
-              />
-              <CameraModal
-                onVideoRecorded={async (video) => {
-                  const getThumbnail = await generateThumbnails([
-                    {
+              <View style={{ position: 'absolute', bottom: 0 }}>
+                <ImageView
+                  images={fileSelected ? [{ uri: fileSelected.uri }] : []}
+                  imageIndex={0}
+                  visible={isImageViewerVisible}
+                  onRequestClose={() => setIsImageViewerVisible(false)}
+                />
+                <VideoModal
+                  visible={isShowVideoModal}
+                  onClose={() => setIsShowVideoModal(false)}
+                  subtitle={{}}
+                  source={fileSelected?.uri || ''}
+                  autoPlay={true}
+                />
+                <MessageWithReaction
+                  onReactionEmoji={handleReactionEmoji}
+                  onActionReaction={handleActionReaction}
+                  user={user as User}
+                  isVisible={isModalReaction}
+                  onClose={() => setIsModalReaction(false)}
+                  message={messageSelected?.message || ({} as TMessage)}
+                  position={messageSelected?.position || ({} as any)}
+                />
+                <MediaAllShow
+                  fileMediaAll={fileMediaAllLocal}
+                  isVisible={isMediaAllShow}
+                  onClose={() => setIsMediaAllShow(false)}
+                  onPressFile={(file) => {
+                    setIsMediaAllShow(false);
+                    setTimeout(() => {
+                      handlePressFile(file);
+                    }, 350);
+                  }}
+                />
+                <CameraModal
+                  onVideoRecorded={async (video) => {
+                    const getThumbnail = await generateThumbnails([
+                      {
+                        uri: video.path,
+                        id: dayjs().valueOf().toString(),
+                        size: video?.size || 0,
+                      },
+                    ]);
+
+                    setIsShowCameraModal(false);
+                    const videoFile = {
                       uri: video.path,
                       id: dayjs().valueOf().toString(),
                       size: video?.size || 0,
-                    },
-                  ]);
-
-                  setIsShowCameraModal(false);
-                  const videoFile = {
-                    uri: video.path,
-                    id: dayjs().valueOf().toString(),
-                    size: video?.size || 0,
-                    name:
-                      video?.path?.split('/').pop() ||
-                      `video - ${dayjs().valueOf().toString()}`,
-                    fileExtension: `.${video?.path?.split('.').pop()}`,
-                    typeFile: 'video',
-                    width: video?.width,
-                    height: video?.height,
-                    duration: video?.duration,
-                    thumbnailPreview: getThumbnail[0]?.path || '',
-                  };
-                  setFileMedia([...fileMedia, videoFile as FileMessage]);
-                }}
-                onPhotoCaptured={(photo) => {
-                  setIsShowCameraModal(false);
-                  const img = {
-                    uri: photo.path,
-                    id: dayjs().valueOf().toString(),
-                    size: photo?.size || 0,
-                    name:
-                      photo?.path?.split('/').pop() ||
-                      `image - ${dayjs().valueOf().toString()}`,
-                    fileExtension: `.${photo?.path?.split('.').pop()}`,
-                    typeFile: 'image',
-                    thumbnailPreview: photo?.path || '',
-                    width: photo?.width,
-                    height: photo?.height,
-                  };
-                  setFileMedia([...fileMedia, img as FileMessage]);
-                }}
-                visible={isShowCameraModal}
-                onClose={() => setIsShowCameraModal(false)}
-              />
+                      name:
+                        video?.path?.split('/').pop() ||
+                        `video - ${dayjs().valueOf().toString()}`,
+                      fileExtension: `.${video?.path?.split('.').pop()}`,
+                      typeFile: 'video',
+                      width: video?.width,
+                      height: video?.height,
+                      duration: video?.duration,
+                      thumbnailPreview: getThumbnail[0]?.path || '',
+                    };
+                    setFileMedia([...fileMedia, videoFile as FileMessage]);
+                  }}
+                  onPhotoCaptured={(photo) => {
+                    setIsShowCameraModal(false);
+                    const img = {
+                      uri: photo.path,
+                      id: dayjs().valueOf().toString(),
+                      size: photo?.size || 0,
+                      name:
+                        photo?.path?.split('/').pop() ||
+                        `image - ${dayjs().valueOf().toString()}`,
+                      fileExtension: `.${photo?.path?.split('.').pop()}`,
+                      typeFile: 'image',
+                      thumbnailPreview: photo?.path || '',
+                      width: photo?.width,
+                      height: photo?.height,
+                    };
+                    setFileMedia([...fileMedia, img as FileMessage]);
+                  }}
+                  visible={isShowCameraModal}
+                  onClose={() => setIsShowCameraModal(false)}
+                />
+              </View>
             </Animated.View>
           ) : (
             renderLoading?.()

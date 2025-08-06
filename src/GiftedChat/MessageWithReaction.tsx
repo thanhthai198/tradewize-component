@@ -210,6 +210,7 @@ export const MessageWithReaction = ({
       isVisible={isVisible}
       style={styles.modal}
       backdropOpacity={0}
+      useNativeDriver={true}
     >
       {/* Pressable bắt sự kiện bấm nền */}
       <Pressable style={StyleSheet.absoluteFill} onPress={onClose}>
