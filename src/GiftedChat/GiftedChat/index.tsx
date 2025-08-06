@@ -245,16 +245,20 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
     const type = file?.typeFile;
     switch (type) {
       case 'video':
-        setIsShowVideoModal(true);
         setFileSelected({
           uri: file.uri,
         });
+        setTimeout(() => {
+          setIsShowVideoModal(true);
+        }, 100);
         break;
       case 'image':
         setFileSelected({
           uri: file.uri,
         });
-        setIsImageViewerVisible(true);
+        setTimeout(() => {
+          setIsImageViewerVisible(true);
+        }, 100);
         break;
       default:
         console.log('unknown');
@@ -283,7 +287,9 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
               message,
               position,
             });
-            setIsModalReaction(true);
+            setTimeout(() => {
+              setIsModalReaction(true);
+            }, 100);
           }}
           onPressFile={(
             file: FileMessage,
@@ -291,8 +297,10 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
             arrMedia?: IMessage
           ) => {
             if (isShowAll) {
-              setIsMediaAllShow(true);
               setFileMediaAllLocal(arrMedia || ({} as IMessage));
+              setTimeout(() => {
+                setIsMediaAllShow(true);
+              }, 100);
               return;
             }
             handlePressFile(file);
