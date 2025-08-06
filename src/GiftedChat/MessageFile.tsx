@@ -52,6 +52,12 @@ export function MessageFile({
         : sizeMedia < getScreenWidth() * 0.1
           ? getScreenWidth() * 0.15
           : sizeMedia;
+      const raw = item?.progress;
+      const progressNum = Number(raw);
+      const safeProgress = Number.isFinite(progressNum)
+        ? Math.max(0, Math.min(100, progressNum))
+        : 0;
+      const safeSize = Number.isFinite(size) ? size : 120;
 
       return (
         <View>
@@ -115,20 +121,19 @@ export function MessageFile({
             )}
           </ButtonBase>
 
-          {!item?.isLoading &&
-            item?.progress &&
-            Number(item?.progress) < 100 && (
-              <View style={[styles.progress, { width: size, height: size }]}>
-                <AnimatedCircularProgress
-                  size={size * 0.3}
-                  width={3}
-                  fill={item?.progress || 0}
-                  tintColor={Color.white}
-                  // onAnimationComplete={() => console.log('onAnimationComplete')}
-                  backgroundColor={Color.defaultColor}
-                />
-              </View>
-            )}
+          {!item?.isLoading && safeProgress < 100 && (
+            <View
+              style={[styles.progress, { width: safeSize, height: safeSize }]}
+            >
+              <AnimatedCircularProgress
+                size={safeSize * 0.3}
+                width={3}
+                fill={safeProgress}
+                tintColor={Color.white}
+                backgroundColor={Color.defaultColor}
+              />
+            </View>
+          )}
         </View>
       );
     },
