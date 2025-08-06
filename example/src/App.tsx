@@ -22,6 +22,7 @@ export default function App() {
           {
             uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s',
             typeFile: 'image',
+            progress: 50,
           },
         ],
       },

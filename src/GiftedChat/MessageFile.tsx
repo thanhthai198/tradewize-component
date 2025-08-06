@@ -115,18 +115,20 @@ export function MessageFile({
             )}
           </ButtonBase>
 
-          {!item?.isLoading && item?.progress && item?.progress < 100 && (
-            <View style={[styles.progress, { width: size, height: size }]}>
-              <AnimatedCircularProgress
-                size={size * 0.3}
-                width={3}
-                fill={item?.progress || 0}
-                tintColor={Color.white}
-                // onAnimationComplete={() => console.log('onAnimationComplete')}
-                backgroundColor={Color.defaultColor}
-              />
-            </View>
-          )}
+          {!item?.isLoading &&
+            item?.progress &&
+            Number(item?.progress) < 100 && (
+              <View style={[styles.progress, { width: size, height: size }]}>
+                <AnimatedCircularProgress
+                  size={size * 0.3}
+                  width={3}
+                  fill={item?.progress || 0}
+                  tintColor={Color.white}
+                  // onAnimationComplete={() => console.log('onAnimationComplete')}
+                  backgroundColor={Color.defaultColor}
+                />
+              </View>
+            )}
         </View>
       );
     },
