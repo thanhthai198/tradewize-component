@@ -58,6 +58,8 @@ export function MessageFile({
         ? Math.max(0, Math.min(100, progressNum))
         : 0;
       const safeSize = Number.isFinite(size) ? size : 120;
+      console.log('safeSize', safeSize);
+      console.log('safeProgress', safeProgress);
 
       return (
         <View>

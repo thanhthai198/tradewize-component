@@ -6,10 +6,7 @@
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
-  "workspaces": [
-    "example",
-    "packages/*"
-  ],
+
   "exports": {
     ".": {
       "import": {
