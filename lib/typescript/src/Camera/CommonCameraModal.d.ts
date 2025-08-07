@@ -1,6 +1,6 @@
 import React from 'react';
-import type { ModalProps } from 'react-native';
 import type { CameraProps } from './CameraComponent';
+import { type ModalProps } from 'react-native-modal';
 export interface CameraModalProps extends Omit<CameraProps, 'onClose'> {
     visible: boolean;
     onClose: () => void;

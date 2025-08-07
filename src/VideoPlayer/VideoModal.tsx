@@ -1,6 +1,5 @@
 import React, { useCallback, useRef, useEffect, useState } from 'react';
 import {
-  Modal,
   View,
   TouchableOpacity,
   StyleSheet,
@@ -16,6 +15,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { LanguageCode, SubtitleEntry } from '../types';
 import { loadSubtitles } from '../helper';
 import { ButtonBase } from '../ButtonBase';
+import ReactNativeModal from 'react-native-modal';
 
 // Helper function to format time
 const formatTime = (seconds: number): string => {
@@ -225,12 +225,17 @@ export const VideoModal: React.FC<VideoModalProps> = ({
   }, [initialSubtitle]);
 
   return (
-    <Modal
-      visible={visible}
-      transparent={true}
-      animationType="fade"
-      onRequestClose={handleClose}
+    <ReactNativeModal
+      isVisible={visible}
+      onBackdropPress={handleClose}
       statusBarTranslucent={true}
+      useNativeDriver={true}
+      style={{ margin: 0 }}
+      animationIn="fadeIn"
+      animationOut="fadeOut"
+      animationInTiming={300}
+      animationOutTiming={300}
+      backdropOpacity={0.5}
     >
       <StatusBar
         barStyle="light-content"
@@ -259,7 +264,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
 
           {currentSubtitle && isSubtitle && hasSubtitles && !error && (
             <View
-              style={[styles.subtitleContainer, { bottom: insets.bottom + 56 }]}
+              style={[styles.subtitleContainer, { bottom: insets.bottom + 48 }]}
             >
               <Text style={styles.subtitleText}>{currentSubtitle}</Text>
             </View>
@@ -310,9 +315,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
 
           {/* Progress Bar */}
           {isProgressBar && !error && (
-            <View
-              style={[styles.progressContainer, { bottom: insets.bottom + 8 }]}
-            >
+            <View style={[styles.progressContainer, { bottom: insets.bottom }]}>
               <View style={styles.progressBar}>
                 <Slider
                   style={styles.slider}
@@ -364,7 +367,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
           onPress={handleBackdropPress}
         />
       </View>
-    </Modal>
+    </ReactNativeModal>
   );
 };
 

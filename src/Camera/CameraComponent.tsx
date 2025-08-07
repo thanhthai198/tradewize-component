@@ -8,8 +8,8 @@ import type {
 } from 'react-native-vision-camera';
 import Slider from '@react-native-community/slider';
 import { SnapScrollView } from './CameraModeSelector';
-import { ButtonBase } from '../ButtonBase';
-import { getScreenHeight } from '../utils';
+import { ButtonBase } from 'tradewize';
+import { getScreenHeight } from 'tradewize';
 import RNFS from 'react-native-fs';
 
 export interface CameraProps {
@@ -35,6 +35,8 @@ export const CameraComponent: React.FC<CameraProps> = ({
 }) => {
   const [hasPermission, setHasPermission] = useState<boolean>(false);
   const [hasAudioPermission, setHasAudioPermission] = useState<boolean>(false);
+  const [isRequestingPermissions, setIsRequestingPermissions] =
+    useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [isCapturing, setIsCapturing] = useState<boolean>(false);
@@ -70,6 +72,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
 
   const requestCameraPermission = useCallback(async () => {
     try {
+      setIsRequestingPermissions(true);
       const status: CameraPermissionStatus =
         await Camera.requestCameraPermission();
       setHasPermission(status === 'granted');
@@ -79,11 +82,14 @@ export const CameraComponent: React.FC<CameraProps> = ({
       }
     } catch (error) {
       onError?.('Failed to request camera permission');
+    } finally {
+      setIsRequestingPermissions(false);
     }
   }, [onError]);
 
   const requestMicrophonePermission = useCallback(async () => {
     try {
+      setIsRequestingPermissions(true);
       const status = await Camera.requestMicrophonePermission();
       setHasAudioPermission(status === 'granted');
 
@@ -97,15 +103,48 @@ export const CameraComponent: React.FC<CameraProps> = ({
       if (audio) {
         onError?.('Failed to request microphone permission');
       }
+    } finally {
+      setIsRequestingPermissions(false);
     }
   }, [audio, onError]);
 
-  useEffect(() => {
-    requestCameraPermission();
-    if (audio && (mode === 'video' || mode === 'both')) {
-      requestMicrophonePermission();
+  // Check permissions every time component is called
+  const checkPermissions = useCallback(async () => {
+    try {
+      setIsRequestingPermissions(true);
+
+      // Check camera permission
+      const cameraStatus = await Camera.getCameraPermissionStatus();
+      setHasPermission(cameraStatus === 'granted');
+
+      // Check microphone permission if audio is enabled
+      if (audio && (mode === 'video' || mode === 'both')) {
+        const microphoneStatus = await Camera.getMicrophonePermissionStatus();
+        setHasAudioPermission(microphoneStatus === 'granted');
+      }
+
+      // Request permissions if not granted
+      if (cameraStatus !== 'granted') {
+        await requestCameraPermission();
+      }
+
+      if (audio && (mode === 'video' || mode === 'both')) {
+        const microphoneStatus = await Camera.getMicrophonePermissionStatus();
+        if (microphoneStatus !== 'granted') {
+          await requestMicrophonePermission();
+        }
+      }
+    } catch (error) {
+      console.error('Error checking permissions:', error);
+    } finally {
+      setIsRequestingPermissions(false);
     }
-  }, [requestCameraPermission, requestMicrophonePermission, audio, mode]);
+  }, [audio, mode, requestCameraPermission, requestMicrophonePermission]);
+
+  // Check and request permissions on every render
+  useEffect(() => {
+    checkPermissions();
+  }, [checkPermissions]);
 
   const toggleCameraPosition = useCallback(() => {
     setCameraPosition((prev) => (prev === 'back' ? 'front' : 'back'));
@@ -237,22 +276,47 @@ export const CameraComponent: React.FC<CameraProps> = ({
   if (!device) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#007AFF" />
-        <Text style={styles.loadingText}>Loading camera...</Text>
+        <ButtonBase style={styles.closeButtonNotPermission} onPress={onClose}>
+          <Text style={styles.closeButtonText}>✕</Text>
+        </ButtonBase>
+        <View style={styles.itemCenter}>
+          <ActivityIndicator size="large" color="#007AFF" />
+          <Text style={styles.loadingText}>Loading camera...</Text>
+        </View>
       </View>
     );
   }
 
-  if (!hasPermission) {
+  if (!hasPermission || isRequestingPermissions) {
     return (
       <View style={styles.permissionContainer}>
-        <Text style={styles.permissionText}>Camera permission is required</Text>
-        <ButtonBase
-          style={styles.permissionButton}
-          onPress={requestCameraPermission}
-        >
-          <Text style={styles.permissionButtonText}>Grant Permission</Text>
+        <ButtonBase style={styles.closeButtonNotPermission} onPress={onClose}>
+          <Text style={styles.closeButtonText}>✕</Text>
         </ButtonBase>
+        <View style={styles.itemCenter}>
+          {isRequestingPermissions ? (
+            <>
+              <ActivityIndicator size="large" color="#007AFF" />
+              <Text style={styles.permissionText}>
+                Requesting permissions...
+              </Text>
+            </>
+          ) : (
+            <>
+              <Text style={styles.permissionText}>
+                Camera permission is required
+              </Text>
+              <ButtonBase
+                style={styles.permissionButton}
+                onPress={requestCameraPermission}
+              >
+                <Text style={styles.permissionButtonText}>
+                  Grant Permission
+                </Text>
+              </ButtonBase>
+            </>
+          )}
+        </View>
       </View>
     );
   }
@@ -280,7 +344,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
       />
 
       {/* Audio Warning */}
-      {showAudioWarning && (
+      {showAudioWarning && !hasAudioPermission && (
         <View style={styles.audioWarning}>
           <Text style={styles.audioWarningText}>
             ⚠️ Video will be recorded without audio
@@ -361,8 +425,6 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#000',
   },
   loadingText: {
@@ -372,8 +434,6 @@ const styles = StyleSheet.create({
   },
   permissionContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#000',
     padding: 20,
   },
@@ -514,6 +574,22 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '600',
+  },
+  closeButtonNotPermission: {
+    position: 'absolute',
+    top: 16,
+    right: 8,
+    backgroundColor: 'gray',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  itemCenter: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Modal } from 'react-native';
-import type { ModalProps } from 'react-native';
 import { CameraComponent } from './CameraComponent';
 import type { CameraProps } from './CameraComponent';
+import Modal, { type ModalProps } from 'react-native-modal';
 
 export interface CameraModalProps extends Omit<CameraProps, 'onClose'> {
   visible: boolean;
@@ -18,9 +17,13 @@ export const CameraModal: React.FC<CameraModalProps> = ({
 }) => {
   return (
     <Modal
-      visible={visible}
-      animationType="slide"
-      presentationStyle="fullScreen"
+      isVisible={visible}
+      animationIn="slideInUp"
+      animationOut="slideOutDown"
+      animationInTiming={300}
+      animationOutTiming={300}
+      useNativeDriver={true}
+      style={{ margin: 0 }}
       {...modalProps}
     >
       <CameraComponent {...cameraProps} onClose={onClose} />
