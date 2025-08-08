@@ -54,12 +54,12 @@ import ImageView from 'react-native-image-viewing';
 
 import stylesCommon from '../styles';
 import styles from './styles';
-import { VideoModal } from 'tradewize';
 import { MessageWithReaction } from '../MessageWithReaction';
 import { MediaAllShow } from '../MediaAllShow';
-import { CameraModal } from 'tradewize';
-import { generateThumbnails } from '../utils';
+import { generateThumbnails, normalizeFileUri } from '../utils';
 import ImageCropPicker from 'react-native-image-crop-picker';
+import { VideoModal } from '../../VideoPlayer';
+import { CameraModal } from '../../Camera';
 
 dayjs.extend(localizedFormat);
 
@@ -348,13 +348,22 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
 
       if (!messages[0]?.text && fileMedia?.length <= 0) return;
 
-      const newMessages: TMessage[] = messages.map((message) => {
+      const convertFileMedia = fileMedia?.map((item) => {
+        return {
+          ...item,
+          uri: item?.uri || '',
+          thumbnailPreview: item?.thumbnailPreview || '',
+          mine: utils.getFileTypeFromPath(item?.uri || ''),
+        };
+      });
+
+      const newMessages: TMessage[] = messages?.map((message) => {
         return {
           ...message,
           user: user!,
           createdAt: new Date(),
           _id: messageIdGenerator?.(),
-          file: fileMedia,
+          file: convertFileMedia,
         };
       });
 
@@ -364,7 +373,16 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
       }
 
       setFileMedia([]);
-      onSend?.(newMessages);
+      let newMessagesWithReaction = newMessages;
+
+      if (messageReaction && messageReaction?.isReply) {
+        newMessagesWithReaction = newMessages.map((message) => {
+          return { ...message, messageReply: messageReaction };
+        });
+      }
+
+      setMessageReaction(null);
+      onSend?.(newMessagesWithReaction);
 
       setTimeout(() => scrollToBottom(), 10);
     },
@@ -376,6 +394,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
       disableTyping,
       resetInputToolbar,
       scrollToBottom,
+      messageReaction,
     ]
   );
 
@@ -412,8 +431,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
           multiple: true,
         });
         const fileMediaAll = result?.map((item) => {
-          const uri =
-            Platform.OS === 'android' ? `file://${item.path}` : item.sourceURL;
+          const uri = item.path || item.sourceURL;
 
           return {
             uri: uri,
@@ -478,6 +496,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
 
     return (
       <InputToolbar
+        isMe={(user as User)?._id === messageReaction?.user?._id}
         onFocusInput={onFocusInput}
         onBlurInput={onBlurInput}
         labelReaction={labelReaction}
@@ -517,6 +536,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
     labelReaction,
     onFocusInput,
     onBlurInput,
+    user,
   ]);
 
   const handleReactionEmoji = useCallback(
@@ -632,7 +652,16 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
             >
               {renderMessages}
               {inputToolbarFragment}
-              <View style={{ position: 'absolute', bottom: 0 }}>
+              <View
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  pointerEvents: 'box-none',
+                }}
+              >
                 <ImageView
                   images={fileSelected ? [{ uri: fileSelected.uri }] : []}
                   imageIndex={0}
@@ -645,6 +674,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                   subtitle={{}}
                   source={fileSelected?.uri || ''}
                   autoPlay={true}
+                  isProgressBar={false}
                 />
                 <MessageWithReaction
                   onReactionEmoji={handleReactionEmoji}
@@ -670,15 +700,14 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                   onVideoRecorded={async (video) => {
                     const getThumbnail = await generateThumbnails([
                       {
-                        uri: video.path,
+                        uri: normalizeFileUri(video.path),
                         id: dayjs().valueOf().toString(),
                         size: video?.size || 0,
                       },
                     ]);
-
                     setIsShowCameraModal(false);
                     const videoFile = {
-                      uri: video.path,
+                      uri: normalizeFileUri(video.path),
                       id: dayjs().valueOf().toString(),
                       size: video?.size || 0,
                       name:
@@ -691,12 +720,14 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                       duration: video?.duration,
                       thumbnailPreview: getThumbnail[0]?.path || '',
                     };
+
                     setFileMedia([...fileMedia, videoFile as FileMessage]);
                   }}
                   onPhotoCaptured={(photo) => {
                     setIsShowCameraModal(false);
+
                     const img = {
-                      uri: photo.path,
+                      uri: normalizeFileUri(photo.path),
                       id: dayjs().valueOf().toString(),
                       size: photo?.size || 0,
                       name:
@@ -704,7 +735,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                         `image - ${dayjs().valueOf().toString()}`,
                       fileExtension: `.${photo?.path?.split('.').pop()}`,
                       typeFile: 'image',
-                      thumbnailPreview: photo?.path || '',
+                      thumbnailPreview: normalizeFileUri(photo?.path || ''),
                       width: photo?.width,
                       height: photo?.height,
                     };

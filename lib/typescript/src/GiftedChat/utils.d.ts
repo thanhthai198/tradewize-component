@@ -7,3 +7,5 @@ export declare const generateThumbnails: (videoList: FileMessage[]) => Promise<{
     path: string;
 }[]>;
 export declare const formatDurationSmart: (seconds: number) => string;
+export declare const normalizeFileUri: (uri: string) => string;
+export declare function getFileTypeFromPath(path: string): string | null;

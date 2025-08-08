@@ -56,6 +56,8 @@ export interface FileMessage {
   height?: number;
   duration?: number;
   progress?: number;
+  mine?: string;
+  url?: string;
 }
 
 export interface IMessage {
@@ -72,6 +74,7 @@ export interface IMessage {
   quickReplies?: QuickReplies;
   isLast?: boolean;
   reactionEmoji?: string;
+  messageReply?: IMessage;
 }
 
 export type IChatMessage = IMessage;

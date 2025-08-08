@@ -3,10 +3,10 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import Modal from 'react-native-modal';
 import type { FileMessage } from './types';
 import type { IMessage } from './types';
-import { getScreenHeight, getScreenWidth } from 'tradewize';
 import Color from './Color';
 import { BlurView } from '@react-native-community/blur';
 import { MessageFile } from './MessageFile';
+import { getScreenHeight, getScreenWidth } from '../utils';
 
 interface MediaAllShowProps {
   isVisible: boolean;
@@ -29,6 +29,7 @@ export function MediaAllShow({
       onBackdropPress={onClose}
       style={styles.modal}
       backdropOpacity={0}
+      useNativeDriver={true}
     >
       <Pressable style={StyleSheet.absoluteFill} onPress={onClose}>
         <BlurView

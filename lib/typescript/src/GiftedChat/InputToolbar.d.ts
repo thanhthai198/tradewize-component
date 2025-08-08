@@ -31,5 +31,7 @@ export interface InputToolbarProps<TMessage extends IMessage> {
     labelReaction?: string;
     onFocusInput?: () => void;
     onBlurInput?: () => void;
+    messageContentReaction?: string;
+    isMe?: boolean;
 }
 export declare function InputToolbar<TMessage extends IMessage = IMessage>(props: InputToolbarProps<TMessage>): React.JSX.Element;

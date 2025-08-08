@@ -129,7 +129,7 @@ export const Composer = forwardRef(
             <Image
               tintColor={Color.defaultBlue}
               resizeMode="contain"
-              source={require('../assets/next.png')}
+              // source={require('../assets/next.png')}
               style={{ width: 18, height: 18 }}
             />
           </ButtonBase>
@@ -140,7 +140,7 @@ export const Composer = forwardRef(
               <Image
                 tintColor={Color.defaultBlue}
                 resizeMode="contain"
-                source={require('../assets/camera.png')}
+                // source={require('../assets/camera.png')}
                 style={styles.iconPick}
               />
             </ButtonBase>
@@ -149,7 +149,7 @@ export const Composer = forwardRef(
               <Image
                 tintColor={Color.defaultBlue}
                 resizeMode="contain"
-                source={require('../assets/photo.png')}
+                // source={require('../assets/photo.png')}
                 style={styles.iconPick}
               />
             </ButtonBase>

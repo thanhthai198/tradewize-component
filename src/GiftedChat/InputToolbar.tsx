@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,9 +14,9 @@ import { Send, type SendProps } from './Send';
 import { Actions, type ActionsProps } from './Actions';
 import Color from './Color';
 import { type FileMessage, type IMessage } from './types';
-import { getScreenWidth } from '../utils';
 import FastImage from 'react-native-fast-image';
 import { formatDurationSmart } from './utils';
+import { getScreenWidth } from '../utils';
 import { ButtonBase } from '../ButtonBase';
 
 export interface InputToolbarProps<TMessage extends IMessage> {
@@ -42,6 +42,8 @@ export interface InputToolbarProps<TMessage extends IMessage> {
   labelReaction?: string;
   onFocusInput?: () => void;
   onBlurInput?: () => void;
+  messageContentReaction?: string;
+  isMe?: boolean;
 }
 
 export function InputToolbar<TMessage extends IMessage = IMessage>(
@@ -67,6 +69,8 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
     labelReaction,
     onFocusInput,
     onBlurInput,
+    messageContentReaction,
+    isMe,
   } = props;
 
   const actionsFragment = useMemo(() => {
@@ -164,10 +168,7 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
                     },
                   ]}
                 >
-                  <FastImage
-                    source={require('../assets/play.png')}
-                    style={styles.iconPlay}
-                  />
+                  {/* <FastImage source={require('../assets/play.png')} style={styles.iconPlay} /> */}
                 </View>
               )}
 
@@ -185,16 +186,100 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
     );
   }, [fileMedia, onRemoveFile, onPressFile]);
 
+  const renderMessageReaction = useCallback(() => {
+    if (!messageReaction?.text && !messageReaction?.file) return null;
+    if (
+      messageReaction?.text &&
+      (!messageReaction?.file || messageReaction?.file?.length <= 0)
+    ) {
+      return messageReaction?.text;
+    }
+    if (messageReaction?.file && messageReaction?.file?.length > 0) {
+      if (messageContentReaction) {
+        return messageContentReaction;
+      }
+      return 'File media';
+    }
+    return null;
+  }, [messageReaction, messageContentReaction]);
+
+  const renderFilePreview = useMemo(() => {
+    if (!messageReaction?.file) return null;
+    if (messageReaction?.file?.length <= 0) return null;
+    if (messageReaction?.file?.length <= 3) {
+      return (
+        <>
+          {messageReaction?.file?.map((item, index) => {
+            return (
+              <View
+                style={styles.filePreview}
+                key={`${item?.id} + ${item?.name} + ${index}`}
+              >
+                <FastImage
+                  source={{ uri: item?.thumbnailPreview || item?.uri }}
+                  style={styles.filePreviewImage}
+                />
+              </View>
+            );
+          })}
+        </>
+      );
+    }
+    return (
+      <>
+        {messageReaction?.file
+          ?.filter((_item, index) => index < 2)
+          ?.map((item, index) => {
+            return (
+              <View
+                style={styles.filePreview}
+                key={`${item?.id} + ${item?.name} + ${index}`}
+              >
+                <FastImage
+                  source={{ uri: item?.thumbnailPreview || item?.uri }}
+                  style={styles.filePreviewImage}
+                />
+              </View>
+            );
+          })}
+        <View>
+          <FastImage
+            source={{
+              uri:
+                messageReaction?.file[2]?.thumbnailPreview ||
+                messageReaction?.file[2]?.uri,
+            }}
+            style={[styles.filePreview, { opacity: 0.5 }]}
+          />
+          <View style={styles.filePreviewMore}>
+            <Text style={styles.filePreviewMoreText}>
+              +
+              {messageReaction?.file?.length - 2 > 99
+                ? '99'
+                : messageReaction?.file?.length - 2}
+            </Text>
+          </View>
+        </View>
+      </>
+    );
+  }, [messageReaction]);
+
   return (
     <View style={[styles.container, containerStyle]}>
       {messageReaction && (
         <View style={styles.messageReaction}>
           <View style={styles.messageReactionContainer}>
-            <Text style={styles.messageReactionText}>{labelReaction}</Text>
+            <Text style={styles.messageReactionText}>
+              {labelReaction
+                ? labelReaction
+                : `Are replying ${isMe ? 'yourself' : messageReaction?.user?.name}`}
+            </Text>
             <Text numberOfLines={2} style={styles.messageReactionContent}>
-              {messageReaction.text}
+              {renderMessageReaction()}
             </Text>
           </View>
+
+          {renderFilePreview}
 
           <ButtonBase
             activeOpacity={0.7}
@@ -325,5 +410,33 @@ const styles = StyleSheet.create({
     height: getScreenWidth() * 0.07,
     justifyContent: 'center',
     alignItems: 'flex-end',
+  },
+  filePreview: {
+    width: getScreenWidth() * 0.1,
+    height: getScreenWidth() * 0.1,
+    borderRadius: 8,
+    overflow: 'hidden',
+    backgroundColor: Color.defaultColor,
+    borderWidth: 1,
+    borderColor: Color.defaultColor,
+    marginLeft: 4,
+  },
+  filePreviewImage: {
+    width: '100%',
+    height: '100%',
+  },
+  filePreviewMore: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  filePreviewMoreText: {
+    color: Color.white,
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });

@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 
 import { type FileMessage, type IMessage } from './types';
 import { createThumbnail } from 'react-native-create-thumbnail';
+import mime from 'mime';
 
 export function isSameDay(
   currentMessage: IMessage,
@@ -75,3 +76,21 @@ export const formatDurationSmart = (seconds: number) => {
 
   return parts.join(':');
 };
+
+export const normalizeFileUri = (uri: string): string => {
+  if (!uri) return uri;
+  console.log('uri', uri);
+
+  // Loại bỏ mọi tiền tố 'file://' nếu có (đề phòng lỗi)
+  const cleaned = uri.replace(/^file:\/+/, '');
+  console.log('cleaned', cleaned);
+
+  return `file://${cleaned}`;
+};
+
+export function getFileTypeFromPath(path: string): string | null {
+  if (!path) return null;
+
+  const mimeType = mime.getType(path);
+  return mimeType || null;
+}

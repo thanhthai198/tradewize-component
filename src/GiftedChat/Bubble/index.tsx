@@ -23,8 +23,9 @@ import type { BubbleProps } from './types';
 import stylesCommon from '../styles';
 import styles from './styles';
 import { MessageFile } from '../MessageFile';
-import { ButtonBase } from '../../ButtonBase';
 import Color from '../Color';
+import { MessageReply } from '../MessageReply';
+import { ButtonBase } from '../../ButtonBase';
 
 export * from './types';
 
@@ -35,7 +36,7 @@ const Bubble = <TMessage extends IMessage = IMessage>(
     currentMessage,
     nextMessage,
     position,
-    containerToNextStyle,
+    // containerToNextStyle,
     previousMessage,
     containerToPreviousStyle,
     onQuickReply,
@@ -86,21 +87,55 @@ const Bubble = <TMessage extends IMessage = IMessage>(
     );
   }, [currentMessage, context, props]);
 
-  const styledBubbleToNext = useCallback(() => {
-    if (
-      currentMessage &&
-      nextMessage &&
-      position &&
-      isSameUser(currentMessage, nextMessage) &&
-      isSameDay(currentMessage, nextMessage)
-    )
-      return [
-        styles[position].containerToNext,
-        containerToNextStyle?.[position],
-      ];
+  const onLongPressItem = useCallback(() => {
+    try {
+      if (innerRef.current) {
+        const node = findNodeHandle(innerRef.current);
+        if (node) {
+          UIManager.measure(
+            node,
+            (
+              x: number,
+              y: number,
+              width: number,
+              height: number,
+              pageX: number,
+              pageY: number
+            ) => {
+              const message = {
+                ...currentMessage,
+                file: refArrThumbnail?.current,
+              };
 
-    return null;
-  }, [currentMessage, nextMessage, position, containerToNextStyle]);
+              onLongPressReaction?.(message, {
+                x,
+                y,
+                width,
+                height,
+                pageX,
+                pageY,
+              });
+            }
+          );
+        }
+      }
+    } catch (error) {
+      console.log('onLongPressItem', error);
+    }
+  }, [currentMessage, onLongPressReaction]);
+
+  // const styledBubbleToNext = useCallback(() => {
+  //   if (
+  //     currentMessage &&
+  //     nextMessage &&
+  //     position &&
+  //     isSameUser(currentMessage, nextMessage) &&
+  //     isSameDay(currentMessage, nextMessage)
+  //   )
+  //     return [styles[position].containerToNext, containerToNextStyle?.[position]];
+
+  //   return null;
+  // }, [currentMessage, nextMessage, position, containerToNextStyle]);
 
   const styledBubbleToPrevious = useCallback(() => {
     if (
@@ -191,13 +226,21 @@ const Bubble = <TMessage extends IMessage = IMessage>(
 
     return (
       <MessageFile
+        onLongPressFile={onLongPressItem}
         onSaveThumbnail={onSaveThumbnail}
         onPressFile={onPressFile}
         messageWidth={messageWidth}
         {...messageFileProps}
       />
     );
-  }, [currentMessage, props, messageWidth, onPressFile, onSaveThumbnail]);
+  }, [
+    currentMessage,
+    props,
+    messageWidth,
+    onPressFile,
+    onSaveThumbnail,
+    onLongPressItem,
+  ]);
 
   const renderMessageAudio = useCallback(() => {
     if (!currentMessage?.audio) return null;
@@ -336,6 +379,19 @@ const Bubble = <TMessage extends IMessage = IMessage>(
     renderReactionEmoji,
   ]);
 
+  const renderMessageReply = useCallback(() => {
+    if (currentMessage?.messageReply) {
+      return (
+        <MessageReply
+          messageReply={currentMessage?.messageReply}
+          onSaveThumbnail={onSaveThumbnail}
+          onPressFile={onPressFile}
+        />
+      );
+    }
+    return null;
+  }, [currentMessage, onSaveThumbnail, onPressFile]);
+
   return (
     <View
       style={[
@@ -353,10 +409,11 @@ const Bubble = <TMessage extends IMessage = IMessage>(
         }
       }}
     >
+      {renderMessageReply()}
       <View
         style={[
           styles[position].wrapper,
-          styledBubbleToNext(),
+          // styledBubbleToNext(),
           styledBubbleToPrevious(),
           wrapperStyle && wrapperStyle[position],
         ]}
@@ -366,40 +423,7 @@ const Bubble = <TMessage extends IMessage = IMessage>(
           onLongPress={onLongPress}
           {...props.touchableProps}
         >
-          <ButtonBase
-            onLongPress={() => {
-              if (innerRef.current) {
-                const node = findNodeHandle(innerRef.current);
-                if (node) {
-                  UIManager.measure(
-                    node,
-                    (
-                      x: number,
-                      y: number,
-                      width: number,
-                      height: number,
-                      pageX: number,
-                      pageY: number
-                    ) => {
-                      const message = {
-                        ...currentMessage,
-                        file: refArrThumbnail?.current,
-                      };
-
-                      onLongPressReaction?.(message, {
-                        x,
-                        y,
-                        width,
-                        height,
-                        pageX,
-                        pageY,
-                      });
-                    }
-                  );
-                }
-              }
-            }}
-          >
+          <ButtonBase onLongPress={onLongPressItem}>
             <View ref={innerRef}>
               {renderBubbleContent()}
               <View

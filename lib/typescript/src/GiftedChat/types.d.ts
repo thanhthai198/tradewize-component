@@ -48,6 +48,8 @@ export interface FileMessage {
     height?: number;
     duration?: number;
     progress?: number;
+    mine?: string;
+    url?: string;
 }
 export interface IMessage {
     _id: string | number;
@@ -63,6 +65,7 @@ export interface IMessage {
     quickReplies?: QuickReplies;
     isLast?: boolean;
     reactionEmoji?: string;
+    messageReply?: IMessage;
 }
 export type IChatMessage = IMessage;
 export interface MessageVideoProps<TMessage extends IMessage> {

@@ -8,9 +8,9 @@ import type {
 } from 'react-native-vision-camera';
 import Slider from '@react-native-community/slider';
 import { SnapScrollView } from './CameraModeSelector';
-import { ButtonBase } from 'tradewize';
-import { getScreenHeight } from 'tradewize';
 import RNFS from 'react-native-fs';
+import { ButtonBase } from '../ButtonBase';
+import { getScreenHeight } from '../utils';
 
 export interface CameraProps {
   onPhotoCaptured?: (photo: PhotoFile & { size: number }) => void;

@@ -10,9 +10,9 @@ import type { FileMessage, IMessage } from './types';
 import { generateThumbnails } from './utils';
 import FastImage from 'react-native-fast-image';
 import Color from './Color';
-import { ButtonBase } from '../ButtonBase';
-import { getScreenWidth } from '../utils';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { getScreenWidth } from '../utils';
+import { ButtonBase } from '../ButtonBase';
 
 const GAP_MEDIA = 3;
 
@@ -22,12 +22,13 @@ interface MessageFileProps {
     isShowAll?: boolean,
     arrMedia?: IMessage
   ) => void;
-  messageWidth: { width: number; _id: string } | null;
+  messageWidth?: { width: number; _id: string } | null;
   currentMessage: IMessage;
   isReaction?: boolean;
   onLayout?: (event: LayoutChangeEvent) => void;
   onSaveThumbnail?: (file: FileMessage[]) => void;
   isShowAll?: boolean;
+  onLongPressFile?: () => void;
 }
 
 export function MessageFile({
@@ -38,6 +39,7 @@ export function MessageFile({
   onLayout,
   onSaveThumbnail,
   isShowAll,
+  onLongPressFile,
 }: MessageFileProps) {
   const [arrMedia, setArrMedia] = useState<FileMessage[]>(
     currentMessage?.file || []
@@ -62,6 +64,7 @@ export function MessageFile({
       return (
         <View>
           <ButtonBase
+            onLongPress={onLongPressFile}
             onPress={() =>
               onPressFile?.(item, arrMedia?.length > 8 && index === 7, {
                 ...currentMessage,
@@ -79,10 +82,14 @@ export function MessageFile({
               },
             ]}
           >
-            <FastImage
-              source={{ uri: item.thumbnailPreview || item.uri }}
-              style={styles.image}
-            />
+            {(item?.thumbnailPreview || item?.uri || item?.url) && (
+              <FastImage
+                source={{
+                  uri: item?.thumbnailPreview || item?.uri || item?.url,
+                }}
+                style={styles.image}
+              />
+            )}
 
             {item?.typeFile === 'video' && (
               <View
@@ -103,7 +110,7 @@ export function MessageFile({
                   <>
                     {(safeProgress <= 0 || safeProgress >= 100) && (
                       <FastImage
-                        source={require('../assets/play.png')}
+                        // source={require('../assets/play.png')}
                         style={[
                           styles.iconPlay,
                           {
@@ -143,7 +150,15 @@ export function MessageFile({
         </View>
       );
     },
-    [messageWidth, onPressFile, isReaction, arrMedia, currentMessage, isShowAll]
+    [
+      messageWidth,
+      onPressFile,
+      isReaction,
+      arrMedia,
+      currentMessage,
+      isShowAll,
+      onLongPressFile,
+    ]
   );
 
   const renderFile = useMemo(() => {

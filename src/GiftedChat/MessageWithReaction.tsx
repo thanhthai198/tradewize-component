@@ -12,12 +12,12 @@ import Modal from 'react-native-modal';
 import { type IMessage, type LeftRightStyle, type User } from './types';
 import { BlurView } from '@react-native-community/blur';
 import Color from './Color';
-import { ButtonBase } from '../ButtonBase';
 import FastImage from 'react-native-fast-image';
 import { MessageText } from './MessageText';
 import { Time } from './Time';
 import { MessageFile } from './MessageFile';
 import { getScreenHeight, getScreenWidth } from '../utils';
+import { ButtonBase } from '../ButtonBase';
 export const EMOJI_REACTIONS = ['❤️', '😂', '😮', '😢', '😠', '👍'];
 
 export interface MessageWithReactionProps {
@@ -36,6 +36,8 @@ export interface MessageWithReactionProps {
   onReactionEmoji?: (emoji: string, messageId: string) => void;
   onActionReaction?: (message: IMessage, action: string) => void;
 }
+
+const DIFFERENCE_LEVEL = 72;
 
 export const MessageWithReaction = ({
   isVisible,
@@ -59,7 +61,7 @@ export const MessageWithReaction = ({
     } else if (!isExceedsScreenHeight) {
       top = position.pageY;
     } else {
-      top = position.pageY - differenceLevel - 48;
+      top = position.pageY - differenceLevel - DIFFERENCE_LEVEL;
     }
 
     if (isMyMessage) {
@@ -95,7 +97,12 @@ export const MessageWithReaction = ({
     } else if (!isExceedsScreenHeight) {
       top = position.pageY - getScreenHeight() * 0.05 - 8;
     } else {
-      top = position.pageY - getScreenHeight() * 0.05 - differenceLevel - 56;
+      top =
+        position.pageY -
+        getScreenHeight() * 0.05 -
+        differenceLevel -
+        DIFFERENCE_LEVEL -
+        8;
     }
 
     if (isMyMessage) {
@@ -123,7 +130,8 @@ export const MessageWithReaction = ({
     } else if (!isExceedsScreenHeight) {
       top = position.pageY + position.height;
     } else {
-      top = position.pageY + position.height - differenceLevel - 48;
+      top =
+        position.pageY + position.height - differenceLevel - DIFFERENCE_LEVEL;
     }
 
     if (isMyMessage) {
@@ -184,10 +192,13 @@ export const MessageWithReaction = ({
     [message, timeTextStyle, isMyMessage]
   );
 
-  const renderMessage = useMemo(
-    () => <MessageText currentMessage={message} position="left" />,
-    [message]
-  );
+  const renderMessage = useMemo(() => {
+    if (message?.text) {
+      return <MessageText currentMessage={message} position="left" />;
+    } else {
+      return null;
+    }
+  }, [message]);
 
   const renderFile = useMemo(() => {
     if (message?.file?.length && message?.file?.length > 0) {
@@ -205,8 +216,9 @@ export const MessageWithReaction = ({
   return (
     <Modal
       animationOut={'zoomOut'}
-      animationIn={'zoomInDown'}
-      animationOutTiming={500}
+      animationIn={'zoomIn'}
+      animationInTiming={300}
+      animationOutTiming={300}
       isVisible={isVisible}
       style={styles.modal}
       backdropOpacity={0}
@@ -216,7 +228,7 @@ export const MessageWithReaction = ({
       <Pressable style={StyleSheet.absoluteFill} onPress={onClose}>
         <BlurView
           pointerEvents="none"
-          style={StyleSheet.absoluteFill}
+          style={[StyleSheet.absoluteFill, { overflow: 'hidden' }]}
           blurType="dark"
           blurAmount={10}
           reducedTransparencyFallbackColor="black"
@@ -250,7 +262,7 @@ export const MessageWithReaction = ({
           style={[
             styles.btnAction,
             { width: getScreenWidth() * 0.5 },
-            styles.btnBorderAction,
+            message?.text && styles.btnBorderAction,
           ]}
           onPress={() => {
             onClose();
@@ -263,20 +275,22 @@ export const MessageWithReaction = ({
             source={require('../assets/reply.png')}
           />
         </ButtonBase>
-        <ButtonBase
-          style={[styles.btnAction]}
-          onPress={() => {
-            onClose();
-            onActionReaction?.(message, 'copy');
-          }}
-        >
-          <Text style={styles.btnActionText}>Copy</Text>
-          <FastImage
-            style={styles.icon}
-            source={require('../assets/copy.png')}
-          />
-        </ButtonBase>
-        <ButtonBase
+        {message?.text && (
+          <ButtonBase
+            style={[styles.btnAction]}
+            onPress={() => {
+              onClose();
+              onActionReaction?.(message, 'copy');
+            }}
+          >
+            <Text style={styles.btnActionText}>Copy</Text>
+            <FastImage
+              style={styles.icon}
+              source={require('../assets/copy.png')}
+            />
+          </ButtonBase>
+        )}
+        {/* <ButtonBase
           style={[styles.btnAction, styles.btnActionOther]}
           onPress={() => {
             onClose();
@@ -284,11 +298,8 @@ export const MessageWithReaction = ({
           }}
         >
           <Text style={styles.btnActionText}>Other</Text>
-          <FastImage
-            style={styles.icon}
-            source={require('../assets/more-information.png')}
-          />
-        </ButtonBase>
+          <FastImage style={styles.icon} source={require('../assets/more-information.png')} />
+        </ButtonBase> */}
       </View>
     </Modal>
   );
