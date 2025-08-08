@@ -58,7 +58,7 @@ import { MessageWithReaction } from '../MessageWithReaction';
 import { MediaAllShow } from '../MediaAllShow';
 import { generateThumbnails, normalizeFileUri } from '../utils';
 import ImageCropPicker from 'react-native-image-crop-picker';
-import { VideoModal } from '../../VideoPlayer';
+import { VideoModal } from '../../VideoPlayer/VideoModal';
 import { CameraModal } from '../../Camera';
 
 dayjs.extend(localizedFormat);

@@ -14,5 +14,5 @@ interface MessageFileProps {
     isShowAll?: boolean;
     onLongPressFile?: () => void;
 }
-export declare function MessageFile({ onPressFile, messageWidth, currentMessage, isReaction, onLayout, onSaveThumbnail, isShowAll, onLongPressFile, }: MessageFileProps): React.JSX.Element | null;
+export declare function MessageFile({ onPressFile, messageWidth, currentMessage, isReaction, onLayout, onSaveThumbnail, isShowAll, onLongPressFile, }: MessageFileProps): React.JSX.Element;
 export {};

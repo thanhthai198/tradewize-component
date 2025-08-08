@@ -85,7 +85,7 @@ export const Send = <TMessage extends IMessage = IMessage>({
       <View>
         {children || (
           <Image
-            source={iconSend ? iconSend : require('../assets/send.png')}
+            source={iconSend ? iconSend : require('./assets/send.png')}
             style={[{ width: 24, height: 24 }, iconStyle]}
           />
         )}

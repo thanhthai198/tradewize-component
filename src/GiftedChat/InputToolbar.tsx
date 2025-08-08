@@ -169,7 +169,7 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
                   ]}
                 >
                   <FastImage
-                    source={require('../assets/play.png')}
+                    source={require('./assets/play.png')}
                     style={styles.iconPlay}
                   />
                 </View>

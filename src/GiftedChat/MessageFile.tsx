@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import {
   ActivityIndicator,
+  FlatList,
   StyleSheet,
   Text,
   View,
@@ -45,7 +46,8 @@ export function MessageFile({
     currentMessage?.file || []
   );
 
-  const MediaItem = useCallback(
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const MediaItem = memo(
     ({ item, index }: { item: FileMessage; index: number }) => {
       const sizeMedia = Number(messageWidth?.width) / 4.65 - GAP_MEDIA * 3.65;
       const sizeMediaShowAll = Number(messageWidth?.width) / 4 - GAP_MEDIA * 3;
@@ -86,6 +88,7 @@ export function MessageFile({
               <FastImage
                 source={{
                   uri: item?.thumbnailPreview || item?.uri || item?.url,
+                  priority: FastImage.priority.low,
                 }}
                 style={styles.image}
               />
@@ -110,7 +113,8 @@ export function MessageFile({
                   <>
                     {(safeProgress <= 0 || safeProgress >= 100) && (
                       <FastImage
-                        source={require('../assets/play.png')}
+                        source={require('./assets/play.png')}
+                        resizeMode={FastImage.resizeMode.cover}
                         style={[
                           styles.iconPlay,
                           {
@@ -150,38 +154,16 @@ export function MessageFile({
         </View>
       );
     },
-    [
-      messageWidth,
-      onPressFile,
-      isReaction,
-      arrMedia,
-      currentMessage,
-      isShowAll,
-      onLongPressFile,
-    ]
+    (prev, next) => {
+      // So sánh shallow để tránh render lại khi không cần thiết
+      return (
+        prev.item.uri === next.item.uri &&
+        prev.item.thumbnailPreview === next.item.thumbnailPreview &&
+        prev.item.progress === next.item.progress &&
+        prev.item.isLoading === next.item.isLoading
+      );
+    }
   );
-
-  const renderFile = useMemo(() => {
-    if (!currentMessage?.file) return null;
-
-    const arrMediaShow = isShowAll ? arrMedia : arrMedia?.slice(0, 8);
-
-    return (
-      <View
-        onLayout={onLayout}
-        style={[
-          styles.container,
-          {
-            gap: GAP_MEDIA,
-          },
-        ]}
-      >
-        {arrMediaShow?.map((item, index) => (
-          <MediaItem key={`${item.uri}-${index}`} item={item} index={index} />
-        ))}
-      </View>
-    );
-  }, [currentMessage?.file, arrMedia, MediaItem, onLayout, isShowAll]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -226,13 +208,41 @@ export function MessageFile({
     fetchData();
   }, [currentMessage, onSaveThumbnail]);
 
-  return renderFile;
+  const arrMediaShow = isShowAll ? arrMedia : arrMedia?.slice(0, 8);
+
+  return (
+    <View
+      onLayout={onLayout}
+      style={[
+        styles.container,
+        {
+          gap: GAP_MEDIA,
+        },
+      ]}
+    >
+      <FlatList
+        data={arrMediaShow || []}
+        renderItem={({ item, index }) => (
+          <MediaItem item={item} index={index} />
+        )}
+        keyExtractor={(item) => item?.uri?.toString()}
+        numColumns={4}
+        scrollEnabled={false}
+        onLayout={onLayout}
+        contentContainerStyle={styles.container}
+        columnWrapperStyle={{ gap: GAP_MEDIA }}
+        initialNumToRender={4}
+        maxToRenderPerBatch={4}
+        windowSize={5}
+        removeClippedSubviews={true}
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     paddingHorizontal: 8,
     paddingTop: 8,
     marginBottom: 4,

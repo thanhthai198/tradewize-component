@@ -272,7 +272,7 @@ export const MessageWithReaction = ({
           <Text style={styles.btnActionText}>Reply</Text>
           <FastImage
             style={styles.icon}
-            source={require('../assets/reply.png')}
+            source={require('./assets/reply.png')}
           />
         </ButtonBase>
         {message?.text && (
@@ -286,7 +286,7 @@ export const MessageWithReaction = ({
             <Text style={styles.btnActionText}>Copy</Text>
             <FastImage
               style={styles.icon}
-              source={require('../assets/copy.png')}
+              source={require('./assets/copy.png')}
             />
           </ButtonBase>
         )}
