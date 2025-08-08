@@ -31,8 +31,8 @@ export const MessageReply = ({
           messageWidth={{ width: width * 0.9, _id: '1' }}
         />
       )}
-      {!messageReply.text && <View style={styles.space} />}
-      {messageReply.text && (
+      {!messageReply?.text && <View style={styles.space} />}
+      {messageReply?.text && (
         <MessageText
           currentMessage={messageReply}
           position="left"
