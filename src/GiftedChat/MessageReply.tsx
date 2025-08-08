@@ -1,10 +1,10 @@
-import React, { Dimensions, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Color from './Color';
 import { type FileMessage, type IMessage } from './types';
 import { MessageFile } from './MessageFile';
 import { MessageText } from './MessageText';
-
-const { width } = Dimensions.get('window');
+import { getScreenWidth } from '../utils';
+import React from 'react';
 
 interface MessageReplyProps {
   messageReply: IMessage;
@@ -16,11 +16,11 @@ interface MessageReplyProps {
   onSaveThumbnail?: (file: FileMessage[]) => void;
 }
 
-export const MessageReply = ({
+export function MessageReply({
   messageReply,
   onPressFile,
   onSaveThumbnail,
-}: MessageReplyProps) => {
+}: MessageReplyProps) {
   return (
     <View style={styles.container}>
       {messageReply?.file?.length && (
@@ -28,7 +28,7 @@ export const MessageReply = ({
           onPressFile={onPressFile}
           onSaveThumbnail={onSaveThumbnail}
           currentMessage={messageReply}
-          messageWidth={{ width: width * 0.9, _id: '1' }}
+          messageWidth={{ width: getScreenWidth() * 0.9, _id: '1' }}
         />
       )}
       {!messageReply?.text && <View style={styles.space} />}
@@ -42,12 +42,12 @@ export const MessageReply = ({
       <View style={styles.space} />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Color.leftBubbleBackground,
-    minWidth: width * 0.12,
+    minWidth: getScreenWidth() * 0.12,
     borderRadius: 16,
     marginBottom: -4,
   },
