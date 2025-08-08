@@ -110,7 +110,7 @@ export function MessageFile({
                   <>
                     {(safeProgress <= 0 || safeProgress >= 100) && (
                       <FastImage
-                        // source={require('../assets/play.png')}
+                        source={require('../assets/play.png')}
                         style={[
                           styles.iconPlay,
                           {
