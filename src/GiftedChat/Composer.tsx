@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
   textInput: {
     paddingRight: 8,
     paddingLeft: 8,
-    fontWeight: '600',
+    fontWeight: '400',
     fontSize: 16,
     lineHeight: 22,
     ...Platform.select({
