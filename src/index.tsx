@@ -32,6 +32,7 @@ import {
 } from './VideoPlayer';
 
 export * from './GiftedChat';
+export * from './IndicatorsMaster';
 
 export {
   ButtonBase,

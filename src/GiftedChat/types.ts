@@ -75,6 +75,7 @@ export interface IMessage {
   isLast?: boolean;
   reactionEmoji?: string;
   messageReply?: IMessage;
+  isSending?: boolean;
 }
 
 export type IChatMessage = IMessage;

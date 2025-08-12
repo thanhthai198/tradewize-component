@@ -14,5 +14,6 @@ import { CameraComponent, CameraModal, type CameraModalProps, type CameraProps, 
 import { getScreenWidth, getScreenHeight } from './utils';
 import { VideoPlayer, VideoModal, type VideoModalProps, type VideoPlayerProps } from './VideoPlayer';
 export * from './GiftedChat';
+export * from './IndicatorsMaster';
 export { ButtonBase, RadioButton, ButtonSwitchToggle, TabView, ScrollTabView, InputBase, OutlinedInput, FlatInput, Collapse, CameraComponent, CameraModal, getScreenWidth, getScreenHeight, VideoPlayer, VideoModal, };
 export type { TabItem, ScrollTabViewProps, InputBaseProps, OutlinedInputProps, FlatInputProps, CollapseProps, CollapseVariant, CollapseSize, CollapseIconPosition, CameraProps, PhotoFile, VideoFile, CameraModalProps, VideoPlayerProps, VideoModalProps, };

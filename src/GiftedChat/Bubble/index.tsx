@@ -26,6 +26,7 @@ import { MessageFile } from '../MessageFile';
 import Color from '../Color';
 import { MessageReply } from '../MessageReply';
 import { ButtonBase } from '../../ButtonBase';
+import { MaterialIndicator } from '../../IndicatorsMaster';
 
 export * from './types';
 
@@ -441,6 +442,22 @@ const Bubble = <TMessage extends IMessage = IMessage>(
         </TouchableWithoutFeedback>
       </View>
       {renderQuickReplies()}
+      {currentMessage?.isSending && (
+        <View
+          style={{
+            height: 16,
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingHorizontal: 8,
+          }}
+        >
+          <MaterialIndicator
+            color={Color.defaultColor}
+            size={12}
+            animationDuration={6000}
+          />
+        </View>
+      )}
     </View>
   );
 };

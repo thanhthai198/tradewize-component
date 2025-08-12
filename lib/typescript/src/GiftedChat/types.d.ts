@@ -66,6 +66,7 @@ export interface IMessage {
     isLast?: boolean;
     reactionEmoji?: string;
     messageReply?: IMessage;
+    isSending?: boolean;
 }
 export type IChatMessage = IMessage;
 export interface MessageVideoProps<TMessage extends IMessage> {

@@ -253,6 +253,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 4,
   },
   playIcon: {
     position: 'absolute',
