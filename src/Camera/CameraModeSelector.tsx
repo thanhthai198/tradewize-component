@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 1,
     paddingTop: 16,
-    height: getScreenHeight() * 0.2,
+    height: getScreenHeight() * 0.215,
   },
   item: {
     width: ITEM_WIDTH,
@@ -306,6 +306,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FFFFFF',
     fontSize: 18,
+    lineHeight: 24,
   },
   activeText: {
     color: '#FFEB3B',
