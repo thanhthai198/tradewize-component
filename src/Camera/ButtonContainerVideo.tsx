@@ -5,30 +5,41 @@ import { ButtonBase } from '../ButtonBase';
 interface ButtonContainerVideoProps {
   isRecording?: boolean;
   isPaused?: boolean;
+  isCanPause?: boolean;
   resumeRecording?: ((event: GestureResponderEvent) => void) | undefined;
   pauseRecording?: ((event: GestureResponderEvent) => void) | undefined;
   startRecording?: ((event: GestureResponderEvent) => void) | undefined;
+  stopRecording?: ((event: GestureResponderEvent) => void) | undefined;
 }
 
 export const ButtonContainerVideo = ({
   isRecording,
   isPaused,
+  isCanPause,
   resumeRecording,
   pauseRecording,
   startRecording,
+  stopRecording,
 }: ButtonContainerVideoProps) => {
+  const handlePress = (event: GestureResponderEvent) => {
+    if (isRecording) {
+      if (isCanPause) {
+        if (isPaused) {
+          resumeRecording?.(event);
+        } else {
+          pauseRecording?.(event);
+        }
+      } else {
+        stopRecording?.(event);
+      }
+    } else {
+      startRecording?.(event);
+    }
+  };
+
   return (
     <View style={styles.videoControlsContainer}>
-      <ButtonBase
-        style={styles.recordButton}
-        onPress={
-          isRecording
-            ? isPaused
-              ? resumeRecording
-              : pauseRecording
-            : startRecording
-        }
-      >
+      <ButtonBase style={styles.recordButton} onPress={handlePress}>
         <View
           style={
             isRecording

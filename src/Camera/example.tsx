@@ -140,6 +140,7 @@ export const CameraExample: React.FC = () => {
         presentationStyle="fullScreen"
       >
         <CameraComponent
+          isCanPause={false}
           mode={cameraMode}
           onPhotoCaptured={handlePhotoCaptured}
           onVideoRecorded={handleVideoRecorded}

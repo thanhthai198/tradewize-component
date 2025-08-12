@@ -26,6 +26,7 @@ interface SnapScrollViewProps {
   isCapturing?: boolean;
   isRecording?: boolean;
   isPaused?: boolean;
+  isCanPause?: boolean;
   stopRecording?: ((event: GestureResponderEvent) => void) | undefined;
   startRecording?: ((event: GestureResponderEvent) => void) | undefined;
   pauseRecording?: ((event: GestureResponderEvent) => void) | undefined;
@@ -42,6 +43,7 @@ export const SnapScrollView = (props: SnapScrollViewProps) => {
     toggleCameraPosition,
     isRecording,
     isPaused,
+    isCanPause,
     stopRecording,
     startRecording,
     pauseRecording,
@@ -148,11 +150,13 @@ export const SnapScrollView = (props: SnapScrollViewProps) => {
             </ButtonBase>
           ) : (
             <ButtonContainerVideo
+              isCanPause={isCanPause}
               isPaused={isPaused}
               isRecording={isRecording}
               pauseRecording={pauseRecording}
               resumeRecording={resumeRecording}
               startRecording={startRecording}
+              stopRecording={stopRecording}
             />
           )}
         </>
@@ -173,11 +177,13 @@ export const SnapScrollView = (props: SnapScrollViewProps) => {
     } else {
       return (
         <ButtonContainerVideo
+          isCanPause={isCanPause}
           isPaused={isPaused}
           isRecording={isRecording}
           pauseRecording={pauseRecording}
           resumeRecording={resumeRecording}
           startRecording={startRecording}
+          stopRecording={stopRecording}
         />
       );
     }
@@ -191,6 +197,8 @@ export const SnapScrollView = (props: SnapScrollViewProps) => {
     startRecording,
     pauseRecording,
     resumeRecording,
+    isCanPause,
+    stopRecording,
   ]);
 
   const backgroundColor = isRecording ? 'transparent' : '#000000';
@@ -245,9 +253,11 @@ export const SnapScrollView = (props: SnapScrollViewProps) => {
             { opacity: fadeAnim, transform: [{ scale: scaleAnim }] },
           ]}
         >
-          <ButtonBase style={styles.switchButton} onPress={stopRecording}>
-            <View style={styles.stopRecordingButtonInner} />
-          </ButtonBase>
+          {isCanPause && (
+            <ButtonBase style={styles.switchButton} onPress={stopRecording}>
+              <View style={styles.stopRecordingButtonInner} />
+            </ButtonBase>
+          )}
         </Animated.View>
 
         <View style={styles.actionButtonContainer}>{renderButton}</View>

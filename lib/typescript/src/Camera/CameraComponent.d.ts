@@ -13,6 +13,7 @@ export interface CameraProps {
     mode?: 'photo' | 'video' | 'both';
     audio?: boolean;
     initialZoom?: number;
+    isCanPause?: boolean;
 }
 export declare const CameraComponent: React.FC<CameraProps>;
 export default CameraComponent;

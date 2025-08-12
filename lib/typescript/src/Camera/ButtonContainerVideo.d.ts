@@ -3,9 +3,11 @@ import { type GestureResponderEvent } from 'react-native';
 interface ButtonContainerVideoProps {
     isRecording?: boolean;
     isPaused?: boolean;
+    isCanPause?: boolean;
     resumeRecording?: ((event: GestureResponderEvent) => void) | undefined;
     pauseRecording?: ((event: GestureResponderEvent) => void) | undefined;
     startRecording?: ((event: GestureResponderEvent) => void) | undefined;
+    stopRecording?: ((event: GestureResponderEvent) => void) | undefined;
 }
-export declare const ButtonContainerVideo: ({ isRecording, isPaused, resumeRecording, pauseRecording, startRecording, }: ButtonContainerVideoProps) => React.JSX.Element;
+export declare const ButtonContainerVideo: ({ isRecording, isPaused, isCanPause, resumeRecording, pauseRecording, startRecording, stopRecording, }: ButtonContainerVideoProps) => React.JSX.Element;
 export {};

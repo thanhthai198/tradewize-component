@@ -21,6 +21,7 @@ export interface CameraProps {
   mode?: 'photo' | 'video' | 'both';
   audio?: boolean; // Cho phép tắt/bật âm thanh khi quay video
   initialZoom?: number; // Thêm prop cho zoom ban đầu
+  isCanPause?: boolean;
 }
 
 export const CameraComponent: React.FC<CameraProps> = ({
@@ -32,6 +33,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
   audio = true, // Mặc định bật âm thanh
   initialZoom = 1, // Mặc định zoom 1x
   flashMode = 'off',
+  isCanPause = true,
 }) => {
   const [hasPermission, setHasPermission] = useState<boolean>(false);
   const [hasAudioPermission, setHasAudioPermission] = useState<boolean>(false);
@@ -200,7 +202,9 @@ export const CameraComponent: React.FC<CameraProps> = ({
 
     try {
       setIsRecording(true);
-      setIsPaused(false);
+      if (isCanPause) {
+        setIsPaused(false);
+      }
       setRecordingDuration(0);
       await camera.current.startRecording({
         onRecordingFinished: async (video) => {
@@ -212,13 +216,17 @@ export const CameraComponent: React.FC<CameraProps> = ({
           };
           onVideoRecorded?.(videoFile);
           setIsRecording(false);
-          setIsPaused(false);
+          if (isCanPause) {
+            setIsPaused(false);
+          }
           setRecordingDuration(0);
         },
         onRecordingError: (error) => {
           onError?.(`Recording error: ${error.message}`);
           setIsRecording(false);
-          setIsPaused(false);
+          if (isCanPause) {
+            setIsPaused(false);
+          }
           setRecordingDuration(0);
         },
         flash: currentFlashMode,
@@ -226,10 +234,20 @@ export const CameraComponent: React.FC<CameraProps> = ({
     } catch (error) {
       onError?.('Failed to start recording');
       setIsRecording(false);
-      setIsPaused(false);
+      if (isCanPause) {
+        setIsPaused(false);
+      }
       setRecordingDuration(0);
     }
-  }, [camera, isRecording, currentFlashMode, onVideoRecorded, onError]);
+    setIsPaused(false);
+  }, [
+    camera,
+    isRecording,
+    currentFlashMode,
+    onVideoRecorded,
+    onError,
+    isCanPause,
+  ]);
 
   const stopRecording = useCallback(async () => {
     if (!camera.current || !isRecording) return;
@@ -239,32 +257,38 @@ export const CameraComponent: React.FC<CameraProps> = ({
     } catch (error) {
       onError?.('Failed to stop recording');
       setIsRecording(false);
-      setIsPaused(false);
+      if (isCanPause) {
+        setIsPaused(false);
+      }
       setRecordingDuration(0);
     }
-  }, [camera, isRecording, onError]);
+  }, [camera, isRecording, onError, isCanPause]);
 
   const pauseRecording = useCallback(async () => {
     if (!camera.current || !isRecording || isPaused) return;
 
     try {
       await camera.current.pauseRecording();
-      setIsPaused(true);
+      if (isCanPause) {
+        setIsPaused(true);
+      }
     } catch (error) {
       onError?.('Failed to pause recording');
     }
-  }, [camera, isRecording, isPaused, onError]);
+  }, [camera, isRecording, isPaused, onError, isCanPause]);
 
   const resumeRecording = useCallback(async () => {
     if (!camera.current || !isRecording || !isPaused) return;
 
     try {
       await camera.current.resumeRecording();
-      setIsPaused(false);
+      if (isCanPause) {
+        setIsPaused(false);
+      }
     } catch (error) {
       onError?.('Failed to resume recording');
     }
-  }, [camera, isRecording, isPaused, onError]);
+  }, [camera, isRecording, isPaused, onError, isCanPause]);
 
   // Format duration to MM:SS
   const formatDuration = (seconds: number): string => {
@@ -400,6 +424,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
         startRecording={startRecording}
         pauseRecording={pauseRecording}
         resumeRecording={resumeRecording}
+        isCanPause={isCanPause}
       />
 
       {/* Recording Indicator */}
