@@ -27,6 +27,7 @@ import Color from '../Color';
 import { MessageReply } from '../MessageReply';
 import { ButtonBase } from '../../ButtonBase';
 import { MaterialIndicator } from '../../IndicatorsMaster';
+import FastImage from 'react-native-fast-image';
 
 export * from './types';
 
@@ -456,6 +457,26 @@ const Bubble = <TMessage extends IMessage = IMessage>(
             size={12}
             animationDuration={6000}
           />
+        </View>
+      )}
+      {currentMessage?.errorMessage && !currentMessage?.isSending && (
+        <View
+          style={{
+            marginTop: 4,
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 4,
+          }}
+        >
+          <FastImage
+            source={require('../../assets/warning.png')}
+            style={{ width: 12, height: 12 }}
+          />
+          <Text
+            style={{ fontSize: 12, fontWeight: '500', color: Color.alizarin }}
+          >
+            {currentMessage?.errorMessage}
+          </Text>
         </View>
       )}
     </View>
