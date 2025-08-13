@@ -336,30 +336,46 @@ const Bubble = <TMessage extends IMessage = IMessage>(
   }, [props]);
 
   const renderReactionEmoji = useCallback(() => {
+    const isCurrentUser = currentMessage.user._id === props?.user?._id;
+
+    const reactionPosition = isCurrentUser ? 'right' : 'left';
+
     if (currentMessage?.reactionEmoji) {
       return (
         <View
-          style={{
-            backgroundColor: Color.white,
-            position: 'absolute',
-            width: 32,
-            height: 20,
-            borderRadius: 12,
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderWidth: 1,
-            borderColor: Color.leftBubbleBackground,
-            bottom: -30,
-            zIndex: 10,
-            right: 2,
-          }}
+          style={[
+            {
+              backgroundColor: Color.white,
+              position: 'absolute',
+              width: 32,
+              height: 20,
+              borderRadius: 12,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: Color.leftBubbleBackground,
+              bottom: -30,
+              zIndex: 10,
+              shadowColor: Color.leftBubbleBackground,
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 3,
+            },
+            reactionPosition === 'right' && {
+              left: 4,
+            },
+            reactionPosition === 'left' && {
+              right: 4,
+            },
+          ]}
         >
-          <Text>{currentMessage.reactionEmoji}</Text>
+          <Text style={{ fontSize: 12 }}>{currentMessage.reactionEmoji}</Text>
         </View>
       );
     }
     return null;
-  }, [currentMessage]);
+  }, [currentMessage.reactionEmoji, currentMessage.user._id, props?.user?._id]);
 
   const renderBubbleContent = useCallback(() => {
     return (
