@@ -2,6 +2,7 @@ import React from 'react';
 import { CameraComponent } from './CameraComponent';
 import type { CameraProps } from './CameraComponent';
 import Modal, { type ModalProps } from 'react-native-modal';
+import Color from '../GiftedChat/Color';
 
 export interface CameraModalProps extends Omit<CameraProps, 'onClose'> {
   visible: boolean;
@@ -23,7 +24,7 @@ export const CameraModal: React.FC<CameraModalProps> = ({
       animationInTiming={300}
       animationOutTiming={300}
       useNativeDriver={true}
-      style={{ margin: 0 }}
+      style={{ margin: 0, backgroundColor: Color.black }}
       {...modalProps}
     >
       <CameraComponent {...cameraProps} onClose={onClose} />

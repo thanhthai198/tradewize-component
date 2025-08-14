@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
 import type {
   CameraPermissionStatus,
@@ -304,7 +304,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
           <Text style={styles.closeButtonText}>✕</Text>
         </ButtonBase>
         <View style={styles.itemCenter}>
-          <ActivityIndicator size="large" color="#007AFF" />
+          {/* <ActivityIndicator size="large" color="#007AFF" /> */}
           <Text style={styles.loadingText}>Loading camera...</Text>
         </View>
       </View>
@@ -320,7 +320,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
         <View style={styles.itemCenter}>
           {isRequestingPermissions ? (
             <>
-              <ActivityIndicator size="large" color="#007AFF" />
+              {/* <ActivityIndicator size="large" color="#007AFF" /> */}
               <Text style={styles.permissionText}>
                 Requesting permissions...
               </Text>
