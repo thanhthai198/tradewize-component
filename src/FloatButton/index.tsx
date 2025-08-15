@@ -51,7 +51,7 @@ interface FloatButtonProps {
 
 const MIN_EDGE_DISTANCE = 16;
 
-const FloatButton: React.FC<FloatButtonProps> = ({
+export const FloatButton: React.FC<FloatButtonProps> = ({
   onPress,
   children,
   size = 60,
@@ -326,5 +326,3 @@ const styles = StyleSheet.create({
     height: 24,
   },
 });
-
-export default FloatButton;

@@ -34,5 +34,5 @@ interface FloatButtonProps {
     yAxisEndLimit?: number;
     yAxisStartLimit?: number;
 }
-declare const FloatButton: React.FC<FloatButtonProps>;
-export default FloatButton;
+export declare const FloatButton: React.FC<FloatButtonProps>;
+export {};
