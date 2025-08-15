@@ -1,0 +1,1 @@
+{"version":3,"names":[],"sources":["type.ts"],"sourcesContent":["export interface MenuItem {\n  id: string;\n  icon?: string;\n  label: string;\n  onPress: () => void;\n  color?: string;\n  renderIcon?: React.ReactNode;\n}\n"],"mappings":"","ignoreList":[]}

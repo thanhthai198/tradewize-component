@@ -33,6 +33,7 @@ import {
 
 export * from './GiftedChat';
 export * from './IndicatorsMaster';
+export * from './FloatButton';
 
 export {
   ButtonBase,
