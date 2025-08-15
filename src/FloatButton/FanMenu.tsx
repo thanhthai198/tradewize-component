@@ -18,6 +18,7 @@ interface FanMenuProps {
   // mainButtonColor?: string;
   // mainButtonIcon?: string;
   minEdgeDistance: number;
+  isPlusEdgeDistance?: boolean;
 }
 
 const FanMenu: React.FC<FanMenuProps> = ({
@@ -34,6 +35,7 @@ const FanMenu: React.FC<FanMenuProps> = ({
   // mainButtonColor = '#007AFF',
   // mainButtonIcon = '×',
   minEdgeDistance = 16,
+  isPlusEdgeDistance = false,
 }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const mainButtonAnim = useRef(new Animated.Value(0)).current;
@@ -136,8 +138,16 @@ const FanMenu: React.FC<FanMenuProps> = ({
       (finaleEndAngle - finaleStartAngle) / (totalItems - 1 || 1);
     const angle = finaleStartAngle + index * angleStep;
     const angleRad = (angle * Math.PI) / 180;
-    const rx = position.x - minEdgeDistance * 0.3;
-    const ry = position.y + mainButtonSize * 1.5;
+    let rx = position.x - minEdgeDistance * 0.3;
+    let ry = position.y + (mainButtonSize + minEdgeDistance * 0.3) / 2;
+
+    if (isPlusEdgeDistance) {
+      rx = position.x - minEdgeDistance * 0.3;
+      ry =
+        position.y +
+        (mainButtonSize + minEdgeDistance * 0.3) / 2 +
+        mainButtonSize * 1.5;
+    }
 
     // Calculate position relative to main button center
     const x = rx + radius * Math.cos(angleRad);
@@ -190,19 +200,22 @@ const FanMenu: React.FC<FanMenuProps> = ({
                   width: mainButtonSize + minEdgeDistance * 0.3,
                   height: mainButtonSize + minEdgeDistance * 0.3,
                   left: position.x - minEdgeDistance * 0.3,
-                  top: position.y + mainButtonSize,
-                  backgroundColor: mainButtonColor,
+                  top: position.y - minEdgeDistance * 0.2,
+                  backgroundColor: '#007AFF',
                   borderRadius: mainButtonSize / 2 + minEdgeDistance * 0.3,
                   transform: [{ scale: mainButtonAnim }],
+                },
+                isPlusEdgeDistance && {
+                  top: position.y + mainButtonSize - minEdgeDistance * 0.2,
                 },
               ]}
             >
               <TouchableOpacity
                 style={styles.mainButtonTouchable}
-                onPress={handleMainButtonPress}
+                // onPress={handleMainButtonPress}
                 activeOpacity={0.8}
               >
-                <Text style={styles.mainButtonText}>{mainButtonIcon}</Text>
+                <Text style={styles.mainButtonText}>+</Text>
               </TouchableOpacity>
             </Animated.View>
           )} */}

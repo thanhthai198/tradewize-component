@@ -15,6 +15,7 @@ interface FanMenuProps {
     iconColor?: string;
     mainButtonSize?: number;
     minEdgeDistance: number;
+    isPlusEdgeDistance?: boolean;
 }
 declare const FanMenu: React.FC<FanMenuProps>;
 export default FanMenu;

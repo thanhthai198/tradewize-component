@@ -12,6 +12,7 @@ interface FloatButtonProps {
     style?: any;
     icon?: any;
     iconColor?: string;
+    isPlusEdgeDistance?: boolean;
     showPopup?: boolean;
     popupContent?: React.ReactNode;
     popupWidth?: number;

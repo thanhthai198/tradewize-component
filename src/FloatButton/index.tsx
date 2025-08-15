@@ -21,6 +21,7 @@ interface FloatButtonProps {
   style?: any;
   icon?: any;
   iconColor?: string;
+  isPlusEdgeDistance?: boolean;
   // Popup props
   showPopup?: boolean;
   popupContent?: React.ReactNode;
@@ -60,6 +61,7 @@ export const FloatButton: React.FC<FloatButtonProps> = ({
   style,
   icon,
   iconColor = '#FFFFFF',
+  isPlusEdgeDistance = false,
   // Popup props
   showPopup = false,
   popupContent,
@@ -296,6 +298,7 @@ export const FloatButton: React.FC<FloatButtonProps> = ({
           // mainButtonColor={mainButtonColor}
           // mainButtonIcon={mainButtonIcon}
           minEdgeDistance={minEdgeDistance}
+          isPlusEdgeDistance={isPlusEdgeDistance}
         />
       )}
     </>
