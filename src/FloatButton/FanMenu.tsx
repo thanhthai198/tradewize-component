@@ -1,5 +1,12 @@
 import React, { useRef, useEffect } from 'react';
-import { StyleSheet, Animated, TouchableOpacity, Image } from 'react-native';
+import {
+  StyleSheet,
+  Animated,
+  TouchableOpacity,
+  Image,
+  type StyleProp,
+  type ImageStyle,
+} from 'react-native';
 import Modal from 'react-native-modal';
 import { getDirection } from './utils';
 import type { MenuItem } from './type';
@@ -19,6 +26,7 @@ interface FanMenuProps {
   // mainButtonIcon?: string;
   minEdgeDistance: number;
   isPlusEdgeDistance?: boolean;
+  stylesIcon?: StyleProp<ImageStyle>;
 }
 
 const FanMenu: React.FC<FanMenuProps> = ({
@@ -30,12 +38,13 @@ const FanMenu: React.FC<FanMenuProps> = ({
   startAngle = 90, // Start from top
   endAngle = 270, // End at bottom
   itemBackgroundColor = '#007AFF',
-  iconColor = '#FFFFFF',
+  iconColor,
   mainButtonSize = 60,
   // mainButtonColor = '#007AFF',
   // mainButtonIcon = '×',
   minEdgeDistance = 16,
   isPlusEdgeDistance = false,
+  stylesIcon,
 }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const mainButtonAnim = useRef(new Animated.Value(0)).current;
@@ -255,7 +264,7 @@ const FanMenu: React.FC<FanMenuProps> = ({
                           ? item?.icon
                           : require('./assets/setting.png')
                       }
-                      style={styles.menuItemIcon}
+                      style={[styles.menuItemIcon, stylesIcon]}
                       tintColor={iconColor}
                     />
                   )}

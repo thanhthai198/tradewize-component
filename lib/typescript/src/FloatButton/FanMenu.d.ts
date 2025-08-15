@@ -1,4 +1,5 @@
 import React from 'react';
+import { type StyleProp, type ImageStyle } from 'react-native';
 import type { MenuItem } from './type';
 interface FanMenuProps {
     visible: boolean;
@@ -16,6 +17,7 @@ interface FanMenuProps {
     mainButtonSize?: number;
     minEdgeDistance: number;
     isPlusEdgeDistance?: boolean;
+    stylesIcon?: StyleProp<ImageStyle>;
 }
 declare const FanMenu: React.FC<FanMenuProps>;
 export default FanMenu;

@@ -5,6 +5,8 @@ import {
   Animated,
   StyleSheet,
   Image,
+  type StyleProp,
+  type ImageStyle,
 } from 'react-native';
 import Popup from './Popup';
 import FanMenu from './FanMenu';
@@ -38,6 +40,7 @@ interface FloatButtonProps {
   menuEndAngle?: number;
   menuItemBackgroundColor?: string;
   menuItemIconColor?: string;
+  styleIconItem?: StyleProp<ImageStyle>;
   onMenuClose?: () => void;
   // Main button props for fan menu
   mainButtonSize?: number;
@@ -77,8 +80,9 @@ export const FloatButton: React.FC<FloatButtonProps> = ({
   menuStartAngle = 90,
   menuEndAngle = 270,
   menuItemBackgroundColor = '#007AFF',
-  menuItemIconColor = '#FFFFFF',
+  menuItemIconColor,
   onMenuClose,
+  styleIconItem,
   // Main button props for fan menu
   mainButtonSize = 60,
   // mainButtonColor = '#007AFF',
@@ -299,6 +303,7 @@ export const FloatButton: React.FC<FloatButtonProps> = ({
           // mainButtonIcon={mainButtonIcon}
           minEdgeDistance={minEdgeDistance}
           isPlusEdgeDistance={isPlusEdgeDistance}
+          stylesIcon={styleIconItem}
         />
       )}
     </>

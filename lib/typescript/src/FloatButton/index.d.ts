@@ -1,4 +1,5 @@
 import React from 'react';
+import { type StyleProp, type ImageStyle } from 'react-native';
 import type { MenuItem } from './type';
 interface FloatButtonProps {
     onPress?: () => void;
@@ -27,6 +28,7 @@ interface FloatButtonProps {
     menuEndAngle?: number;
     menuItemBackgroundColor?: string;
     menuItemIconColor?: string;
+    styleIconItem?: StyleProp<ImageStyle>;
     onMenuClose?: () => void;
     mainButtonSize?: number;
     mainButtonColor?: string;
