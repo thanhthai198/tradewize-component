@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Popup from './Popup';
 import FanMenu from './FanMenu';
-import { getScreenHeight, getScreenWidth } from '../utils';
+import { getScreenHeight, getScreenWidth } from 'tradewize';
 import { getDirection } from './utils';
 import type { MenuItem } from './type';
 
@@ -54,6 +54,8 @@ interface FloatButtonProps {
 }
 
 const MIN_EDGE_DISTANCE = 16;
+const DRAG_THRESHOLD = 10; // Minimum distance to consider as drag
+const TAP_DELAY = 200; // Maximum time to consider as tap
 
 export const FloatButton: React.FC<FloatButtonProps> = ({
   onPress,
@@ -105,6 +107,11 @@ export const FloatButton: React.FC<FloatButtonProps> = ({
     '-180deg',
   ]);
 
+  // Add refs for better drag detection
+  const startPosition = useRef({ x: 0, y: 0 });
+  const startTime = useRef(0);
+  const hasMoved = useRef(false);
+
   useEffect(() => {
     Animated.timing(rotateAnim, {
       toValue: fanMenuVisible ? 1 : 0, // 1 = 180°, 0 = 0°
@@ -146,55 +153,96 @@ export const FloatButton: React.FC<FloatButtonProps> = ({
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => {
-        setIsDragging(true);
+      onMoveShouldSetPanResponder: (_evt, gestureState) => {
+        // Only start pan responder if movement exceeds threshold
+        return (
+          Math.abs(gestureState.dx) > DRAG_THRESHOLD ||
+          Math.abs(gestureState.dy) > DRAG_THRESHOLD
+        );
+      },
+      onPanResponderGrant: (_evt, gestureState) => {
+        startPosition.current = { x: gestureState.x0, y: gestureState.y0 };
+        startTime.current = Date.now();
+        hasMoved.current = false;
+        setIsDragging(false);
+
         pan.setOffset({
           x: (pan.x as any)._value,
           y: (pan.y as any)._value,
         });
         pan.setValue({ x: 0, y: 0 });
       },
-      onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], {
-        useNativeDriver: false,
-      }),
-      onPanResponderRelease: () => {
-        setIsDragging(false);
+      onPanResponderMove: (evt, gestureState) => {
+        const distance = Math.sqrt(
+          Math.pow(gestureState.dx, 2) + Math.pow(gestureState.dy, 2)
+        );
+
+        if (distance > DRAG_THRESHOLD) {
+          hasMoved.current = true;
+          setIsDragging(true);
+        }
+
+        Animated.event([null, { dx: pan.x, dy: pan.y }], {
+          useNativeDriver: false,
+        })(evt, gestureState);
+      },
+      onPanResponderRelease: (_evt, gestureState) => {
+        const endTime = Date.now();
+        const timeDiff = endTime - startTime.current;
+        const distance = Math.sqrt(
+          Math.pow(gestureState.dx, 2) + Math.pow(gestureState.dy, 2)
+        );
+
+        // If it's a quick tap with minimal movement, don't consider it as drag
+        if (timeDiff < TAP_DELAY && distance < DRAG_THRESHOLD) {
+          setIsDragging(false);
+          hasMoved.current = false;
+        }
+
         pan.flattenOffset();
 
-        // Snap to edges if near screen boundaries
-        const newX = (pan.x as any)._value;
-        const newY = (pan.y as any)._value;
+        // Only snap to edges if we actually dragged
+        if (hasMoved.current) {
+          // Snap to edges if near screen boundaries
+          const newX = (pan.x as any)._value;
+          const newY = (pan.y as any)._value;
 
-        let finalX = newX;
-        let finalY = newY;
+          let finalX = newX;
+          let finalY = newY;
 
-        // Snap to left or right edge
-        if (newX < getScreenWidth() / 2) {
-          finalX = minEdgeDistance;
-        } else {
-          finalX = getScreenWidth() - size - minEdgeDistance;
+          // Snap to left or right edge
+          if (newX < getScreenWidth() / 2) {
+            finalX = minEdgeDistance;
+          } else {
+            finalX = getScreenWidth() - size - minEdgeDistance;
+          }
+
+          // Ensure button stays within screen bounds
+          if (finalY < yAxisStartLimit) {
+            finalY = yAxisStartLimit;
+          } else if (
+            finalY >
+            getScreenHeight() - size - yAxisStartLimit - yAxisEndLimit
+          ) {
+            finalY = getScreenHeight() - size - yAxisStartLimit - yAxisEndLimit;
+          }
+
+          const finalPosition = { x: finalX, y: finalY };
+          setButtonPosition(finalPosition);
+
+          Animated.spring(pan, {
+            toValue: finalPosition,
+            useNativeDriver: false,
+            tension: 100,
+            friction: 8,
+          }).start();
         }
 
-        // Ensure button stays within screen bounds
-        if (finalY < yAxisStartLimit) {
-          finalY = yAxisStartLimit;
-        } else if (
-          finalY >
-          getScreenHeight() - size - yAxisStartLimit - yAxisEndLimit
-        ) {
-          finalY = getScreenHeight() - size - yAxisStartLimit - yAxisEndLimit;
-        }
-
-        const finalPosition = { x: finalX, y: finalY };
-        setButtonPosition(finalPosition);
-
-        Animated.spring(pan, {
-          toValue: finalPosition,
-          useNativeDriver: false,
-          tension: 100,
-          friction: 8,
-        }).start();
+        // Reset drag state after a short delay
+        setTimeout(() => {
+          setIsDragging(false);
+          hasMoved.current = false;
+        }, 100);
       },
     })
   ).current;
@@ -205,7 +253,10 @@ export const FloatButton: React.FC<FloatButtonProps> = ({
   });
 
   const handlePress = () => {
-    if (!isDragging) {
+    console.log('isDragging', isDragging);
+    console.log('hasMoved', hasMoved.current);
+
+    if (!isDragging && !hasMoved.current) {
       if (showFanMenu && menuItems.length > 0) {
         setFanMenuVisible(true);
       } else if (showPopup && popupContent) {
@@ -260,6 +311,8 @@ export const FloatButton: React.FC<FloatButtonProps> = ({
           ]}
           onPress={handlePress}
           activeOpacity={0.8}
+          delayPressIn={0}
+          delayPressOut={0}
         >
           {children || (
             <Image
