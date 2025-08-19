@@ -27,6 +27,7 @@ interface SnapScrollViewProps {
   isRecording?: boolean;
   isPaused?: boolean;
   isCanPause?: boolean;
+  canStopRecording?: boolean;
   stopRecording?: ((event: GestureResponderEvent) => void) | undefined;
   startRecording?: ((event: GestureResponderEvent) => void) | undefined;
   pauseRecording?: ((event: GestureResponderEvent) => void) | undefined;
@@ -44,6 +45,7 @@ export const SnapScrollView = (props: SnapScrollViewProps) => {
     isRecording,
     isPaused,
     isCanPause,
+    canStopRecording = false,
     stopRecording,
     startRecording,
     pauseRecording,
@@ -153,6 +155,7 @@ export const SnapScrollView = (props: SnapScrollViewProps) => {
               isCanPause={isCanPause}
               isPaused={isPaused}
               isRecording={isRecording}
+              canStopRecording={canStopRecording}
               pauseRecording={pauseRecording}
               resumeRecording={resumeRecording}
               startRecording={startRecording}
@@ -180,6 +183,7 @@ export const SnapScrollView = (props: SnapScrollViewProps) => {
           isCanPause={isCanPause}
           isPaused={isPaused}
           isRecording={isRecording}
+          canStopRecording={canStopRecording}
           pauseRecording={pauseRecording}
           resumeRecording={resumeRecording}
           startRecording={startRecording}
@@ -199,6 +203,7 @@ export const SnapScrollView = (props: SnapScrollViewProps) => {
     resumeRecording,
     isCanPause,
     stopRecording,
+    canStopRecording,
   ]);
 
   const backgroundColor = isRecording ? 'transparent' : '#000000';
@@ -253,7 +258,7 @@ export const SnapScrollView = (props: SnapScrollViewProps) => {
             { opacity: fadeAnim, transform: [{ scale: scaleAnim }] },
           ]}
         >
-          {isCanPause && (
+          {isCanPause && canStopRecording && (
             <ButtonBase style={styles.switchButton} onPress={stopRecording}>
               <View style={styles.stopRecordingButtonInner} />
             </ButtonBase>
@@ -269,7 +274,7 @@ export const SnapScrollView = (props: SnapScrollViewProps) => {
           >
             <Image
               tintColor="#FFFFFF"
-              source={require('../assets/repeat.png')}
+              // source={require('../assets/repeat.png')}
               style={[
                 styles.switchButtonImage,
                 {
