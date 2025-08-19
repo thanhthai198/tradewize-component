@@ -16,6 +16,7 @@ export interface CameraProps {
   onVideoRecorded?: (video: VideoFile & { size: number }) => void;
   onError?: (error: string) => void;
   onClose?: () => void;
+  onExportLoading?: (isLoading: boolean) => void;
   flashMode?: 'off' | 'on';
   mode?: 'photo' | 'video' | 'both';
   audio?: boolean; // Cho phép tắt/bật âm thanh khi quay video
@@ -30,6 +31,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
   onVideoRecorded,
   onError,
   onClose,
+  onExportLoading,
   mode = 'both',
   audio = true, // Mặc định bật âm thanh
   initialZoom = 1, // Mặc định zoom 1x
@@ -54,7 +56,6 @@ export const CameraComponent: React.FC<CameraProps> = ({
   );
   const [zoom, setZoom] = useState<number>(initialZoom); // Thêm state cho zoom
   const [canStopRecording, setCanStopRecording] = useState<boolean>(false); // Kiểm tra có thể dừng quay không
-  const [isExportingVideo, setIsExportingVideo] = useState<boolean>(false); // Loading khi xuất video
 
   const camera = useRef<Camera>(null);
   const devices = useCameraDevices();
@@ -262,8 +263,8 @@ export const CameraComponent: React.FC<CameraProps> = ({
         videoCodec: 'h265',
         fileType: 'mp4',
         onRecordingFinished: async (video) => {
-          setIsExportingVideo(true);
           try {
+            onExportLoading?.(true);
             const path = video.path.replace('file://', '');
             const stat = await RNFS.stat(path);
             const videoFile = {
@@ -275,7 +276,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
           } catch (error) {
             onError?.('Failed to process video file');
           } finally {
-            setIsExportingVideo(false);
+            onExportLoading?.(false);
             setIsRecording(false);
             setCanStopRecording(false);
             if (isCanPause) {
@@ -312,6 +313,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
     onVideoRecorded,
     onError,
     isCanPause,
+    onExportLoading,
   ]);
 
   const pauseRecording = useCallback(async () => {
@@ -489,14 +491,6 @@ export const CameraComponent: React.FC<CameraProps> = ({
             {!hasAudioPermission && audio ? '(No Audio)' : ''}
           </Text>
           <Text style={styles.timeLimitText}>Max: {maxRecordingTime}s</Text>
-        </View>
-      )}
-
-      {/* Exporting Video Loading Indicator */}
-      {isExportingVideo && (
-        <View style={styles.exportingIndicator}>
-          <View style={styles.exportingDot} />
-          <Text style={styles.exportingText}>Exporting video...</Text>
         </View>
       )}
     </View>
@@ -682,31 +676,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  exportingIndicator: {
-    position: 'absolute',
-    top: 100,
-    alignSelf: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 122, 255, 0.8)',
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    borderRadius: 20,
-    zIndex: 1,
-  },
-  exportingDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#FFFFFF',
-    marginRight: 8,
-    opacity: 0.8,
-  },
-  exportingText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '600',
   },
 });
 

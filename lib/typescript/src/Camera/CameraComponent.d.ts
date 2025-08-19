@@ -9,6 +9,7 @@ export interface CameraProps {
     }) => void;
     onError?: (error: string) => void;
     onClose?: () => void;
+    onExportLoading?: (isLoading: boolean) => void;
     flashMode?: 'off' | 'on';
     mode?: 'photo' | 'video' | 'both';
     audio?: boolean;
