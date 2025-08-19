@@ -274,7 +274,7 @@ export const SnapScrollView = (props: SnapScrollViewProps) => {
           >
             <Image
               tintColor="#FFFFFF"
-              // source={require('../assets/repeat.png')}
+              source={require('../assets/repeat.png')}
               style={[
                 styles.switchButtonImage,
                 {
