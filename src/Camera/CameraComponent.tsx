@@ -54,6 +54,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
   );
   const [zoom, setZoom] = useState<number>(initialZoom); // Thêm state cho zoom
   const [canStopRecording, setCanStopRecording] = useState<boolean>(false); // Kiểm tra có thể dừng quay không
+  const [isExportingVideo, setIsExportingVideo] = useState<boolean>(false); // Loading khi xuất video
 
   const camera = useRef<Camera>(null);
   const devices = useCameraDevices();
@@ -261,20 +262,27 @@ export const CameraComponent: React.FC<CameraProps> = ({
         videoCodec: 'h265',
         fileType: 'mp4',
         onRecordingFinished: async (video) => {
-          const path = video.path.replace('file://', '');
-          const stat = await RNFS.stat(path);
-          const videoFile = {
-            ...video,
-            size: stat?.size,
-          };
+          setIsExportingVideo(true);
+          try {
+            const path = video.path.replace('file://', '');
+            const stat = await RNFS.stat(path);
+            const videoFile = {
+              ...video,
+              size: stat?.size,
+            };
 
-          onVideoRecorded?.(videoFile);
-          setIsRecording(false);
-          setCanStopRecording(false);
-          if (isCanPause) {
-            setIsPaused(false);
+            onVideoRecorded?.(videoFile);
+          } catch (error) {
+            onError?.('Failed to process video file');
+          } finally {
+            setIsExportingVideo(false);
+            setIsRecording(false);
+            setCanStopRecording(false);
+            if (isCanPause) {
+              setIsPaused(false);
+            }
+            setRecordingDuration(0);
           }
-          setRecordingDuration(0);
         },
         onRecordingError: (error) => {
           onError?.(`Recording error: ${error.message}`);
@@ -483,6 +491,14 @@ export const CameraComponent: React.FC<CameraProps> = ({
           <Text style={styles.timeLimitText}>Max: {maxRecordingTime}s</Text>
         </View>
       )}
+
+      {/* Exporting Video Loading Indicator */}
+      {isExportingVideo && (
+        <View style={styles.exportingIndicator}>
+          <View style={styles.exportingDot} />
+          <Text style={styles.exportingText}>Exporting video...</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -666,6 +682,31 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  exportingIndicator: {
+    position: 'absolute',
+    top: 100,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 122, 255, 0.8)',
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 20,
+    zIndex: 1,
+  },
+  exportingDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#FFFFFF',
+    marginRight: 8,
+    opacity: 0.8,
+  },
+  exportingText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });
 
