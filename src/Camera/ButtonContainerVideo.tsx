@@ -6,6 +6,7 @@ interface ButtonContainerVideoProps {
   isRecording?: boolean;
   isPaused?: boolean;
   isCanPause?: boolean;
+  canStopRecording?: boolean;
   resumeRecording?: ((event: GestureResponderEvent) => void) | undefined;
   pauseRecording?: ((event: GestureResponderEvent) => void) | undefined;
   startRecording?: ((event: GestureResponderEvent) => void) | undefined;
@@ -16,6 +17,7 @@ export const ButtonContainerVideo = ({
   isRecording,
   isPaused,
   isCanPause,
+  canStopRecording = false,
   resumeRecording,
   pauseRecording,
   startRecording,
@@ -30,7 +32,10 @@ export const ButtonContainerVideo = ({
           pauseRecording?.(event);
         }
       } else {
-        stopRecording?.(event);
+        // Chỉ cho phép dừng quay khi đã đạt thời gian tối thiểu
+        if (canStopRecording) {
+          stopRecording?.(event);
+        }
       }
     } else {
       startRecording?.(event);
@@ -39,7 +44,14 @@ export const ButtonContainerVideo = ({
 
   return (
     <View style={styles.videoControlsContainer}>
-      <ButtonBase style={styles.recordButton} onPress={handlePress}>
+      <ButtonBase
+        style={[
+          styles.recordButton,
+          isRecording && !canStopRecording && styles.recordButtonDisabled,
+        ]}
+        onPress={handlePress}
+        disabled={isRecording && !canStopRecording}
+      >
         <View
           style={
             isRecording
@@ -69,6 +81,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 4,
     borderColor: '#FFFFFF',
+  },
+  recordButtonDisabled: {
+    opacity: 0.5,
+    borderColor: '#FFA500',
   },
   recordButtonInner: {
     width: 65,

@@ -11,7 +11,6 @@ import { SnapScrollView } from './CameraModeSelector';
 import RNFS from 'react-native-fs';
 import { ButtonBase } from '../ButtonBase';
 import { getScreenHeight } from '../utils';
-
 export interface CameraProps {
   onPhotoCaptured?: (photo: PhotoFile & { size: number }) => void;
   onVideoRecorded?: (video: VideoFile & { size: number }) => void;
@@ -22,6 +21,8 @@ export interface CameraProps {
   audio?: boolean; // Cho phép tắt/bật âm thanh khi quay video
   initialZoom?: number; // Thêm prop cho zoom ban đầu
   isCanPause?: boolean;
+  minRecordingTime?: number; // Thời gian quay video tối thiểu (giây)
+  maxRecordingTime?: number; // Thời gian quay video tối đa (giây)
 }
 
 export const CameraComponent: React.FC<CameraProps> = ({
@@ -34,6 +35,8 @@ export const CameraComponent: React.FC<CameraProps> = ({
   initialZoom = 1, // Mặc định zoom 1x
   flashMode = 'off',
   isCanPause = true,
+  minRecordingTime = 3, // Mặc định thời gian tối thiểu 3 giây
+  maxRecordingTime = 60, // Mặc định thời gian tối đa 60 giây
 }) => {
   const [hasPermission, setHasPermission] = useState<boolean>(false);
   const [hasAudioPermission, setHasAudioPermission] = useState<boolean>(false);
@@ -50,6 +53,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
     flashMode
   );
   const [zoom, setZoom] = useState<number>(initialZoom); // Thêm state cho zoom
+  const [canStopRecording, setCanStopRecording] = useState<boolean>(false); // Kiểm tra có thể dừng quay không
 
   const camera = useRef<Camera>(null);
   const devices = useCameraDevices();
@@ -59,18 +63,64 @@ export const CameraComponent: React.FC<CameraProps> = ({
   const minZoom = device?.minZoom || 1;
   const maxZoom = device?.maxZoom || 10;
 
+  const stopRecording = useCallback(async () => {
+    if (!camera.current || !isRecording) return;
+
+    // Kiểm tra thời gian quay có đạt tối thiểu chưa
+    if (recordingDuration < minRecordingTime) {
+      onError?.(`Video must be at least ${minRecordingTime} seconds long`);
+      return;
+    }
+
+    try {
+      await camera.current.stopRecording();
+    } catch (error) {
+      onError?.('Failed to stop recording');
+      setIsRecording(false);
+      setCanStopRecording(false);
+      if (isCanPause) {
+        setIsPaused(false);
+      }
+      setRecordingDuration(0);
+    }
+  }, [
+    camera,
+    isRecording,
+    recordingDuration,
+    minRecordingTime,
+    onError,
+    isCanPause,
+  ]);
+
   // Timer for recording duration
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isRecording && !isPaused) {
       interval = setInterval(() => {
-        setRecordingDuration((prev) => prev + 1);
+        setRecordingDuration((prev) => {
+          const newDuration = prev + 1;
+          // Kiểm tra có thể dừng quay khi đạt thời gian tối thiểu
+          if (newDuration >= minRecordingTime) {
+            setCanStopRecording(true);
+          }
+          // Tự động dừng quay khi đạt thời gian tối đa
+          if (newDuration >= maxRecordingTime) {
+            stopRecording();
+          }
+          return newDuration;
+        });
       }, 1000);
     }
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isRecording, isPaused]);
+  }, [
+    isRecording,
+    isPaused,
+    minRecordingTime,
+    maxRecordingTime,
+    stopRecording,
+  ]);
 
   const requestCameraPermission = useCallback(async () => {
     try {
@@ -202,11 +252,14 @@ export const CameraComponent: React.FC<CameraProps> = ({
 
     try {
       setIsRecording(true);
+      setCanStopRecording(false); // Reset trạng thái có thể dừng quay
       if (isCanPause) {
         setIsPaused(false);
       }
       setRecordingDuration(0);
       await camera.current.startRecording({
+        videoCodec: 'h265',
+        fileType: 'mp4',
         onRecordingFinished: async (video) => {
           const path = video.path.replace('file://', '');
           const stat = await RNFS.stat(path);
@@ -214,8 +267,10 @@ export const CameraComponent: React.FC<CameraProps> = ({
             ...video,
             size: stat?.size,
           };
+
           onVideoRecorded?.(videoFile);
           setIsRecording(false);
+          setCanStopRecording(false);
           if (isCanPause) {
             setIsPaused(false);
           }
@@ -224,6 +279,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
         onRecordingError: (error) => {
           onError?.(`Recording error: ${error.message}`);
           setIsRecording(false);
+          setCanStopRecording(false);
           if (isCanPause) {
             setIsPaused(false);
           }
@@ -234,6 +290,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
     } catch (error) {
       onError?.('Failed to start recording');
       setIsRecording(false);
+      setCanStopRecording(false);
       if (isCanPause) {
         setIsPaused(false);
       }
@@ -248,21 +305,6 @@ export const CameraComponent: React.FC<CameraProps> = ({
     onError,
     isCanPause,
   ]);
-
-  const stopRecording = useCallback(async () => {
-    if (!camera.current || !isRecording) return;
-
-    try {
-      await camera.current.stopRecording();
-    } catch (error) {
-      onError?.('Failed to stop recording');
-      setIsRecording(false);
-      if (isCanPause) {
-        setIsPaused(false);
-      }
-      setRecordingDuration(0);
-    }
-  }, [camera, isRecording, onError, isCanPause]);
 
   const pauseRecording = useCallback(async () => {
     if (!camera.current || !isRecording || isPaused) return;
@@ -425,6 +467,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
         pauseRecording={pauseRecording}
         resumeRecording={resumeRecording}
         isCanPause={isCanPause}
+        canStopRecording={canStopRecording}
       />
 
       {/* Recording Indicator */}
@@ -437,6 +480,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
             {formatDuration(recordingDuration)} {isPaused ? '(Paused)' : ''}
             {!hasAudioPermission && audio ? '(No Audio)' : ''}
           </Text>
+          <Text style={styles.timeLimitText}>Max: {maxRecordingTime}s</Text>
         </View>
       )}
     </View>
@@ -599,6 +643,13 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '600',
+  },
+  timeLimitText: {
+    color: '#FFFFFF',
+    fontSize: 10,
+    fontWeight: '400',
+    opacity: 0.8,
+    marginTop: 2,
   },
   closeButtonNotPermission: {
     position: 'absolute',

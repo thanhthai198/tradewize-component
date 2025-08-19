@@ -14,6 +14,8 @@ export interface CameraProps {
     audio?: boolean;
     initialZoom?: number;
     isCanPause?: boolean;
+    minRecordingTime?: number;
+    maxRecordingTime?: number;
 }
 export declare const CameraComponent: React.FC<CameraProps>;
 export default CameraComponent;

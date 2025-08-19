@@ -148,6 +148,8 @@ export const CameraExample: React.FC = () => {
           onClose={() => setShowCamera(false)}
           flashMode="off"
           audio={audioEnabled}
+          minRecordingTime={3}
+          maxRecordingTime={60}
         />
       </Modal>
     </ScrollView>

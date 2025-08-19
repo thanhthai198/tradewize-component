@@ -6,6 +6,7 @@ interface SnapScrollViewProps {
     isRecording?: boolean;
     isPaused?: boolean;
     isCanPause?: boolean;
+    canStopRecording?: boolean;
     stopRecording?: ((event: GestureResponderEvent) => void) | undefined;
     startRecording?: ((event: GestureResponderEvent) => void) | undefined;
     pauseRecording?: ((event: GestureResponderEvent) => void) | undefined;
