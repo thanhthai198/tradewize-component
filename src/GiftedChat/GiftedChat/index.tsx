@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {
   createRef,
   useEffect,
@@ -669,6 +670,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                   onRequestClose={() => setIsImageViewerVisible(false)}
                 />
                 <VideoModal
+                  txtSkipButton={'X'}
                   visible={isShowVideoModal}
                   onClose={() => setIsShowVideoModal(false)}
                   subtitle={{}}
@@ -697,6 +699,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                   }}
                 />
                 <CameraModal
+                  isCanPause={false}
                   onVideoRecorded={async (video) => {
                     const getThumbnail = await generateThumbnails([
                       {
