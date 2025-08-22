@@ -243,9 +243,8 @@ export function MessageFile({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    paddingHorizontal: 8,
-    paddingTop: 8,
-    marginBottom: 4,
+    marginVertical: 4,
+    paddingHorizontal: 4,
   },
   mediaItem: {
     borderRadius: 8,

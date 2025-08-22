@@ -104,12 +104,7 @@ const Bubble = <TMessage extends IMessage = IMessage>(
               pageX: number,
               pageY: number
             ) => {
-              const message = {
-                ...currentMessage,
-                file: refArrThumbnail?.current,
-              };
-
-              onLongPressReaction?.(message, {
+              onLongPressReaction?.(currentMessage, {
                 x,
                 y,
                 width,
@@ -339,16 +334,19 @@ const Bubble = <TMessage extends IMessage = IMessage>(
     const isCurrentUser = currentMessage.user._id === props?.user?._id;
 
     const reactionPosition = isCurrentUser ? 'right' : 'left';
+    const reactionEmoji = [
+      ...new Set(currentMessage?.reactionEmoji?.map((item) => item?.reaction)),
+    ];
 
-    if (currentMessage?.reactionEmoji) {
+    if (reactionEmoji && reactionEmoji?.length > 0) {
       return (
         <View
           style={[
             {
               backgroundColor: Color.white,
               position: 'absolute',
-              width: 32,
-              height: 20,
+              minWidth: 18,
+              height: 16,
               borderRadius: 12,
               justifyContent: 'center',
               alignItems: 'center',
@@ -361,16 +359,26 @@ const Bubble = <TMessage extends IMessage = IMessage>(
               shadowOpacity: 0.25,
               shadowRadius: 3.84,
               elevation: 3,
+              flexDirection: 'row',
+              gap: 2,
+              paddingHorizontal: 4,
             },
             reactionPosition === 'right' && {
-              left: 4,
+              left: -8,
             },
             reactionPosition === 'left' && {
-              right: 4,
+              right: 12,
             },
           ]}
         >
-          <Text style={{ fontSize: 12 }}>{currentMessage.reactionEmoji}</Text>
+          {reactionEmoji?.map((item, index) => (
+            <Text key={index} style={{ fontSize: 10 }}>
+              {item}
+            </Text>
+          ))}
+          <Text style={{ fontSize: 12 }}>
+            {currentMessage?.reactionEmoji?.length}
+          </Text>
         </View>
       );
     }
@@ -448,6 +456,10 @@ const Bubble = <TMessage extends IMessage = IMessage>(
                 style={[
                   styles[position].bottom,
                   bottomContainerStyle?.[position],
+                  currentMessage?.reactionEmoji &&
+                    currentMessage?.reactionEmoji?.length > 0 && {
+                      marginBottom: 8,
+                    },
                 ]}
               >
                 {renderUsername()}

@@ -46,10 +46,12 @@ export function MessageReply({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Color.leftBubbleBackground,
+    backgroundColor: 'rgba(0, 0, 0, 0.02)',
     minWidth: getScreenWidth() * 0.12,
-    borderRadius: 16,
+    borderRadius: 8,
     marginBottom: -4,
+    borderWidth: 0.5,
+    borderColor: 'rgba(0, 0, 0, 0.05)',
   },
   space: {
     height: 4,

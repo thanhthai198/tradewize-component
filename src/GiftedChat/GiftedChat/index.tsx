@@ -542,16 +542,9 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
 
   const handleReactionEmoji = useCallback(
     (emoji: string, messageId: string) => {
-      const newArrMessage = arrMessage?.map((item) => {
-        if (item?._id?.toString() === messageId) {
-          return { ...item, reactionEmoji: emoji };
-        }
-        return item;
-      });
-      setArrMessage(newArrMessage);
       onReactionEmoji?.(emoji, messageId);
     },
-    [arrMessage, onReactionEmoji]
+    [onReactionEmoji]
   );
 
   const handleActionReaction = useCallback(

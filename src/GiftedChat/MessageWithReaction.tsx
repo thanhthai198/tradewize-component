@@ -68,23 +68,17 @@ export const MessageWithReaction = ({
       return {
         top,
         right: 16,
-        width: position.width - 24,
-        height: position.height,
       };
     }
 
     return {
       top,
       left: position.pageX,
-      width: position.width - 24,
-      height: position.height,
     };
   }, [
     isMyMessage,
     position.pageX,
     position.pageY,
-    position.width,
-    position.height,
     isExceedsScreenHeight,
     differenceLevel,
   ]);
@@ -312,7 +306,7 @@ const styles = StyleSheet.create({
   message: {
     position: 'absolute',
     zIndex: 1,
-    borderRadius: 16,
+    borderRadius: 8,
     backgroundColor: Color.white,
     minWidth: getScreenWidth() * 0.19,
   },

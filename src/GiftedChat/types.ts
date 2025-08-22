@@ -73,7 +73,7 @@ export interface IMessage {
   pending?: boolean;
   quickReplies?: QuickReplies;
   isLast?: boolean;
-  reactionEmoji?: string;
+  reactionEmoji?: { id: string; reaction: string; reactionType: string }[];
   messageReply?: IMessage;
   isSending?: boolean;
   errorMessage?: string;
