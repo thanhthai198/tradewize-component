@@ -335,7 +335,12 @@ const Bubble = <TMessage extends IMessage = IMessage>(
 
     const reactionPosition = isCurrentUser ? 'right' : 'left';
     const reactionEmoji = [
-      ...new Set(currentMessage?.reactionEmoji?.map((item) => item?.reaction)),
+      ...new Set(
+        (Array.isArray(currentMessage?.reactionEmoji)
+          ? currentMessage.reactionEmoji
+          : []
+        ).map((item) => item?.reaction)
+      ),
     ];
 
     if (reactionEmoji && reactionEmoji?.length > 0) {

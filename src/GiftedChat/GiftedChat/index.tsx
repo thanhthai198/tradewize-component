@@ -654,6 +654,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                   right: 0,
                   bottom: 0,
                   pointerEvents: 'box-none',
+                  backgroundColor: 'transparent',
                 }}
               >
                 <ImageView

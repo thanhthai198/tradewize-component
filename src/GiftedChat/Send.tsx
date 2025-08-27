@@ -87,6 +87,7 @@ export const Send = <TMessage extends IMessage = IMessage>({
           <Image
             source={iconSend ? iconSend : require('./assets/send.png')}
             style={[{ width: 24, height: 24 }, iconStyle]}
+            tintColor={Color.defaultBlue}
           />
         )}
       </View>
