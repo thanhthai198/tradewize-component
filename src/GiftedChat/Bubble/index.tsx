@@ -345,14 +345,15 @@ const Bubble = <TMessage extends IMessage = IMessage>(
             {
               backgroundColor: Color.white,
               position: 'absolute',
-              minWidth: 18,
-              height: 16,
+              minWidth: 36,
+              width: 18 * reactionEmoji?.length + 12,
+              height: 18,
               borderRadius: 12,
               justifyContent: 'center',
               alignItems: 'center',
               borderWidth: 1,
               borderColor: Color.leftBubbleBackground,
-              bottom: -30,
+              bottom: -32,
               zIndex: 10,
               shadowColor: Color.leftBubbleBackground,
               shadowOffset: { width: 0, height: 1 },
@@ -361,13 +362,16 @@ const Bubble = <TMessage extends IMessage = IMessage>(
               elevation: 3,
               flexDirection: 'row',
               gap: 2,
-              paddingHorizontal: 4,
             },
             reactionPosition === 'right' && {
-              left: -8,
+              left: reactionEmoji?.length
+                ? -12 * (reactionEmoji?.length - 1)
+                : -12,
             },
             reactionPosition === 'left' && {
-              right: 12,
+              right: reactionEmoji?.length
+                ? -12 * (reactionEmoji?.length - 1)
+                : -12,
             },
           ]}
         >
