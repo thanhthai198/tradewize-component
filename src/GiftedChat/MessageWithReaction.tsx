@@ -231,7 +231,7 @@ export const MessageWithReaction = ({
         />
       </Pressable>
 
-      {isShowEmoji && (
+      {isShowEmoji && user?._id !== message?.user?._id && (
         <View style={[styles.reactionIcon, styleReactionIcon()]}>
           {EMOJI_REACTIONS?.map((emoji) => (
             <Pressable
