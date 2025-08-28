@@ -33,6 +33,7 @@ export interface MessageWithReactionProps {
     pageY: number;
   };
   user: User;
+  isShowEmoji?: boolean;
   onReactionEmoji?: (emoji: string, messageId: string) => void;
   onActionReaction?: (message: IMessage, action: string) => void;
 }
@@ -47,6 +48,7 @@ export const MessageWithReaction = ({
   user,
   onReactionEmoji,
   onActionReaction,
+  isShowEmoji = true,
 }: MessageWithReactionProps) => {
   delete message.quickReplies;
   const [isExceedsScreenHeight, setIsExceedsScreenHeight] = useState(false);
@@ -229,20 +231,22 @@ export const MessageWithReaction = ({
         />
       </Pressable>
 
-      <View style={[styles.reactionIcon, styleReactionIcon()]}>
-        {EMOJI_REACTIONS?.map((emoji) => (
-          <Pressable
-            key={emoji}
-            onPress={() => {
-              onClose();
-              onReactionEmoji?.(emoji, message?._id?.toString());
-            }}
-            style={styles.reactionIconItem}
-          >
-            <Text style={styles.reactionIconText}>{emoji}</Text>
-          </Pressable>
-        ))}
-      </View>
+      {isShowEmoji && (
+        <View style={[styles.reactionIcon, styleReactionIcon()]}>
+          {EMOJI_REACTIONS?.map((emoji) => (
+            <Pressable
+              key={emoji}
+              onPress={() => {
+                onClose();
+                onReactionEmoji?.(emoji, message?._id?.toString());
+              }}
+              style={styles.reactionIconItem}
+            >
+              <Text style={styles.reactionIconText}>{emoji}</Text>
+            </Pressable>
+          ))}
+        </View>
+      )}
 
       {/* Hiển thị message ở vị trí đã đo */}
       <View style={[styles.message, styleMessage()]}>

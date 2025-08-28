@@ -113,4 +113,5 @@ export interface GiftedChatProps<TMessage extends IMessage> extends Partial<Mess
     onReactionEmoji?(emoji: string, messageId: string): void;
     onFocusInput?: () => void;
     onBlurInput?: () => void;
+    isShowEmojiReaction?: boolean;
 }

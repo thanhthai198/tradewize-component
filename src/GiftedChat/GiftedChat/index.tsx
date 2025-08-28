@@ -103,6 +103,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
     labelReaction,
     onFocusInput,
     onBlurInput,
+    isShowEmojiReaction = true,
   } = props;
 
   const actionSheetRef = useRef<ActionSheetProviderRef>(null);
@@ -673,6 +674,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                   isProgressBar={false}
                 />
                 <MessageWithReaction
+                  isShowEmoji={isShowEmojiReaction}
                   onReactionEmoji={handleReactionEmoji}
                   onActionReaction={handleActionReaction}
                   user={user as User}

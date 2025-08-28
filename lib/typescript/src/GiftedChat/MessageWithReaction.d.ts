@@ -14,7 +14,8 @@ export interface MessageWithReactionProps {
         pageY: number;
     };
     user: User;
+    isShowEmoji?: boolean;
     onReactionEmoji?: (emoji: string, messageId: string) => void;
     onActionReaction?: (message: IMessage, action: string) => void;
 }
-export declare const MessageWithReaction: ({ isVisible, onClose, message, position, user, onReactionEmoji, onActionReaction, }: MessageWithReactionProps) => React.JSX.Element;
+export declare const MessageWithReaction: ({ isVisible, onClose, message, position, user, onReactionEmoji, onActionReaction, isShowEmoji, }: MessageWithReactionProps) => React.JSX.Element;

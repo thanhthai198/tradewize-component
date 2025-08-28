@@ -212,4 +212,6 @@ export interface GiftedChatProps<TMessage extends IMessage>
   onFocusInput?: () => void;
   // phần này để làm blur input
   onBlurInput?: () => void;
+  // phần này để làm show emoji reaction
+  isShowEmojiReaction?: boolean;
 }
