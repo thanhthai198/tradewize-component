@@ -206,13 +206,12 @@ export const SnapScrollView = (props: SnapScrollViewProps) => {
     canStopRecording,
   ]);
 
-  const backgroundColor = isRecording ? 'transparent' : '#000000';
-
   return (
     <View
       style={[
         styles.bottomControls,
-        { paddingBottom: bottom, backgroundColor },
+        // eslint-disable-next-line react-native/no-inline-styles
+        { paddingBottom: bottom, backgroundColor: 'transparent' },
       ]}
     >
       <FlatList

@@ -401,7 +401,8 @@ export const CameraComponent: React.FC<CameraProps> = ({
   const showAudioWarning =
     audio && !hasAudioPermission && (mode === 'video' || mode === 'both');
 
-  const height = isRecording ? getScreenHeight() : getScreenHeight() * 0.8;
+  // const height = isRecording ? getScreenHeight() : getScreenHeight() * 0.8;
+  const height = getScreenHeight();
   const flashButtonColor =
     currentFlashMode === 'off' ? 'rgba(0, 0, 0, 0.5)' : '#EDE27D';
 
