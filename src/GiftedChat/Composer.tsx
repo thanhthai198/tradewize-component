@@ -123,7 +123,7 @@ export const Composer = forwardRef(
     }, [lineCount, composerHeight]);
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { opacity: disableComposer ? 0.5 : 1 }]}>
         {isFocused && !isPickerOpen && (
           <ButtonBase onPress={() => setIsPickerOpen(true)}>
             <Image
@@ -136,7 +136,10 @@ export const Composer = forwardRef(
         )}
         {(!isFocused || isPickerOpen) && (
           <>
-            <ButtonBase onPress={() => onPressPickMedia?.('camera')}>
+            <ButtonBase
+              disabled={disableComposer}
+              onPress={() => onPressPickMedia?.('camera')}
+            >
               <Image
                 tintColor={Color.defaultBlue}
                 resizeMode="contain"
@@ -145,7 +148,10 @@ export const Composer = forwardRef(
               />
             </ButtonBase>
 
-            <ButtonBase onPress={() => onPressPickMedia?.('pick')}>
+            <ButtonBase
+              disabled={disableComposer}
+              onPress={() => onPressPickMedia?.('pick')}
+            >
               <Image
                 tintColor={Color.defaultBlue}
                 resizeMode="contain"

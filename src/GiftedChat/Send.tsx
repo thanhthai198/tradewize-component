@@ -41,7 +41,6 @@ export interface SendProps<TMessage extends IMessage> {
   textStyle?: StyleProp<TextStyle>;
   children?: React.ReactNode;
   alwaysShowSend?: boolean;
-  disabled?: boolean;
   iconStyle?: StyleProp<ImageStyle>;
   sendButtonProps?: Partial<TouchableOpacityProps>;
   iconSend?: ImageSourcePropType;
@@ -49,6 +48,7 @@ export interface SendProps<TMessage extends IMessage> {
     messages: Partial<TMessage> | Partial<TMessage>[],
     shouldResetInputToolbar: boolean
   ): void;
+  disableComposer?: boolean;
 }
 
 export const Send = <TMessage extends IMessage = IMessage>({
@@ -56,11 +56,11 @@ export const Send = <TMessage extends IMessage = IMessage>({
   containerStyle,
   children,
   alwaysShowSend = false,
-  disabled = false,
   sendButtonProps,
   onSend,
   iconStyle,
   iconSend,
+  disableComposer,
 }: SendProps<TMessage>) => {
   const handleOnPress = useCallback(() => {
     onSend?.({ text: text?.trim() } as Partial<TMessage>, true);
@@ -77,9 +77,13 @@ export const Send = <TMessage extends IMessage = IMessage>({
       testID={TEST_ID.SEND_TOUCHABLE}
       accessible
       accessibilityLabel="send"
-      style={[styles.container, containerStyle]}
+      style={[
+        styles.container,
+        containerStyle,
+        { opacity: disableComposer ? 0.5 : 1 },
+      ]}
       onPress={handleOnPress}
-      disabled={disabled}
+      disabled={disableComposer}
       {...sendButtonProps}
     >
       <View>

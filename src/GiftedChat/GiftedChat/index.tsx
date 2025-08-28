@@ -513,6 +513,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
         }}
         fileMedia={fileMedia}
         onPressPickMedia={onPressPickMedia}
+        disableComposer={props.disableComposer}
         {...inputToolbarProps}
       />
     );
