@@ -444,6 +444,14 @@ const Bubble = <TMessage extends IMessage = IMessage>(
         }
       }}
     >
+      {currentMessage?.isShowName && (
+        <View style={styles.content.layoutName}>
+          <Text numberOfLines={1} style={styles.content.name}>
+            {currentMessage?.user?.name}
+          </Text>
+        </View>
+      )}
+
       {renderMessageReply()}
       <View
         style={[

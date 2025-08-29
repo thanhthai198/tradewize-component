@@ -67,6 +67,15 @@ const styles = {
       flexDirection: 'row',
       marginHorizontal: 10,
     },
+    layoutName: {
+      paddingVertical: 2,
+      width: '80%',
+    },
+    name: {
+      fontSize: 12,
+      color: Color.black,
+      fontWeight: 'semibold',
+    },
   }),
 };
 

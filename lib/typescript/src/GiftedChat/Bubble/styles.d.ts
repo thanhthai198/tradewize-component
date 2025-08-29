@@ -64,6 +64,15 @@ declare const styles: {
             flexDirection: "row";
             marginHorizontal: number;
         };
+        layoutName: {
+            paddingVertical: number;
+            width: "80%";
+        };
+        name: {
+            fontSize: number;
+            color: string;
+            fontWeight: "semibold";
+        };
     };
 };
 export default styles;

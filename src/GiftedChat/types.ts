@@ -78,6 +78,7 @@ export interface IMessage {
   messageReply?: IMessage;
   isSending?: boolean;
   errorMessage?: string;
+  isShowName?: boolean;
 }
 
 export type IChatMessage = IMessage;

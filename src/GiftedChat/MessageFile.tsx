@@ -301,6 +301,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginVertical: 4,
     paddingHorizontal: 4,
+    borderRadius: 8,
   },
   mediaItem: {
     borderRadius: 8,
