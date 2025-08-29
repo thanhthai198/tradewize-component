@@ -8,6 +8,11 @@ import {
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
+import Animated, {
+  Layout,
+  SlideInDown,
+  SlideOutUp,
+} from 'react-native-reanimated';
 
 import { Composer, type ComposerProps } from './Composer';
 import { Send, type SendProps } from './Send';
@@ -116,76 +121,89 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
     if (!fileMedia?.length) return null;
 
     return (
-      <View style={styles.previewFile}>
-        {fileMedia?.map((item) => {
+      <Animated.View
+        style={styles.previewFile}
+        entering={SlideInDown.duration(300).springify()}
+        exiting={SlideOutUp.duration(300).springify()}
+        layout={Layout.springify()}
+      >
+        {fileMedia?.map((item, index) => {
           return (
-            <TouchableOpacity
-              onPress={() => {
-                onPressFile?.(item);
-              }}
+            <Animated.View
               key={item.id}
-              style={[
-                styles.previewFileItem,
-                {
-                  width: getScreenWidth() * 0.22,
-                  height: getScreenWidth() * 0.22,
-                },
-              ]}
+              entering={SlideInDown.delay(index * 100)
+                .duration(300)
+                .springify()}
+              exiting={SlideOutUp.duration(300).springify()}
+              layout={Layout.springify()}
             >
               <TouchableOpacity
                 onPress={() => {
-                  onRemoveFile?.(item);
+                  onPressFile?.(item);
                 }}
                 style={[
-                  styles.removeFile,
+                  styles.previewFileItem,
                   {
-                    width: getScreenWidth() * 0.06,
-                    height: getScreenWidth() * 0.06,
+                    width: getScreenWidth() * 0.22,
+                    height: getScreenWidth() * 0.22,
                   },
                 ]}
               >
-                <Text style={styles.removeFileText}>X</Text>
-              </TouchableOpacity>
-
-              <FastImage
-                source={{ uri: item.thumbnailPreview }}
-                style={styles.previewFileItemImage}
-              />
-
-              {item.typeFile === 'video' && (
-                <View
+                <TouchableOpacity
+                  onPress={() => {
+                    onRemoveFile?.(item);
+                  }}
                   style={[
-                    styles.iconPlayContainer,
+                    styles.removeFile,
                     {
-                      width: getScreenWidth() * 0.1,
-                      height: getScreenWidth() * 0.1,
-                      top:
-                        (getScreenWidth() * 0.22) / 2 -
-                        (getScreenWidth() * 0.1) / 2,
-                      right:
-                        (getScreenWidth() * 0.22) / 2 -
-                        (getScreenWidth() * 0.1) / 2,
+                      width: getScreenWidth() * 0.06,
+                      height: getScreenWidth() * 0.06,
                     },
                   ]}
                 >
-                  <FastImage
-                    source={require('./assets/play.png')}
-                    style={styles.iconPlay}
-                  />
-                </View>
-              )}
+                  <Text style={styles.removeFileText}>X</Text>
+                </TouchableOpacity>
 
-              {item.typeFile === 'video' && (
-                <View style={styles.previewFileItemVideo}>
-                  <Text style={styles.previewFileItemVideoText}>
-                    {formatDurationSmart(item?.duration || 0)}
-                  </Text>
-                </View>
-              )}
-            </TouchableOpacity>
+                <FastImage
+                  source={{ uri: item.thumbnailPreview }}
+                  style={styles.previewFileItemImage}
+                />
+
+                {item.typeFile === 'video' && (
+                  <View
+                    style={[
+                      styles.iconPlayContainer,
+                      {
+                        width: getScreenWidth() * 0.1,
+                        height: getScreenWidth() * 0.1,
+                        top:
+                          (getScreenWidth() * 0.22) / 2 -
+                          (getScreenWidth() * 0.1) / 2,
+                        right:
+                          (getScreenWidth() * 0.22) / 2 -
+                          (getScreenWidth() * 0.1) / 2,
+                      },
+                    ]}
+                  >
+                    <FastImage
+                      source={require('./assets/play.png')}
+                      style={styles.iconPlay}
+                    />
+                  </View>
+                )}
+
+                {item.typeFile === 'video' && (
+                  <View style={styles.previewFileItemVideo}>
+                    <Text style={styles.previewFileItemVideoText}>
+                      {formatDurationSmart(item?.duration || 0)}
+                    </Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            </Animated.View>
           );
         })}
-      </View>
+      </Animated.View>
     );
   }, [fileMedia, onRemoveFile, onPressFile]);
 

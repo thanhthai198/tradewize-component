@@ -36,6 +36,7 @@ export interface QuickReplies {
     keepIt?: boolean;
 }
 export interface FileMessage {
+    clientId?: string;
     uri: string;
     id?: string;
     size?: number;

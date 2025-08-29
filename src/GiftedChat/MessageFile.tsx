@@ -32,6 +32,147 @@ interface MessageFileProps {
   onLongPressFile?: () => void;
 }
 
+// ✅ tính toán size cố định dựa vào messageWidth + isShowAll
+const calcSize = (
+  isShowAll: boolean | undefined,
+  messageWidth?: { width: number } | null
+) => {
+  const width = Number(messageWidth?.width) || getScreenWidth(); // fallback an toàn
+
+  const sizeMedia = width / 4.65 - GAP_MEDIA * 3.65;
+  const sizeMediaShowAll = width / 4 - GAP_MEDIA * 3;
+
+  if (isShowAll) return sizeMediaShowAll;
+  if (sizeMedia < getScreenWidth() * 0.1) return getScreenWidth() * 0.15;
+  return sizeMedia;
+};
+
+interface MediaItemProps {
+  item: FileMessage;
+  index: number;
+  size: number;
+  arrMedia: FileMessage[];
+  isShowAll?: boolean;
+  isReaction?: boolean;
+  currentMessage: IMessage;
+  onPressFile?: (
+    file: FileMessage,
+    isShowAll?: boolean,
+    arrMedia?: IMessage
+  ) => void;
+  onLongPressFile?: () => void;
+}
+
+// ✅ MediaItem chỉ nhận size từ ngoài → ổn định layout
+const MediaItem = memo(
+  ({
+    item,
+    index,
+    size,
+    arrMedia,
+    isShowAll,
+    isReaction,
+    currentMessage,
+    onPressFile,
+    onLongPressFile,
+  }: MediaItemProps) => {
+    const progressNum = Number(item?.progress);
+    const safeProgress = Number.isFinite(progressNum)
+      ? Math.max(0, Math.min(100, progressNum))
+      : 0;
+
+    return (
+      <>
+        <ButtonBase
+          onLongPress={onLongPressFile}
+          onPress={() =>
+            onPressFile?.(item, arrMedia?.length > 8 && index === 7, {
+              ...currentMessage,
+              file: arrMedia,
+            })
+          }
+          disabled={
+            isReaction || (item?.isLoading && item?.typeFile === 'video')
+          }
+          style={[
+            styles.mediaItem,
+            {
+              width: size,
+              height: size,
+            },
+          ]}
+        >
+          {(item?.thumbnailPreview || item?.uri || item?.url) && (
+            <FastImage
+              source={{
+                uri: item?.thumbnailPreview || item?.uri || item?.url,
+                priority: FastImage.priority.low,
+              }}
+              style={styles.image}
+            />
+          )}
+
+          {item?.typeFile === 'video' && (
+            <View
+              style={[
+                styles.playIcon,
+                (safeProgress <= 0 ||
+                  safeProgress >= 100 ||
+                  item?.isLoading) && {
+                  width: size * 0.5,
+                  height: size * 0.5,
+                  borderRadius: (size * 0.5) / 2,
+                },
+              ]}
+            >
+              {item?.isLoading ? (
+                <ActivityIndicator size="small" color={Color.defaultBlue} />
+              ) : (
+                (safeProgress <= 0 || safeProgress >= 100) && (
+                  <FastImage
+                    source={require('./assets/play.png')}
+                    resizeMode={FastImage.resizeMode.cover}
+                    style={{
+                      width: (size * 0.5) / 2,
+                      height: (size * 0.5) / 2,
+                    }}
+                  />
+                )
+              )}
+            </View>
+          )}
+
+          {arrMedia?.length > 8 && index === 7 && !isShowAll && (
+            <View style={styles.reactionIcon}>
+              <Text style={styles.reactionIconText}>
+                + {arrMedia?.length - 8 > 99 ? '99+' : arrMedia?.length - 8}
+              </Text>
+            </View>
+          )}
+        </ButtonBase>
+
+        {!item?.isLoading && safeProgress > 0 && safeProgress < 100 && (
+          <View style={[styles.progress, { width: size, height: size }]}>
+            <AnimatedCircularProgress
+              size={size * 0.3}
+              width={3}
+              fill={safeProgress}
+              tintColor={Color.white}
+              backgroundColor={Color.defaultColor}
+            />
+          </View>
+        )}
+      </>
+    );
+  },
+  (prev, next) =>
+    prev.item.uri === next.item.uri &&
+    prev.item.thumbnailPreview === next.item.thumbnailPreview &&
+    prev.item.progress === next.item.progress &&
+    prev.item.isLoading === next.item.isLoading &&
+    prev.size === next.size // ✅ so sánh luôn size
+);
+
 export function MessageFile({
   onPressFile,
   messageWidth,
@@ -46,125 +187,6 @@ export function MessageFile({
     currentMessage?.file || []
   );
 
-  // eslint-disable-next-line react/no-unstable-nested-components
-  const MediaItem = memo(
-    ({ item, index }: { item: FileMessage; index: number }) => {
-      const sizeMedia = Number(messageWidth?.width) / 4.65 - GAP_MEDIA * 3.65;
-      const sizeMediaShowAll = Number(messageWidth?.width) / 4 - GAP_MEDIA * 3;
-      const size = isShowAll
-        ? sizeMediaShowAll
-        : sizeMedia < getScreenWidth() * 0.1
-          ? getScreenWidth() * 0.15
-          : sizeMedia;
-      const raw = item?.progress;
-      const progressNum = Number(raw);
-      const safeProgress = Number.isFinite(progressNum)
-        ? Math.max(0, Math.min(100, progressNum))
-        : 0;
-      const safeSize = Number.isFinite(size) ? size : 120;
-
-      return (
-        <View>
-          <ButtonBase
-            onLongPress={onLongPressFile}
-            onPress={() =>
-              onPressFile?.(item, arrMedia?.length > 8 && index === 7, {
-                ...currentMessage,
-                file: arrMedia,
-              })
-            }
-            disabled={
-              isReaction || (item?.isLoading && item?.typeFile === 'video')
-            }
-            style={[
-              styles.mediaItem,
-              {
-                width: size,
-                height: size,
-              },
-            ]}
-          >
-            {(item?.thumbnailPreview || item?.uri || item?.url) && (
-              <FastImage
-                source={{
-                  uri: item?.thumbnailPreview || item?.uri || item?.url,
-                  priority: FastImage.priority.low,
-                }}
-                style={styles.image}
-              />
-            )}
-
-            {item?.typeFile === 'video' && (
-              <View
-                style={[
-                  styles.playIcon,
-                  (safeProgress <= 0 ||
-                    safeProgress >= 100 ||
-                    item?.isLoading) && {
-                    width: sizeMedia * 0.5,
-                    height: sizeMedia * 0.5,
-                    borderRadius: (sizeMedia * 0.5) / 2,
-                  },
-                ]}
-              >
-                {item?.isLoading ? (
-                  <ActivityIndicator size="small" color={Color.defaultBlue} />
-                ) : (
-                  <>
-                    {(safeProgress <= 0 || safeProgress >= 100) && (
-                      <FastImage
-                        source={require('./assets/play.png')}
-                        resizeMode={FastImage.resizeMode.cover}
-                        style={[
-                          styles.iconPlay,
-                          {
-                            width: (sizeMedia * 0.5) / 2,
-                            height: (sizeMedia * 0.5) / 2,
-                          },
-                        ]}
-                      />
-                    )}
-                  </>
-                )}
-              </View>
-            )}
-
-            {arrMedia?.length > 8 && index === 7 && !isShowAll && (
-              <View style={styles.reactionIcon}>
-                <Text style={styles.reactionIconText}>
-                  + {arrMedia?.length - 8 > 99 ? '99+' : arrMedia?.length - 8}
-                </Text>
-              </View>
-            )}
-          </ButtonBase>
-
-          {!item?.isLoading && safeProgress > 0 && safeProgress < 100 && (
-            <View
-              style={[styles.progress, { width: safeSize, height: safeSize }]}
-            >
-              <AnimatedCircularProgress
-                size={safeSize * 0.3}
-                width={3}
-                fill={safeProgress}
-                tintColor={Color.white}
-                backgroundColor={Color.defaultColor}
-              />
-            </View>
-          )}
-        </View>
-      );
-    },
-    (prev, next) => {
-      // So sánh shallow để tránh render lại khi không cần thiết
-      return (
-        prev.item.uri === next.item.uri &&
-        prev.item.thumbnailPreview === next.item.thumbnailPreview &&
-        prev.item.progress === next.item.progress &&
-        prev.item.isLoading === next.item.isLoading
-      );
-    }
-  );
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -172,32 +194,26 @@ export function MessageFile({
         const getFileComplete = file?.filter((item) => item.uri);
         if (!getFileComplete) return;
 
-        // isLoading: true cho video
-        const newArrMediaLoading = getFileComplete.map((item) => {
-          if (item.typeFile === 'video') {
-            const isLoading = !item?.thumbnailPreview;
-            return { ...item, isLoading };
-          }
-          return item;
-        });
+        const newArrMediaLoading = getFileComplete.map((item) =>
+          item.typeFile === 'video'
+            ? { ...item, isLoading: !item?.thumbnailPreview }
+            : item
+        );
 
         setArrMedia(newArrMediaLoading);
 
-        // Lấy danh sách video để generate thumbnail
         const arrVideo = getFileComplete.filter(
           (item) => item.typeFile === 'video'
         );
-        const result = await generateThumbnails(arrVideo); // generate tất cả video một lần
+        const result = await generateThumbnails(arrVideo);
 
         const newArrMedia = getFileComplete.map((item) => {
           if (item.typeFile === 'video') {
-            // Tìm thumbnail tương ứng theo vị trí trong arrVideo
             const videoIndex = arrVideo.findIndex((v) => v.uri === item.uri);
             const path = result?.find((res) => res?.index === videoIndex)?.path;
-            // isLoading: false cho video
             return { ...item, thumbnailPreview: path, isLoading: false };
           }
-          return item; // Không phải video thì giữ nguyên
+          return item;
         });
         onSaveThumbnail?.(newArrMedia);
         setArrMedia(newArrMedia);
@@ -209,32 +225,40 @@ export function MessageFile({
   }, [currentMessage, onSaveThumbnail]);
 
   const arrMediaShow = isShowAll ? arrMedia : arrMedia?.slice(0, 8);
+  const size = calcSize(!!isShowAll, messageWidth);
 
   return (
-    <View
-      onLayout={onLayout}
-      style={[
-        styles.container,
-        {
-          gap: GAP_MEDIA,
-        },
-      ]}
-    >
+    <View onLayout={onLayout} style={[styles.container, { gap: GAP_MEDIA }]}>
       <FlatList
         data={arrMediaShow || []}
         renderItem={({ item, index }) => (
-          <MediaItem item={item} index={index} />
+          <MediaItem
+            item={item}
+            index={index}
+            size={size}
+            arrMedia={arrMedia}
+            isShowAll={!!isShowAll}
+            isReaction={isReaction}
+            currentMessage={currentMessage}
+            onPressFile={onPressFile}
+            onLongPressFile={onLongPressFile}
+          />
         )}
-        keyExtractor={(item) => item?.uri?.toString()}
+        keyExtractor={(item) =>
+          item?.clientId?.toString() || item?.uri?.toString()
+        }
         numColumns={4}
         scrollEnabled={false}
-        onLayout={onLayout}
-        contentContainerStyle={styles.container}
         columnWrapperStyle={{ gap: GAP_MEDIA }}
         initialNumToRender={4}
         maxToRenderPerBatch={4}
         windowSize={5}
-        removeClippedSubviews={true}
+        removeClippedSubviews={false} // ✅ tránh flicker
+        getItemLayout={(_, index) => ({
+          length: size,
+          offset: Math.floor(index / 4) * size,
+          index,
+        })}
       />
     </View>
   );
@@ -259,9 +283,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
-  },
-  iconPlay: {
-    marginLeft: 4,
   },
   image: {
     width: '100%',

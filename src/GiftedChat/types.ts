@@ -44,6 +44,7 @@ export interface QuickReplies {
 }
 
 export interface FileMessage {
+  clientId?: string;
   uri: string;
   id?: string;
   size?: number;
