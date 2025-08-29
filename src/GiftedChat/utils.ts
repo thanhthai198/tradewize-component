@@ -44,7 +44,7 @@ export const generateThumbnails = async (videoList: FileMessage[]) => {
       try {
         const result = await createThumbnail({
           url: video.uri,
-          timeStamp: 1000,
+          timeStamp: 500,
         });
         return { index, path: result.path };
       } catch (e) {

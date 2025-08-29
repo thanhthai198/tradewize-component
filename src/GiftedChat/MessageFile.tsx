@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, useState, memo, useRef } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -187,6 +187,10 @@ export function MessageFile({
     currentMessage?.file || []
   );
 
+  // ✅ Cache để tránh tạo lại thumbnail
+  const thumbnailCache = useRef<Map<string, string>>(new Map());
+  const processedFiles = useRef<Set<string>>(new Set());
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -194,27 +198,55 @@ export function MessageFile({
         const getFileComplete = file?.filter((item) => item.uri);
         if (!getFileComplete) return;
 
-        const newArrMediaLoading = getFileComplete.map((item) =>
-          item.typeFile === 'video'
-            ? { ...item, isLoading: !item?.thumbnailPreview }
-            : item
+        // ✅ Chỉ xử lý những video chưa có thumbnail và chưa được xử lý
+        const videosNeedThumbnail = getFileComplete.filter(
+          (item) =>
+            item.typeFile === 'video' &&
+            !item?.thumbnailPreview &&
+            !processedFiles.current.has(item.uri)
         );
 
-        setArrMedia(newArrMediaLoading);
-
-        const arrVideo = getFileComplete.filter(
-          (item) => item.typeFile === 'video'
-        );
-        const result = await generateThumbnails(arrVideo);
-
-        const newArrMedia = getFileComplete.map((item) => {
-          if (item.typeFile === 'video') {
-            const videoIndex = arrVideo.findIndex((v) => v.uri === item.uri);
-            const path = result?.find((res) => res?.index === videoIndex)?.path;
-            return { ...item, thumbnailPreview: path, isLoading: false };
+        // ✅ Cập nhật loading state cho tất cả video chưa có thumbnail
+        const newArrMediaLoading = getFileComplete.map((item) => {
+          if (item.typeFile === 'video' && !item?.thumbnailPreview) {
+            const isProcessing = videosNeedThumbnail.some(
+              (v) => v.uri === item.uri
+            );
+            return { ...item, isLoading: isProcessing };
           }
           return item;
         });
+
+        setArrMedia(newArrMediaLoading);
+
+        // ✅ Chỉ tạo thumbnail cho những video cần thiết
+        if (videosNeedThumbnail.length > 0) {
+          const result = await generateThumbnails(videosNeedThumbnail);
+
+          // ✅ Cache thumbnail results
+          result.forEach((res, index) => {
+            const video = videosNeedThumbnail[index];
+            if (video && res.path) {
+              thumbnailCache.current.set(video.uri, res.path);
+              processedFiles.current.add(video.uri);
+            }
+          });
+        }
+
+        // ✅ Cập nhật final state với thumbnail từ cache hoặc mới tạo
+        const newArrMedia = getFileComplete.map((item) => {
+          if (item.typeFile === 'video') {
+            const cachedThumbnail = thumbnailCache.current.get(item.uri);
+            const thumbnail = item?.thumbnailPreview || cachedThumbnail || '';
+            return {
+              ...item,
+              thumbnailPreview: thumbnail,
+              isLoading: false,
+            };
+          }
+          return item;
+        });
+
         onSaveThumbnail?.(newArrMedia);
         setArrMedia(newArrMedia);
       } catch (error) {

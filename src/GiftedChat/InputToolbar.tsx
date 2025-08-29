@@ -121,89 +121,76 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
     if (!fileMedia?.length) return null;
 
     return (
-      <Animated.View
-        style={styles.previewFile}
-        entering={SlideInDown.duration(300).springify()}
-        exiting={SlideOutUp.duration(300).springify()}
-        layout={Layout.springify()}
-      >
-        {fileMedia?.map((item, index) => {
+      <View style={styles.previewFile}>
+        {fileMedia?.map((item) => {
           return (
-            <Animated.View
+            <TouchableOpacity
+              onPress={() => {
+                onPressFile?.(item);
+              }}
               key={item.id}
-              entering={SlideInDown.delay(index * 100)
-                .duration(300)
-                .springify()}
-              exiting={SlideOutUp.duration(300).springify()}
-              layout={Layout.springify()}
+              style={[
+                styles.previewFileItem,
+                {
+                  width: getScreenWidth() * 0.22,
+                  height: getScreenWidth() * 0.22,
+                },
+              ]}
             >
               <TouchableOpacity
                 onPress={() => {
-                  onPressFile?.(item);
+                  onRemoveFile?.(item);
                 }}
                 style={[
-                  styles.previewFileItem,
+                  styles.removeFile,
                   {
-                    width: getScreenWidth() * 0.22,
-                    height: getScreenWidth() * 0.22,
+                    width: getScreenWidth() * 0.06,
+                    height: getScreenWidth() * 0.06,
                   },
                 ]}
               >
-                <TouchableOpacity
-                  onPress={() => {
-                    onRemoveFile?.(item);
-                  }}
+                <Text style={styles.removeFileText}>X</Text>
+              </TouchableOpacity>
+
+              <FastImage
+                source={{ uri: item.thumbnailPreview }}
+                style={styles.previewFileItemImage}
+              />
+
+              {item.typeFile === 'video' && (
+                <View
                   style={[
-                    styles.removeFile,
+                    styles.iconPlayContainer,
                     {
-                      width: getScreenWidth() * 0.06,
-                      height: getScreenWidth() * 0.06,
+                      width: getScreenWidth() * 0.1,
+                      height: getScreenWidth() * 0.1,
+                      top:
+                        (getScreenWidth() * 0.22) / 2 -
+                        (getScreenWidth() * 0.1) / 2,
+                      right:
+                        (getScreenWidth() * 0.22) / 2 -
+                        (getScreenWidth() * 0.1) / 2,
                     },
                   ]}
                 >
-                  <Text style={styles.removeFileText}>X</Text>
-                </TouchableOpacity>
+                  <FastImage
+                    source={require('./assets/play.png')}
+                    style={styles.iconPlay}
+                  />
+                </View>
+              )}
 
-                <FastImage
-                  source={{ uri: item.thumbnailPreview }}
-                  style={styles.previewFileItemImage}
-                />
-
-                {item.typeFile === 'video' && (
-                  <View
-                    style={[
-                      styles.iconPlayContainer,
-                      {
-                        width: getScreenWidth() * 0.1,
-                        height: getScreenWidth() * 0.1,
-                        top:
-                          (getScreenWidth() * 0.22) / 2 -
-                          (getScreenWidth() * 0.1) / 2,
-                        right:
-                          (getScreenWidth() * 0.22) / 2 -
-                          (getScreenWidth() * 0.1) / 2,
-                      },
-                    ]}
-                  >
-                    <FastImage
-                      source={require('./assets/play.png')}
-                      style={styles.iconPlay}
-                    />
-                  </View>
-                )}
-
-                {item.typeFile === 'video' && (
-                  <View style={styles.previewFileItemVideo}>
-                    <Text style={styles.previewFileItemVideoText}>
-                      {formatDurationSmart(item?.duration || 0)}
-                    </Text>
-                  </View>
-                )}
-              </TouchableOpacity>
-            </Animated.View>
+              {item.typeFile === 'video' && (
+                <View style={styles.previewFileItemVideo}>
+                  <Text style={styles.previewFileItemVideoText}>
+                    {formatDurationSmart(item?.duration || 0)}
+                  </Text>
+                </View>
+              )}
+            </TouchableOpacity>
           );
         })}
-      </Animated.View>
+      </View>
     );
   }, [fileMedia, onRemoveFile, onPressFile]);
 
@@ -324,7 +311,13 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
           {renderAccessory(props)}
         </View>
       )}
-      {renderFileMedia}
+      <Animated.View
+        entering={SlideInDown.duration(300)}
+        exiting={SlideOutUp.duration(300)}
+        layout={Layout}
+      >
+        {renderFileMedia}
+      </Animated.View>
     </View>
   );
 }
