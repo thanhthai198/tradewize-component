@@ -5,6 +5,7 @@ import type { JSX } from 'react';
 import {
   findNodeHandle,
   Text,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   UIManager,
   View,
@@ -25,7 +26,6 @@ import styles from './styles';
 import { MessageFile } from '../MessageFile';
 import Color from '../Color';
 import { MessageReply } from '../MessageReply';
-import { ButtonBase } from '../../ButtonBase';
 import { MaterialIndicator } from '../../IndicatorsMaster';
 import FastImage from 'react-native-fast-image';
 
@@ -466,7 +466,7 @@ const Bubble = <TMessage extends IMessage = IMessage>(
           onLongPress={onLongPress}
           {...props.touchableProps}
         >
-          <ButtonBase onLongPress={onLongPressItem}>
+          <TouchableOpacity delayLongPress={100} onLongPress={onLongPressItem}>
             <View ref={innerRef}>
               {renderBubbleContent()}
               <View
@@ -484,7 +484,7 @@ const Bubble = <TMessage extends IMessage = IMessage>(
                 {renderTicks()}
               </View>
             </View>
-          </ButtonBase>
+          </TouchableOpacity>
         </TouchableWithoutFeedback>
       </View>
       {renderQuickReplies()}

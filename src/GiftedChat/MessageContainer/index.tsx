@@ -314,7 +314,7 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
         const newValue = {
           y,
           height,
-          createdAt: new Date((props.item as IMessage).createdAt).getTime(),
+          createdAt: new Date((props?.item as IMessage)?.createdAt).getTime(),
         };
 
         daysPositions.modify((value) => {

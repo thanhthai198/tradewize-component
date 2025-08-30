@@ -1,16 +1,21 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import {
-  View,
   StyleSheet,
   Pressable,
   Text,
+  Modal,
   type LayoutChangeEvent,
   type TextStyle,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withSpring,
+  withDelay,
+} from 'react-native-reanimated';
 
-import Modal from 'react-native-modal';
 import { type IMessage, type LeftRightStyle, type User } from './types';
-import { BlurView } from '@react-native-community/blur';
 import Color from './Color';
 import FastImage from 'react-native-fast-image';
 import { MessageText } from './MessageText';
@@ -55,6 +60,76 @@ export const MessageWithReaction = ({
   const [differenceLevel, setDifferenceLevel] = useState(0);
 
   const isMyMessage = message.user?._id === user?._id;
+
+  // Animation values
+  const overlayOpacity = useSharedValue(0);
+  const messageScale = useSharedValue(0.8);
+  const messageOpacity = useSharedValue(0);
+  const reactionIconOpacity = useSharedValue(0);
+  const actionButtonsOpacity = useSharedValue(0);
+
+  // Animation effects
+  useEffect(() => {
+    if (isVisible) {
+      // Start entrance animations
+      overlayOpacity.value = withTiming(0.9, { duration: 30 });
+      messageScale.value = withSpring(1, {
+        damping: 30,
+        stiffness: 500,
+      });
+      messageOpacity.value = withTiming(1, { duration: 30 });
+
+      // Staggered animations for reaction icons
+      if (isShowEmoji && user?._id !== message?.user?._id) {
+        reactionIconOpacity.value = withDelay(
+          30,
+          withTiming(1, { duration: 30 })
+        );
+      }
+
+      // Staggered animations for action buttons
+      actionButtonsOpacity.value = withDelay(
+        60,
+        withTiming(1, { duration: 30 })
+      );
+    } else {
+      // Reset animations when closing
+      overlayOpacity.value = 0;
+      messageScale.value = 0.8;
+      messageOpacity.value = 0;
+      reactionIconOpacity.value = 0;
+      actionButtonsOpacity.value = 0;
+    }
+  }, [
+    isVisible,
+    isShowEmoji,
+    user?._id,
+    message?.user?._id,
+    isMyMessage,
+    overlayOpacity,
+    messageScale,
+    messageOpacity,
+    reactionIconOpacity,
+    actionButtonsOpacity,
+  ]);
+
+  // Animated styles
+  const overlayAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: overlayOpacity.value,
+  }));
+
+  const messageAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: messageScale.value }],
+    opacity: messageOpacity.value,
+  }));
+
+  const reactionIconAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: reactionIconOpacity.value,
+  }));
+
+  const actionButtonsAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: actionButtonsOpacity.value,
+  }));
 
   const styleMessage = useCallback(() => {
     let top = 0;
@@ -211,94 +286,109 @@ export const MessageWithReaction = ({
 
   return (
     <Modal
-      animationOut={'zoomOut'}
-      animationIn={'zoomIn'}
-      animationInTiming={300}
-      animationOutTiming={300}
-      isVisible={isVisible}
+      visible={isVisible}
       style={styles.modal}
-      backdropOpacity={0}
-      useNativeDriver={true}
+      transparent={true}
+      animationType="none"
     >
       {/* Pressable bắt sự kiện bấm nền */}
-      <Pressable style={StyleSheet.absoluteFill} onPress={onClose}>
-        <BlurView
-          pointerEvents="none"
-          style={[StyleSheet.absoluteFill, { overflow: 'hidden' }]}
-          blurType="dark"
-          blurAmount={10}
-          reducedTransparencyFallbackColor="black"
-        />
-      </Pressable>
+      <Animated.View style={StyleSheet.absoluteFill}>
+        <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
 
-      {isShowEmoji && user?._id !== message?.user?._id && (
-        <View style={[styles.reactionIcon, styleReactionIcon()]}>
-          {EMOJI_REACTIONS?.map((emoji) => (
-            <Pressable
-              key={emoji}
-              onPress={() => {
-                onClose();
-                onReactionEmoji?.(emoji, message?._id?.toString());
-              }}
-              style={styles.reactionIconItem}
-            >
-              <Text style={styles.reactionIconText}>{emoji}</Text>
-            </Pressable>
-          ))}
-        </View>
-      )}
-
-      {/* Hiển thị message ở vị trí đã đo */}
-      <View style={[styles.message, styleMessage()]}>
-        {renderFile}
-        {renderMessage}
-        {renderTime}
-      </View>
-
-      <View onLayout={onLayout} style={[styles.layout, styleLayoutAction()]}>
-        <ButtonBase
+        {/* Overlay màu đen đậm */}
+        <Animated.View
           style={[
-            styles.btnAction,
-            { width: getScreenWidth() * 0.5 },
-            message?.text && styles.btnBorderAction,
+            StyleSheet.absoluteFill,
+            styles.overlay,
+            overlayAnimatedStyle,
           ]}
-          onPress={() => {
-            onClose();
-            onActionReaction?.(message, 'reply');
-          }}
+          pointerEvents="none"
+        />
+
+        {isShowEmoji && user?._id !== message?.user?._id && (
+          <Animated.View
+            style={[
+              styles.reactionIcon,
+              styleReactionIcon(),
+              reactionIconAnimatedStyle,
+            ]}
+          >
+            {EMOJI_REACTIONS?.map((emoji) => (
+              <Pressable
+                key={emoji}
+                onPress={() => {
+                  onClose();
+                  onReactionEmoji?.(emoji, message?._id?.toString());
+                }}
+                style={styles.reactionIconItem}
+              >
+                <Text style={styles.reactionIconText}>{emoji}</Text>
+              </Pressable>
+            ))}
+          </Animated.View>
+        )}
+
+        {/* Hiển thị message ở vị trí đã đo */}
+        <Animated.View
+          style={[styles.message, styleMessage(), messageAnimatedStyle]}
         >
-          <Text style={styles.btnActionText}>Reply</Text>
-          <FastImage
-            style={styles.icon}
-            source={require('./assets/reply.png')}
-          />
-        </ButtonBase>
-        {message?.text && (
+          {renderFile}
+          {renderMessage}
+          {renderTime}
+        </Animated.View>
+
+        <Animated.View
+          onLayout={onLayout}
+          style={[
+            styles.layout,
+            styleLayoutAction(),
+            actionButtonsAnimatedStyle,
+          ]}
+        >
           <ButtonBase
-            style={[styles.btnAction]}
+            style={[
+              styles.btnAction,
+              { width: getScreenWidth() * 0.5 },
+              message?.text && styles.btnBorderAction,
+            ]}
             onPress={() => {
               onClose();
-              onActionReaction?.(message, 'copy');
+              onActionReaction?.(message, 'reply');
             }}
           >
-            <Text style={styles.btnActionText}>Copy</Text>
+            <Text style={styles.btnActionText}>Reply</Text>
             <FastImage
               style={styles.icon}
-              source={require('./assets/copy.png')}
+              source={require('./assets/reply.png')}
             />
           </ButtonBase>
-        )}
-        {/* <ButtonBase
-          style={[styles.btnAction, styles.btnActionOther]}
-          onPress={() => {
-            onClose();
-            onActionReaction?.(message, 'other');
-          }}
-        >
-          <Text style={styles.btnActionText}>Other</Text>
-          <FastImage style={styles.icon} source={require('../assets/more-information.png')} />
-        </ButtonBase> */}
-      </View>
+          {message?.text && (
+            <ButtonBase
+              style={[styles.btnAction]}
+              onPress={() => {
+                onClose();
+                onActionReaction?.(message, 'copy');
+              }}
+            >
+              <Text style={styles.btnActionText}>Copy</Text>
+              <FastImage
+                style={styles.icon}
+                source={require('./assets/copy.png')}
+              />
+            </ButtonBase>
+          )}
+          {/* <ButtonBase
+            style={[styles.btnAction, styles.btnActionOther]}
+            onPress={() => {
+              onClose();
+              onActionReaction?.(message, 'other');
+            }}
+          >
+            <Text style={styles.btnActionText}>Other</Text>
+            <FastImage style={styles.icon} source={require('../assets/more-information.png')} />
+          </ButtonBase> */}
+        </Animated.View>
+      </Animated.View>
     </Modal>
   );
 };
@@ -307,18 +397,37 @@ const styles = StyleSheet.create({
   modal: {
     margin: 0,
   },
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+  },
   message: {
     position: 'absolute',
     zIndex: 1,
     borderRadius: 8,
     backgroundColor: Color.white,
     minWidth: getScreenWidth() * 0.19,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
   },
   layout: {
     backgroundColor: Color.white,
     position: 'absolute',
     borderRadius: 16,
     marginTop: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 6,
   },
   btnAction: {
     flexDirection: 'row',
@@ -359,6 +468,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     flexDirection: 'row',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 6,
   },
   reactionIconItem: {
     height: '100%',

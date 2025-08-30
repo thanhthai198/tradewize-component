@@ -1,0 +1,3143 @@
+[
+  {
+    "_id": 1,
+    "text": "Image & video attachment",
+    "createdAt": "2025-07-04T13:44:59.453538",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 2,
+    "text": "Hello world",
+    "createdAt": "2025-07-22T05:04:59.453568",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😡",
+    "file": null,
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 3,
+    "text": "Test message",
+    "createdAt": "2025-07-03T07:40:59.453583",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": null,
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 4,
+    "text": "Just another random chat",
+    "createdAt": "2025-08-07T04:16:59.453601",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "👍",
+    "file": null,
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 5,
+    "text": "Test message",
+    "createdAt": "2025-07-08T15:23:59.453613",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 6,
+    "text": "React Native rocks!",
+    "createdAt": "2025-07-05T22:55:59.453623",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 7,
+    "text": "React Native rocks!",
+    "createdAt": "2025-06-17T11:40:59.453632",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": null,
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 8,
+    "text": "Quick reply option",
+    "createdAt": "2025-07-20T14:50:59.453645",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 22
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 9,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-08-17T17:07:59.453660",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 94
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 10,
+    "text": "Hello world",
+    "createdAt": "2025-06-22T20:09:59.453668",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😂",
+    "file": null,
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 11,
+    "text": "Quick reply option",
+    "createdAt": "2025-08-23T18:46:59.453679",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 23
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 12,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-06-19T21:20:59.453687",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": null,
+    "file": null,
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 13,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-06-04T06:02:59.453697",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": null,
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 14,
+    "text": "👍😂🔥",
+    "createdAt": "2025-08-08T11:37:59.453708",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 16
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 15,
+    "text": "Error occurred while sending",
+    "createdAt": "2025-07-12T20:35:59.453718",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 17
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 16,
+    "text": "Just another random chat",
+    "createdAt": "2025-07-03T15:30:59.453728",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 17,
+    "text": "Image & video attachment",
+    "createdAt": "2025-06-02T18:43:59.453737",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 18,
+    "text": "Just another random chat",
+    "createdAt": "2025-07-10T15:47:59.453851",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 19,
+    "text": "Quick reply option",
+    "createdAt": "2025-07-11T20:13:59.453861",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": null,
+    "file": null,
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 20,
+    "text": "Quick reply option",
+    "createdAt": "2025-07-12T05:18:59.453869",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "👍",
+    "file": null,
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 21,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-06-27T13:08:59.453879",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 22,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-08-24T22:33:59.453887",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": ["😢", "😂", "😡"],
+    "file": null,
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 23,
+    "text": "Hello world",
+    "createdAt": "2025-06-29T04:59:59.453896",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 24,
+    "text": "Quick reply option",
+    "createdAt": "2025-07-04T14:22:59.453905",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 25,
+    "text": "Test message",
+    "createdAt": "2025-06-15T01:45:59.453915",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 26,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-06-01T22:16:59.453924",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 23
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 27,
+    "text": "React Native rocks!",
+    "createdAt": "2025-06-21T18:49:59.453941",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 28,
+    "text": "Image & video attachment",
+    "createdAt": "2025-06-14T20:00:59.453950",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": null,
+    "file": null,
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 29,
+    "text": "Quick reply option",
+    "createdAt": "2025-06-30T12:22:59.453958",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😢",
+    "file": null,
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 30,
+    "text": "Test message",
+    "createdAt": "2025-07-25T00:56:59.453968",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 31,
+    "text": "👍😂🔥",
+    "createdAt": "2025-08-23T16:45:59.453982",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 32,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-08-22T05:17:59.453990",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "👍",
+    "file": null,
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 33,
+    "text": "Just another random chat",
+    "createdAt": "2025-08-23T05:20:59.454000",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 34,
+    "text": "Test message",
+    "createdAt": "2025-07-04T06:01:59.454011",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 26
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 35,
+    "text": "Image & video attachment",
+    "createdAt": "2025-07-25T05:24:59.454019",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "😢",
+    "file": null,
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 36,
+    "text": "React Native rocks!",
+    "createdAt": "2025-06-24T21:06:59.454030",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 37,
+    "text": "React Native rocks!",
+    "createdAt": "2025-07-31T07:49:59.454040",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": null,
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 38,
+    "text": "Quick reply option",
+    "createdAt": "2025-08-10T19:28:59.454050",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 83
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 39,
+    "text": "👍😂🔥",
+    "createdAt": "2025-08-21T02:45:59.454061",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 26
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 40,
+    "text": "👍😂🔥",
+    "createdAt": "2025-07-25T10:27:59.454073",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 19
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 47
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 41,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-07-08T21:45:59.454082",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 42,
+    "text": "👍😂🔥",
+    "createdAt": "2025-08-08T17:05:59.454090",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "👍",
+    "file": null,
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 43,
+    "text": "Quick reply option",
+    "createdAt": "2025-06-30T00:24:59.454099",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😂",
+    "file": null,
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 44,
+    "text": "Error occurred while sending",
+    "createdAt": "2025-08-21T10:49:59.454109",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 5
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 45,
+    "text": "Test message",
+    "createdAt": "2025-06-19T09:01:59.454121",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 80
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 46,
+    "text": "👍😂🔥",
+    "createdAt": "2025-08-28T17:11:59.454132",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 17
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 47,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-06-26T16:44:59.454141",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 48,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-07-09T15:22:59.454152",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 96
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 49,
+    "text": "How are you?",
+    "createdAt": "2025-06-19T02:08:59.454165",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 50,
+    "text": "Just another random chat",
+    "createdAt": "2025-06-11T18:24:59.454174",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 51,
+    "text": "Image & video attachment",
+    "createdAt": "2025-06-11T16:43:59.454184",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 52,
+    "text": "Error occurred while sending",
+    "createdAt": "2025-08-21T01:01:59.454194",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 55
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 53,
+    "text": "React Native rocks!",
+    "createdAt": "2025-08-21T06:45:59.454202",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "👍",
+    "file": null,
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 54,
+    "text": "How are you?",
+    "createdAt": "2025-08-29T20:50:59.454214",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 14
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 55,
+    "text": "Just another random chat",
+    "createdAt": "2025-08-29T20:36:59.454225",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 80
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 57
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 56,
+    "text": "Error occurred while sending",
+    "createdAt": "2025-08-16T20:41:59.454235",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 57,
+    "text": "Test message",
+    "createdAt": "2025-08-03T06:43:59.454243",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😡",
+    "file": null,
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 58,
+    "text": "React Native rocks!",
+    "createdAt": "2025-07-07T10:04:59.454254",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 97
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 59,
+    "text": "How are you?",
+    "createdAt": "2025-06-23T01:07:59.454264",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😡",
+    "file": null,
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 60,
+    "text": "How are you?",
+    "createdAt": "2025-08-15T19:35:59.454273",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 61,
+    "text": "How are you?",
+    "createdAt": "2025-06-02T14:07:59.454283",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 75
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 62,
+    "text": "Error occurred while sending",
+    "createdAt": "2025-07-10T00:07:59.454293",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 63,
+    "text": "Test message",
+    "createdAt": "2025-07-02T06:17:59.454304",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": null,
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 64,
+    "text": "React Native rocks!",
+    "createdAt": "2025-08-03T08:13:59.454319",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 65,
+    "text": "Image & video attachment",
+    "createdAt": "2025-07-12T02:01:59.454333",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "❤️",
+    "file": null,
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 66,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-07-21T21:33:59.454352",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 38
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 22
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 67,
+    "text": "How are you?",
+    "createdAt": "2025-08-29T01:08:59.454377",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 68,
+    "text": "Just another random chat",
+    "createdAt": "2025-06-16T15:05:59.454397",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 69,
+    "text": "How are you?",
+    "createdAt": "2025-06-26T22:20:59.454408",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 70,
+    "text": "Quick reply option",
+    "createdAt": "2025-08-04T01:01:59.454419",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": null,
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 46
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 71,
+    "text": "Hello world",
+    "createdAt": "2025-08-20T22:36:59.454428",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 72,
+    "text": "React Native rocks!",
+    "createdAt": "2025-08-16T18:19:59.454438",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 73,
+    "text": "React Native rocks!",
+    "createdAt": "2025-05-31T13:34:59.454449",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 86
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 74,
+    "text": "Image & video attachment",
+    "createdAt": "2025-08-02T16:25:59.454462",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 5
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 75,
+    "text": "Image & video attachment",
+    "createdAt": "2025-06-20T02:51:59.454471",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 76,
+    "text": "How are you?",
+    "createdAt": "2025-06-15T03:54:59.454480",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "👍",
+    "file": null,
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 77,
+    "text": "How are you?",
+    "createdAt": "2025-08-10T14:07:59.454488",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😢",
+    "file": null,
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 78,
+    "text": "Test message",
+    "createdAt": "2025-06-12T13:48:59.454496",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": null,
+    "file": null,
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 79,
+    "text": "Just another random chat",
+    "createdAt": "2025-08-27T06:18:59.454508",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 93
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 80,
+    "text": "Test message",
+    "createdAt": "2025-07-15T17:50:59.454517",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 81,
+    "text": "Image & video attachment",
+    "createdAt": "2025-06-11T16:02:59.454525",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "❤️",
+    "file": null,
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 82,
+    "text": "Hello world",
+    "createdAt": "2025-07-25T11:39:59.454535",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 83,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-08-01T23:30:59.454544",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 84,
+    "text": "👍😂🔥",
+    "createdAt": "2025-06-22T19:39:59.454552",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "👍",
+    "file": null,
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 85,
+    "text": "Just another random chat",
+    "createdAt": "2025-08-03T22:25:59.454560",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": null,
+    "file": null,
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 86,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-07-18T10:10:59.454572",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "❤️",
+    "file": null,
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 87,
+    "text": "Test message",
+    "createdAt": "2025-06-03T14:20:59.454584",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 58
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 31
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 88,
+    "text": "👍😂🔥",
+    "createdAt": "2025-06-18T11:45:59.454596",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 46
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 89,
+    "text": "Quick reply option",
+    "createdAt": "2025-06-18T05:45:59.454606",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 90,
+    "text": "React Native rocks!",
+    "createdAt": "2025-08-22T10:17:59.454615",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 91,
+    "text": "Hello world",
+    "createdAt": "2025-08-05T16:44:59.454626",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 50
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 92,
+    "text": "How are you?",
+    "createdAt": "2025-06-11T18:13:59.454634",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😢",
+    "file": null,
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 93,
+    "text": "Quick reply option",
+    "createdAt": "2025-06-19T13:08:59.454644",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 82
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 94,
+    "text": "How are you?",
+    "createdAt": "2025-08-14T23:04:59.454655",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 95,
+    "text": "👍😂🔥",
+    "createdAt": "2025-07-01T02:27:59.454665",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": null,
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 96,
+    "text": "👍😂🔥",
+    "createdAt": "2025-08-09T23:58:59.454675",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 3
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 97,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-07-05T12:03:59.454684",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 98,
+    "text": "Quick reply option",
+    "createdAt": "2025-07-13T18:04:59.454694",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 92
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 99,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-08-10T22:36:59.454703",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 100,
+    "text": "React Native rocks!",
+    "createdAt": "2025-08-25T22:22:59.454713",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 62
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 101,
+    "text": "Error occurred while sending",
+    "createdAt": "2025-08-03T15:51:59.454723",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 65
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 102,
+    "text": "Error occurred while sending",
+    "createdAt": "2025-06-27T04:43:59.454733",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 103,
+    "text": "👍😂🔥",
+    "createdAt": "2025-06-29T21:22:59.454743",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 59
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 104,
+    "text": "How are you?",
+    "createdAt": "2025-08-05T06:52:59.454757",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 77
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 105,
+    "text": "Hello world",
+    "createdAt": "2025-06-13T05:25:59.454766",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 106,
+    "text": "How are you?",
+    "createdAt": "2025-07-07T08:35:59.454774",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "❤️",
+    "file": null,
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 107,
+    "text": "Error occurred while sending",
+    "createdAt": "2025-07-25T10:11:59.454782",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "❤️",
+    "file": null,
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 108,
+    "text": "Error occurred while sending",
+    "createdAt": "2025-08-01T07:46:59.454792",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 109,
+    "text": "Hello world",
+    "createdAt": "2025-08-29T10:34:59.454801",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": null,
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 110,
+    "text": "Image & video attachment",
+    "createdAt": "2025-07-17T05:27:59.454810",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "👍",
+    "file": null,
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 111,
+    "text": "Just another random chat",
+    "createdAt": "2025-08-21T01:22:59.454817",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "👍",
+    "file": null,
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 112,
+    "text": "Hello world",
+    "createdAt": "2025-08-14T10:05:59.454827",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 113,
+    "text": "Hello world",
+    "createdAt": "2025-06-11T11:00:59.454836",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 114,
+    "text": "Test message",
+    "createdAt": "2025-07-25T00:29:59.454845",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 23
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 115,
+    "text": "Test message",
+    "createdAt": "2025-08-02T16:51:59.454867",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": null,
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 116,
+    "text": "React Native rocks!",
+    "createdAt": "2025-07-08T20:18:59.454877",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 56
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 117,
+    "text": "Error occurred while sending",
+    "createdAt": "2025-06-15T17:01:59.454887",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 118,
+    "text": "Hello world",
+    "createdAt": "2025-07-23T06:10:59.454897",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 119,
+    "text": "Hello world",
+    "createdAt": "2025-05-31T19:08:59.454906",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 74
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 120,
+    "text": "Just another random chat",
+    "createdAt": "2025-07-24T08:32:59.454916",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 121,
+    "text": "Test message",
+    "createdAt": "2025-06-01T21:56:59.454924",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "👍",
+    "file": null,
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 122,
+    "text": "👍😂🔥",
+    "createdAt": "2025-07-07T09:06:59.454933",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😡",
+    "file": null,
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 123,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-08-25T06:25:59.454943",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 26
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 124,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-08-12T01:40:59.454953",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 125,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-08-23T22:19:59.454967",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 97
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 126,
+    "text": "React Native rocks!",
+    "createdAt": "2025-07-25T15:19:59.454975",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😂",
+    "file": null,
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 127,
+    "text": "Test message",
+    "createdAt": "2025-07-09T10:45:59.454984",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😂",
+    "file": null,
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 128,
+    "text": "React Native rocks!",
+    "createdAt": "2025-08-16T04:14:59.454994",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 75
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 129,
+    "text": "React Native rocks!",
+    "createdAt": "2025-08-02T10:49:59.455003",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "❤️",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 130,
+    "text": "How are you?",
+    "createdAt": "2025-07-23T03:20:59.455011",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "😡",
+    "file": null,
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": null
+  },
+  {
+    "_id": 131,
+    "text": "Test message",
+    "createdAt": "2025-06-12T12:02:59.455022",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 15
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 49
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 132,
+    "text": "Hello world",
+    "createdAt": "2025-08-09T09:13:59.455030",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "❤️",
+    "file": null,
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 133,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-08-14T16:08:59.455039",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": null,
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 134,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-06-22T20:24:59.455048",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": null,
+    "file": null,
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 135,
+    "text": "👍😂🔥",
+    "createdAt": "2025-06-08T08:36:59.455057",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 136,
+    "text": "Error occurred while sending",
+    "createdAt": "2025-06-10T13:49:59.455066",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": null,
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 137,
+    "text": "How are you?",
+    "createdAt": "2025-08-02T07:04:59.455077",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": null,
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 17
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 87
+      }
+    ],
+    "isShowName": false,
+    "isLast": false,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 138,
+    "text": "How are you?",
+    "createdAt": "2025-07-03T13:42:59.455086",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 139,
+    "text": "Error occurred while sending",
+    "createdAt": "2025-07-17T01:37:59.455096",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 140,
+    "text": "Hello world",
+    "createdAt": "2025-06-14T00:33:59.455105",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😡",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 141,
+    "text": "How are you?",
+    "createdAt": "2025-07-29T18:02:59.455116",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 142,
+    "text": "React Native rocks!",
+    "createdAt": "2025-08-08T09:00:59.455124",
+    "user": {
+      "_id": 3,
+      "name": "React Dev"
+    },
+    "reactionEmoji": "😢",
+    "file": null,
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 143,
+    "text": "Hello world",
+    "createdAt": "2025-06-06T23:24:59.455132",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😡",
+    "file": null,
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 144,
+    "text": "React Native rocks!",
+    "createdAt": "2025-07-13T09:54:59.455143",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 29
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": true,
+    "errorMessage": null
+  },
+  {
+    "_id": 145,
+    "text": "Error occurred while sending",
+    "createdAt": "2025-06-26T06:20:59.455154",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 66
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 27
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Hello"
+  },
+  {
+    "_id": 146,
+    "text": "This is a long text message for testing React Native chat UI components.",
+    "createdAt": "2025-07-16T05:17:59.455164",
+    "user": {
+      "_id": 5,
+      "name": "OpenAI Bot"
+    },
+    "reactionEmoji": null,
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 147,
+    "text": "Test message",
+    "createdAt": "2025-08-02T23:46:59.455173",
+    "user": {
+      "_id": 1,
+      "name": "React Native"
+    },
+    "reactionEmoji": "😢",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Upload failed"
+  },
+  {
+    "_id": 148,
+    "text": "Hello world",
+    "createdAt": "2025-07-18T04:28:59.455184",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "👍",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 38
+      },
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image",
+        "progress": 61
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 149,
+    "text": "How are you?",
+    "createdAt": "2025-08-23T06:35:59.455194",
+    "user": {
+      "_id": 2,
+      "name": "React Native1"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": false,
+    "isLast": true,
+    "errorMessage": "Network error"
+  },
+  {
+    "_id": 150,
+    "text": "How are you?",
+    "createdAt": "2025-07-16T15:34:59.455204",
+    "user": {
+      "_id": 4,
+      "name": "RN Tester"
+    },
+    "reactionEmoji": "😂",
+    "file": [
+      {
+        "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKWlc2q33w1V9avPpwb0afullg-AZyOjSlA&s",
+        "typeFile": "image"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      },
+      {
+        "uri": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "typeFile": "video"
+      }
+    ],
+    "isShowName": true,
+    "isLast": false,
+    "errorMessage": "Network error"
+  }
+]
