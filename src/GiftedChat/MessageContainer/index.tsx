@@ -6,7 +6,6 @@ import {
   Platform,
   type LayoutChangeEvent,
   type ListRenderItemInfo,
-  FlatList,
   type CellRendererProps,
 } from 'react-native';
 import Animated, {
@@ -16,6 +15,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { FlatList } from 'react-native-gesture-handler';
 import type { ReanimatedScrollEvent } from 'react-native-reanimated/lib/typescript/hook/commonTypes';
 import DayAnimated from './components/DayAnimated';
 import Item from './components/Item';

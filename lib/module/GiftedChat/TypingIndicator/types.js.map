@@ -1,1 +1,1 @@
-{"version":3,"names":[],"sources":["types.ts"],"sourcesContent":["export interface TypingIndicatorProps {\n  isTyping?: boolean;\n}\n"],"mappings":"","ignoreList":[]}
+{"version":3,"names":[],"sources":["types.ts"],"sourcesContent":["export interface TypingIndicatorProps {\r\n  isTyping?: boolean;\r\n}\r\n"],"mappings":"","ignoreList":[]}
