@@ -463,28 +463,27 @@ const Bubble = <TMessage extends IMessage = IMessage>(
       >
         <TouchableWithoutFeedback
           onPress={onPress}
-          onLongPress={onLongPress}
+          onLongPress={onLongPressItem || onLongPress}
+          delayLongPress={100}
           {...props.touchableProps}
         >
-          <TouchableOpacity delayLongPress={100} onLongPress={onLongPressItem}>
-            <View ref={innerRef}>
-              {renderBubbleContent()}
-              <View
-                style={[
-                  styles[position].bottom,
-                  bottomContainerStyle?.[position],
-                  currentMessage?.reactionEmoji &&
-                    currentMessage?.reactionEmoji?.length > 0 && {
-                      marginBottom: 8,
-                    },
-                ]}
-              >
-                {renderUsername()}
-                {renderTime()}
-                {renderTicks()}
-              </View>
+          <View ref={innerRef}>
+            {renderBubbleContent()}
+            <View
+              style={[
+                styles[position].bottom,
+                bottomContainerStyle?.[position],
+                currentMessage?.reactionEmoji &&
+                  currentMessage?.reactionEmoji?.length > 0 && {
+                    marginBottom: 8,
+                  },
+              ]}
+            >
+              {renderUsername()}
+              {renderTime()}
+              {renderTicks()}
             </View>
-          </TouchableOpacity>
+          </View>
         </TouchableWithoutFeedback>
       </View>
       {renderQuickReplies()}

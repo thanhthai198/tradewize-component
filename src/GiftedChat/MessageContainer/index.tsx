@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -8,6 +8,9 @@ import {
   type ListRenderItemInfo,
   FlatList,
   type CellRendererProps,
+  ScrollView,
+  type NativeSyntheticEvent,
+  type NativeScrollEvent,
 } from 'react-native';
 import Animated, {
   runOnJS,
@@ -23,7 +26,7 @@ import Item from './components/Item';
 import { LoadEarlier } from '../LoadEarlier';
 import { type IMessage } from '../types';
 import TypingIndicator from '../TypingIndicator';
-import { type MessageContainerProps, type DaysPositions } from './types';
+import { type MessageContainerProps, type DaysPositions, type AnimatedList } from './types';
 import { type ItemProps } from './components/Item/types';
 
 import { warning } from '../logging';
@@ -64,6 +67,7 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
     renderDay: renderDayProp,
     onPressFile,
     onLongPressReaction,
+    useScrollView = false,
   } = props;
 
   const scrollToBottomOpacity = useSharedValue(0);
@@ -104,19 +108,62 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
 
   const scrollTo = useCallback(
     (options: { animated?: boolean; offset: number }) => {
-      if (forwardRef?.current && options)
-        forwardRef.current.scrollToOffset(options);
+      if (forwardRef?.current && options) {
+        if (useScrollView) {
+          // ScrollView uses scrollTo method
+          const scrollViewRef = forwardRef.current as ScrollView;
+          if ('scrollTo' in scrollViewRef) {
+            scrollViewRef.scrollTo({
+              x: 0,
+              y: options.offset,
+              animated: options.animated ?? true,
+            });
+          }
+        } else {
+          // FlatList uses scrollToOffset method
+          const flatListRef = forwardRef.current as AnimatedList<TMessage>;
+          if ('scrollToOffset' in flatListRef) {
+            flatListRef.scrollToOffset(options);
+          }
+        }
+      }
     },
-    [forwardRef]
+    [forwardRef, useScrollView]
   );
 
   const doScrollToBottom = useCallback(
     (animated: boolean = true) => {
-      if (inverted) scrollTo({ offset: 0, animated });
-      else if (forwardRef?.current)
-        forwardRef.current.scrollToEnd({ animated });
+      if (forwardRef?.current) {
+        if (useScrollView) {
+          // ScrollView uses scrollToEnd method
+          const scrollViewRef = forwardRef.current as ScrollView;
+          if (inverted) {
+            if ('scrollTo' in scrollViewRef) {
+              scrollViewRef.scrollTo({
+                x: 0,
+                y: 0,
+                animated,
+              });
+            }
+          } else {
+            if ('scrollToEnd' in scrollViewRef) {
+              scrollViewRef.scrollToEnd({ animated });
+            }
+          }
+        } else {
+          // FlatList logic
+          const flatListRef = forwardRef.current as AnimatedList<TMessage>;
+          if (inverted) {
+            scrollTo({ offset: 0, animated });
+          } else {
+            if ('scrollToEnd' in flatListRef) {
+              flatListRef.scrollToEnd({ animated });
+            }
+          }
+        }
+      }
     },
-    [forwardRef, inverted, scrollTo]
+    [forwardRef, inverted, scrollTo, useScrollView]
   );
 
   const handleOnScroll = useCallback(
@@ -274,18 +321,24 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
     isScrollToBottomVisible,
   ]);
 
+  const isFirstRender = useRef({
+    scrollToBottom: true,
+  });
+
   const onLayoutList = useCallback(
     (event: LayoutChangeEvent) => {
       listHeight.value = event.nativeEvent.layout.height;
 
-      if (!inverted && messages?.length)
+      if (!inverted && isFirstRender.current.scrollToBottom) {
         setTimeout(() => {
           doScrollToBottom(false);
+          isFirstRender.current.scrollToBottom = false;
         }, 500);
+      }
 
       listViewProps?.onLayout?.(event);
     },
-    [inverted, messages, doScrollToBottom, listHeight, listViewProps]
+    [inverted, doScrollToBottom, listHeight, listViewProps]
   );
 
   const onEndReached = useCallback(() => {
@@ -366,6 +419,10 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
     [handleOnScroll]
   );
 
+  const scrollHandlerForScrollView = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    scrolledY.value = event.nativeEvent.contentOffset.y;
+  }
+
   // removes unrendered days positions when messages are added/removed
   useEffect(() => {
     Object.keys(daysPositions.value).forEach((key) => {
@@ -397,31 +454,56 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
         alignTop ? styles.containerAlignTop : stylesCommon.fill,
       ]}
     >
-      <AnimatedFlatList
-        extraData={extraData}
-        ref={forwardRef as any}
-        keyExtractor={keyExtractor}
-        data={messages}
-        renderItem={renderItem as any}
-        inverted={inverted}
-        automaticallyAdjustContentInsets={false}
-        style={stylesCommon.fill}
-        {...invertibleScrollViewProps}
-        ListEmptyComponent={renderChatEmpty}
-        ListFooterComponent={
-          inverted ? ListHeaderComponent : ListFooterComponent
-        }
-        ListHeaderComponent={
-          inverted ? ListFooterComponent : ListHeaderComponent
-        }
-        onScroll={scrollHandler}
-        scrollEventThrottle={1}
-        onEndReached={onEndReached}
-        onEndReachedThreshold={0.1}
-        {...listViewProps}
-        onLayout={onLayoutList}
-        CellRendererComponent={renderCell}
-      />
+      {useScrollView ? (
+        <ScrollView
+          ref={forwardRef as any}
+          style={stylesCommon.fill}
+          automaticallyAdjustContentInsets={false}
+          {...invertibleScrollViewProps}
+          onScroll={scrollHandlerForScrollView}
+          scrollEventThrottle={1}
+          onLayout={onLayoutList}
+          nestedScrollEnabled={true}
+        >
+          {inverted ? ListHeaderComponent : null}
+          {messages.length === 0 ? renderChatEmpty() : null}
+          {messages.map((item, index) => {
+            const renderedItem = renderItem({ item, index } as ListRenderItemInfo<unknown>);
+            return renderedItem ? (
+              <View key={keyExtractor(item)} onLayout={(event) => renderCell({ item, index, onLayout: (e) => {}, children: renderedItem } as any).props.onLayout?.(event)}>
+                {renderedItem}
+              </View>
+            ) : null;
+          })}
+          {inverted ? ListFooterComponent : ListHeaderComponent}
+        </ScrollView>
+      ) : (
+        <AnimatedFlatList
+          extraData={extraData}
+          ref={forwardRef as any}
+          keyExtractor={keyExtractor}
+          data={messages}
+          renderItem={renderItem as any}
+          inverted={inverted}
+          automaticallyAdjustContentInsets={false}
+          style={stylesCommon.fill}
+          {...invertibleScrollViewProps}
+          ListEmptyComponent={renderChatEmpty}
+          ListFooterComponent={
+            inverted ? ListHeaderComponent : ListFooterComponent
+          }
+          ListHeaderComponent={
+            inverted ? ListFooterComponent : ListHeaderComponent
+          }
+          onScroll={scrollHandler}
+          scrollEventThrottle={1}
+          onEndReached={onEndReached}
+          onEndReachedThreshold={0.1}
+          {...listViewProps}
+          onLayout={onLayoutList}
+          CellRendererComponent={renderCell}
+        />
+      )}
       {isScrollToBottomEnabled ? renderScrollToBottomWrapper() : null}
       <DayAnimated
         scrolledY={scrolledY}

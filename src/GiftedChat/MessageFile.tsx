@@ -4,6 +4,7 @@ import {
   FlatList,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
   type LayoutChangeEvent,
 } from 'react-native';
@@ -83,7 +84,7 @@ const MediaItem = memo(
 
     return (
       <>
-        <ButtonBase
+        <TouchableOpacity
           onLongPress={onLongPressFile}
           onPress={() =>
             onPressFile?.(item, arrMedia?.length > 8 && index === 7, {
@@ -149,7 +150,7 @@ const MediaItem = memo(
               </Text>
             </View>
           )}
-        </ButtonBase>
+        </TouchableOpacity>
 
         {!item?.isLoading && safeProgress > 0 && safeProgress < 100 && (
           <View style={[styles.progress, { width: size, height: size }]}>

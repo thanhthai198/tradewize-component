@@ -3,6 +3,7 @@ import { type ActionSheetOptions } from '@expo/react-native-action-sheet';
 import {
   type TextInput,
   type StyleProp,
+  type ScrollView,
   type TextStyle,
   type ViewStyle,
 } from 'react-native';
@@ -36,7 +37,7 @@ import { type BubbleProps } from '../Bubble';
 export interface GiftedChatProps<TMessage extends IMessage>
   extends Partial<MessageContainerProps<TMessage>> {
   /* Message container ref */
-  messageContainerRef?: RefObject<AnimatedList<TMessage>>;
+  messageContainerRef?: RefObject<AnimatedList<TMessage> | ScrollView>;
   /* text input ref */
   textInputRef?: RefObject<TextInput>;
   /* Messages to display */
@@ -214,4 +215,6 @@ export interface GiftedChatProps<TMessage extends IMessage>
   onBlurInput?: () => void;
   // phần này để làm show emoji reaction
   isShowEmojiReaction?: boolean;
+  /* Use ScrollView instead of FlatList for message rendering */
+  useScrollView?: boolean;
 }

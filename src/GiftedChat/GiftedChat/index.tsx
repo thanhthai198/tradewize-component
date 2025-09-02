@@ -19,6 +19,7 @@ import {
   TextInput,
   View,
   Clipboard,
+  ScrollView,
   type LayoutChangeEvent,
 } from 'react-native';
 import { Actions } from '../Actions';
@@ -104,14 +105,15 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
     onFocusInput,
     onBlurInput,
     isShowEmojiReaction = true,
+    useScrollView = false,
   } = props;
 
   const actionSheetRef = useRef<ActionSheetProviderRef>(null);
 
   const messageContainerRef = useMemo(
-    () => props.messageContainerRef || createRef<AnimatedList<TMessage>>(),
+    () => props.messageContainerRef || createRef<AnimatedList<TMessage> | ScrollView>(),
     [props.messageContainerRef]
-  ) as RefObject<AnimatedList<TMessage>>;
+  ) as RefObject<AnimatedList<TMessage> | ScrollView>;
 
   const textInputRef = useMemo(
     () => props.textInputRef || createRef<TextInput>(),
@@ -230,15 +232,32 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
     (isAnimated = true) => {
       if (!messageContainerRef?.current) return;
 
-      if (inverted) {
-        messageContainerRef.current.scrollToOffset({
-          offset: 0,
-          animated: isAnimated,
-        });
-        return;
+      // Type-safe check for ScrollView
+      if ('scrollTo' in messageContainerRef.current && 'scrollToEnd' in messageContainerRef.current) {
+        // ScrollView case
+        const scrollViewRef = messageContainerRef.current as ScrollView;
+        if (inverted) {
+          scrollViewRef.scrollTo({
+            y: 0,
+            animated: isAnimated,
+          });
+        } else {
+          scrollViewRef.scrollToEnd({ animated: isAnimated });
+        }
+      } else if ('scrollToOffset' in messageContainerRef.current) {
+        // AnimatedList case
+        const animatedListRef = messageContainerRef.current as AnimatedList<TMessage>;
+        if (inverted) {
+          animatedListRef.scrollToOffset({
+            offset: 0,
+            animated: isAnimated,
+          });
+        } else {
+          if ('scrollToEnd' in animatedListRef) {
+            animatedListRef.scrollToEnd({ animated: isAnimated });
+          }
+        }
       }
-
-      messageContainerRef.current.scrollToEnd({ animated: isAnimated });
     },
     [inverted, messageContainerRef]
   );
@@ -284,6 +303,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
           messages={arrMessage}
           forwardRef={messageContainerRef}
           isTyping={isTyping}
+          useScrollView={useScrollView}
           onLongPressReaction={(message, position) => {
             setMessageSelected({
               message,
@@ -321,6 +341,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
     messageContainerRef,
     renderChatFooter,
     handlePressFile,
+    useScrollView,
   ]);
 
   const notifyInputTextReset = useCallback(() => {
@@ -586,8 +607,9 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
   }, [props.text]);
 
   useEffect(() => {
-    setArrMessage(messages);
-  }, [messages]);
+    const prepareMessage = inverted ? messages : [...messages].reverse();
+    setArrMessage(prepareMessage);
+  }, [messages, inverted]);
 
   useAnimatedReaction(
     () => -keyboard.height.value,
