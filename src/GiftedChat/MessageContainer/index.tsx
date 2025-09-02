@@ -83,6 +83,12 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
   const listHeight = useSharedValue(0);
   const scrolledY = useSharedValue(0);
 
+  // Scroll position tracking refs for ScrollView load more functionality
+  const scrollPosition = useRef(0);
+  const contentHeight = useRef(0);
+  const scrollViewHeight = useRef(0);
+  const hasInitiallyRendered = useRef(false);
+
   const renderTypingIndicator = useCallback(() => {
     if (renderTypingIndicatorProp) return renderTypingIndicatorProp();
     if (isTyping) return <TypingIndicator />;
@@ -352,6 +358,44 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
       onLoadEarlier();
   }, [infiniteScroll, loadEarlier, onLoadEarlier, isLoadingEarlier]);
 
+  // Handle scroll to the top for loading more messages (ScrollView version)
+  const handleScrollToTop = useCallback(() => {
+    // Only trigger load more if we have more messages, not loading, and have rendered initially
+    if (
+      infiniteScroll &&
+      loadEarlier &&
+      onLoadEarlier &&
+      !isLoadingEarlier &&
+      hasInitiallyRendered.current &&
+      Platform.OS !== 'web'
+    ) {
+      // Record the current position before loading more
+      const currentPosition = scrollPosition.current;
+      const currentContentHeight = contentHeight.current;
+
+      // Call load more
+      onLoadEarlier();
+
+      // After loading more, try to maintain the scroll position
+      setTimeout(() => {
+        if (
+          forwardRef?.current &&
+          contentHeight.current > currentContentHeight
+        ) {
+          // Calculate new position to maintain relative view
+          const heightDiff = contentHeight.current - currentContentHeight;
+          const scrollViewRef = forwardRef.current as ScrollView;
+          if ('scrollTo' in scrollViewRef) {
+            scrollViewRef.scrollTo({
+              y: currentPosition + heightDiff,
+              animated: false,
+            });
+          }
+        }
+      }, 300);
+    }
+  }, [infiniteScroll, loadEarlier, onLoadEarlier, isLoadingEarlier, forwardRef]);
+
   const keyExtractor: any = useCallback(
     (item: unknown) => (item as TMessage)._id.toString(),
     []
@@ -419,9 +463,37 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
     [handleOnScroll]
   );
 
-  const scrollHandlerForScrollView = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    scrolledY.value = event.nativeEvent.contentOffset.y;
-  }
+  const scrollHandlerForScrollView = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;
+    const currentOffset = contentOffset.y;
+    const currentContentHeight = contentSize.height;
+    const currentScrollViewHeight = layoutMeasurement.height;
+
+    // Update refs for scroll position tracking
+    scrollPosition.current = currentOffset;
+    contentHeight.current = currentContentHeight;
+    scrollViewHeight.current = currentScrollViewHeight;
+
+    // Update animated value for existing functionality
+    scrolledY.value = currentOffset;
+  }, []);
+
+  // Handle scroll begin drag to detect scrolling to top
+  const onScrollBeginDrag = useCallback(() => {
+    // If user scrolls near the top (less than 100 pixels from top) and has more messages to load
+    if (scrollPosition.current < 100 && loadEarlier) {
+      handleScrollToTop();
+    }
+  }, [handleScrollToTop, loadEarlier]);
+
+  // Prevent early load more calls during initial render
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      hasInitiallyRendered.current = true;
+    }, 1000); // Wait 1 second before allowing load more calls
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // removes unrendered days positions when messages are added/removed
   useEffect(() => {
@@ -461,6 +533,7 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
           automaticallyAdjustContentInsets={false}
           {...invertibleScrollViewProps}
           onScroll={scrollHandlerForScrollView}
+          onScrollBeginDrag={onScrollBeginDrag}
           scrollEventThrottle={1}
           onLayout={onLayoutList}
           nestedScrollEnabled={true}
