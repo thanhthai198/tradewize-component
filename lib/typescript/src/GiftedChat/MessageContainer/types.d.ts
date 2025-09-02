@@ -1,5 +1,5 @@
 import React, { type Component, type RefObject } from 'react';
-import { type FlatListProps, type StyleProp, type ViewStyle } from 'react-native';
+import { type FlatListProps, type StyleProp, type ViewStyle, ScrollView } from 'react-native';
 import { type LoadEarlierProps } from '../LoadEarlier';
 import { type MessageProps } from '../Message';
 import { type User, type IMessage, type Reply, type DayProps, type FileMessage } from '../types';
@@ -9,7 +9,7 @@ import { type AnimateProps } from 'react-native-reanimated';
 export type ListViewProps<TMessage extends IMessage = IMessage> = Partial<FlatListProps<TMessage>>;
 export type AnimatedList<TMessage> = Component<AnimateProps<FlatListProps<TMessage>>, unknown, unknown> & FlatList<FlatListProps<TMessage>>;
 export interface MessageContainerProps<TMessage extends IMessage = IMessage> {
-    forwardRef?: RefObject<AnimatedList<TMessage>>;
+    forwardRef?: RefObject<AnimatedList<TMessage> | ScrollView>;
     messages?: TMessage[];
     isTyping?: boolean;
     user?: User;
@@ -22,6 +22,7 @@ export interface MessageContainerProps<TMessage extends IMessage = IMessage> {
     invertibleScrollViewProps?: object;
     extraData?: object;
     scrollToBottomOffset?: number;
+    useScrollView?: boolean;
     renderChatEmpty?(): React.ReactNode;
     renderFooter?(props: MessageContainerProps<TMessage>): React.ReactNode;
     renderMessage?(props: MessageProps<TMessage>): React.ReactElement;

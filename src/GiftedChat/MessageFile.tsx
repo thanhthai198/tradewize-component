@@ -14,7 +14,6 @@ import FastImage from 'react-native-fast-image';
 import Color from './Color';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { getScreenWidth } from '../utils';
-import { ButtonBase } from '../ButtonBase';
 
 const GAP_MEDIA = 3;
 

@@ -5,7 +5,6 @@ import type { JSX } from 'react';
 import {
   findNodeHandle,
   Text,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   UIManager,
   View,

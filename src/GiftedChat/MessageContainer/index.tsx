@@ -470,7 +470,7 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
           {messages.map((item, index) => {
             const renderedItem = renderItem({ item, index } as ListRenderItemInfo<unknown>);
             return renderedItem ? (
-              <View key={keyExtractor(item)} onLayout={(event) => renderCell({ item, index, onLayout: (e) => {}, children: renderedItem } as any).props.onLayout?.(event)}>
+              <View key={keyExtractor(item)} onLayout={(event) => renderCell({ item, index, onLayout: () => {}, children: renderedItem } as any).props.onLayout?.(event)}>
                 {renderedItem}
               </View>
             ) : null;

@@ -1,6 +1,6 @@
 import React, { type RefObject } from 'react';
 import { type ActionSheetOptions } from '@expo/react-native-action-sheet';
-import { type TextInput, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
+import { type TextInput, type StyleProp, type ScrollView, type TextStyle, type ViewStyle } from 'react-native';
 import { type ActionsProps } from '../Actions';
 import { type AvatarProps } from '../Avatar';
 import { type ComposerProps } from '../Composer';
@@ -17,7 +17,7 @@ import { type TimeProps } from '../Time';
 import { type AnimatedList, type ListViewProps, type MessageContainerProps } from '../MessageContainer';
 import { type BubbleProps } from '../Bubble';
 export interface GiftedChatProps<TMessage extends IMessage> extends Partial<MessageContainerProps<TMessage>> {
-    messageContainerRef?: RefObject<AnimatedList<TMessage>>;
+    messageContainerRef?: RefObject<AnimatedList<TMessage> | ScrollView>;
     textInputRef?: RefObject<TextInput>;
     messages?: TMessage[];
     isTyping?: boolean;
@@ -114,4 +114,5 @@ export interface GiftedChatProps<TMessage extends IMessage> extends Partial<Mess
     onFocusInput?: () => void;
     onBlurInput?: () => void;
     isShowEmojiReaction?: boolean;
+    useScrollView?: boolean;
 }
