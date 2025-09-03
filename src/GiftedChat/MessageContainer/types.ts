@@ -3,6 +3,7 @@ import {
   type FlatListProps,
   type StyleProp,
   type ViewStyle,
+  ScrollView,
 } from 'react-native';
 
 import { type LoadEarlierProps } from '../LoadEarlier';
@@ -30,7 +31,7 @@ export type AnimatedList<TMessage> = Component<
   FlatList<FlatListProps<TMessage>>;
 
 export interface MessageContainerProps<TMessage extends IMessage = IMessage> {
-  forwardRef?: RefObject<AnimatedList<TMessage>>;
+  forwardRef?: RefObject<AnimatedList<TMessage> | ScrollView>;
   messages?: TMessage[];
   isTyping?: boolean;
   user?: User;
@@ -43,6 +44,7 @@ export interface MessageContainerProps<TMessage extends IMessage = IMessage> {
   invertibleScrollViewProps?: object;
   extraData?: object;
   scrollToBottomOffset?: number;
+  useScrollView?: boolean;
   renderChatEmpty?(): React.ReactNode;
   renderFooter?(props: MessageContainerProps<TMessage>): React.ReactNode;
   renderMessage?(props: MessageProps<TMessage>): React.ReactElement;

@@ -39,6 +39,7 @@ interface ButtonBaseProps extends TouchableOpacityProps {
     accessibilityHint?: string;
     accessibilityRole?: any;
     pressable?: boolean;
+    renderAsView?: boolean;
     shadow?: boolean;
     shadowColor?: string;
     shadowOffset?: {

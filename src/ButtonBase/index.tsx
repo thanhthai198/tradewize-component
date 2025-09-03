@@ -79,6 +79,9 @@ interface ButtonBaseProps extends TouchableOpacityProps {
 
   // Animation props
   pressable?: boolean;
+  
+  // Render as View instead of TouchableOpacity
+  renderAsView?: boolean;
 
   // Shadow props
   shadow?: boolean;
@@ -144,6 +147,9 @@ export const ButtonBase: React.FC<ButtonBaseProps> = ({
 
   // Animation props
   pressable = true,
+  
+  // Render as View instead of TouchableOpacity
+  renderAsView = false,
 
   // Shadow props
   shadow = false,
@@ -320,6 +326,21 @@ export const ButtonBase: React.FC<ButtonBaseProps> = ({
       </View>
     );
   };
+
+  if (renderAsView) {
+    return (
+      <View style={containerStyle}>
+        <View
+          style={buttonStyle}
+          accessibilityLabel={accessibilityLabel || title}
+          accessibilityHint={accessibilityHint}
+          accessibilityRole={accessibilityRole}
+        >
+          {renderContent()}
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={containerStyle}>

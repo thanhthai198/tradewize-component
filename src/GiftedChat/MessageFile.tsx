@@ -4,6 +4,7 @@ import {
   FlatList,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
   type LayoutChangeEvent,
 } from 'react-native';
@@ -13,7 +14,6 @@ import FastImage from 'react-native-fast-image';
 import Color from './Color';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { getScreenWidth } from '../utils';
-import { ButtonBase } from '../ButtonBase';
 
 const GAP_MEDIA = 3;
 
@@ -83,7 +83,7 @@ const MediaItem = memo(
 
     return (
       <>
-        <ButtonBase
+        <TouchableOpacity
           onLongPress={onLongPressFile}
           onPress={() =>
             onPressFile?.(item, arrMedia?.length > 8 && index === 7, {
@@ -149,7 +149,7 @@ const MediaItem = memo(
               </Text>
             </View>
           )}
-        </ButtonBase>
+        </TouchableOpacity>
 
         {!item?.isLoading && safeProgress > 0 && safeProgress < 100 && (
           <View style={[styles.progress, { width: size, height: size }]}>

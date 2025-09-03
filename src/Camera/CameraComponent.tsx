@@ -96,7 +96,7 @@ export const CameraComponent: React.FC<CameraProps> = ({
 
   // Timer for recording duration
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: ReturnType<typeof setInterval> | null = null;
     if (isRecording && !isPaused) {
       interval = setInterval(() => {
         setRecordingDuration((prev) => {
