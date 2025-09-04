@@ -72,6 +72,7 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
 
   const scrollToBottomOpacity = useSharedValue(0);
   const [isScrollToBottomVisible, setIsScrollToBottomVisible] = useState(false);
+  const [isAtBottom, setIsAtBottom] = useState<boolean>(true);
   const scrollToBottomStyleAnim = useAnimatedStyle(
     () => ({
       opacity: scrollToBottomOpacity.value,
@@ -88,6 +89,13 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
   const contentHeight = useRef(0);
   const scrollViewHeight = useRef(0);
   const hasInitiallyRendered = useRef(false);
+
+  // Auto-scroll tracking refs (similar to ChatScrollView and VirtualizedChatList)
+  const previousLengthRef = useRef(messages.length);
+  const lastMessageIdRef = useRef<string | number | null>(null);
+  const hasScrolledToBottomRef = useRef(false);
+  const isFirstTimeAccess = useRef(true);
+  const hasScrolledOnFirstAccess = useRef(false);
 
   const renderTypingIndicator = useCallback(() => {
     if (renderTypingIndicatorProp) return renderTypingIndicatorProp();
@@ -137,6 +145,15 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
     [forwardRef, useScrollView]
   );
 
+  // Check if user is at bottom (similar to ChatScrollView)
+  const checkIsAtBottom = useCallback(
+    (contentOffset: number, contentSize: number, layoutHeight: number) => {
+      const threshold = 100; // 100 px threshold
+      return contentOffset + layoutHeight >= contentSize - threshold;
+    },
+    [],
+  );
+
   const doScrollToBottom = useCallback(
     (animated: boolean = true) => {
       if (forwardRef?.current) {
@@ -182,6 +199,13 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
         layoutMeasurement: { height: layoutMeasurementHeight },
       } = event;
 
+      const atBottom = checkIsAtBottom(
+        contentOffsetY,
+        contentSizeHeight,
+        layoutMeasurementHeight,
+      );
+      runOnJS(setIsAtBottom)(atBottom);
+
       const duration = 250;
 
       const makeScrollToBottomVisible = () => {
@@ -209,7 +233,7 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
         makeScrollToBottomVisible();
       else makeScrollToBottomHidden();
     },
-    [handleOnScrollProp, inverted, scrollToBottomOffset, scrollToBottomOpacity]
+    [handleOnScrollProp, inverted, scrollToBottomOffset, scrollToBottomOpacity, checkIsAtBottom]
   );
 
   const renderItem = useCallback(
@@ -474,9 +498,29 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
     contentHeight.current = currentContentHeight;
     scrollViewHeight.current = currentScrollViewHeight;
 
+    // Check if at the bottom and update state
+    const atBottom = checkIsAtBottom(
+      currentOffset,
+      currentContentHeight,
+      currentScrollViewHeight,
+    );
+    setIsAtBottom(atBottom);
+
     // Update animated value for existing functionality
     scrolledY.value = currentOffset;
-  }, []);
+  }, [checkIsAtBottom]);
+
+  // Update scroll-to-bottom button visibility based on isAtBottom state
+  useEffect(() => {
+    if (!isAtBottom && !isScrollToBottomVisible) {
+      setIsScrollToBottomVisible(true);
+      scrollToBottomOpacity.value = withTiming(1, { duration: 200 });
+    } else if (isAtBottom && isScrollToBottomVisible) {
+      scrollToBottomOpacity.value = withTiming(0, { duration: 200 }, () => {
+        runOnJS(setIsScrollToBottomVisible)(false);
+      });
+    }
+  }, [isAtBottom, isScrollToBottomVisible, scrollToBottomOpacity]);
 
   // Handle scroll begin drag to detect scrolling to top
   const onScrollBeginDrag = useCallback(() => {
@@ -494,6 +538,103 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
 
     return () => clearTimeout(timer);
   }, []);
+
+  // Enhanced auto-scroll to the bottom when new messages arrive (only if user is at bottom)
+  useEffect(() => {
+    const currentLength = messages.length;
+    const previousLength = previousLengthRef.current;
+
+    // Get the last message ID
+    const lastMessage = messages[messages.length - 1];
+    const currentLastMessageId = lastMessage?._id || null;
+    const previousLastMessageId = lastMessageIdRef.current;
+
+    // Only auto-scroll if:
+    // 1. User is at the bottom (or this is an initial load)
+    // 2. AND (new messages were added OR last message changed OR first time with messages)
+    // 3. AND not loading (if loading prop exists)
+    const hasNewContent =
+      currentLength > previousLength ||
+      (currentLastMessageId !== previousLastMessageId &&
+        currentLastMessageId !== null);
+    const isFirstTimeWithMessages =
+      currentLength > 0 && !hasScrolledToBottomRef.current;
+
+    const shouldScroll =
+      (isAtBottom || isFirstTimeWithMessages) &&
+      (hasNewContent || isFirstTimeWithMessages) &&
+      currentLength > 0;
+
+    if (shouldScroll) {
+      doScrollToBottom();
+      hasScrolledToBottomRef.current = true;
+    }
+
+    // Update refs
+    previousLengthRef.current = currentLength;
+    lastMessageIdRef.current = currentLastMessageId;
+  }, [messages, doScrollToBottom, isAtBottom]);
+
+  // Enhanced initial scroll to the bottom when messages first load
+  useEffect(() => {
+    if (
+      messages.length > 0 &&
+      isFirstTimeAccess.current &&
+      !hasScrolledOnFirstAccess.current
+    ) {
+      // Mark that we've attempted the first scroll
+      hasScrolledOnFirstAccess.current = true;
+
+      // Multiple scroll attempts with increasing delays to ensure messages are fully rendered
+      const scrollAttempts = [100, 300, 500, 800, 1200];
+
+      scrollAttempts.forEach((delay, index) => {
+        setTimeout(() => {
+          if (messages.length > 0) {
+            doScrollToBottom(index > 0); // First attempt immediate, rest animated
+          }
+        }, delay);
+      });
+
+      // Mark as no longer first time after all attempts
+      setTimeout(() => {
+        isFirstTimeAccess.current = false;
+        hasScrolledToBottomRef.current = true;
+      }, 1500);
+    } else if (
+      messages.length > 0 &&
+      !hasScrolledToBottomRef.current &&
+      !isFirstTimeAccess.current
+    ) {
+      // Regular initial scroll for subsequent loads
+      setTimeout(() => doScrollToBottom(), 100);
+      hasScrolledToBottomRef.current = true;
+    }
+  }, [messages.length, doScrollToBottom]);
+
+  // Reset scroll flag when messages are cleared (e.g., when switching chats)
+  useEffect(() => {
+    if (messages.length === 0) {
+      hasScrolledToBottomRef.current = false;
+      isFirstTimeAccess.current = true;
+      hasScrolledOnFirstAccess.current = false;
+      setIsAtBottom(true);
+    }
+  }, [messages.length]);
+
+  // Auto-scroll when typing indicator appears (only if user is truly at bottom)
+  useEffect(() => {
+    // Only auto-scroll if:
+    // 1. Typing indicator just appeared (isTyping became true)
+    // 2. User is at the bottom
+    // 3. User is not actively scrolling up to read old messages
+    if (isTyping && isAtBottom && hasScrolledToBottomRef.current) {
+      // Small delay to ensure typing indicator is rendered
+      setTimeout(() => {
+        doScrollToBottom(true);
+      }, 100);
+    }
+  }, [isTyping, isAtBottom, doScrollToBottom]);
 
   // removes unrendered days positions when messages are added/removed
   useEffect(() => {
@@ -548,7 +689,7 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
               </View>
             ) : null;
           })}
-          {inverted ? ListFooterComponent : ListHeaderComponent}
+          {inverted ? null : ListFooterComponent}
         </ScrollView>
       ) : (
         <AnimatedFlatList
