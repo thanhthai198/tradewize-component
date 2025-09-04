@@ -6,7 +6,15 @@ import {
   Modal,
   type LayoutChangeEvent,
   type TextStyle,
+  Dimensions,
 } from 'react-native';
+
+const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
+
+// Constants for horizontal positioning
+const HORIZONTAL_PADDING = 16;
+const MESSAGE_MAX_WIDTH = screenWidth * 0.8;
+const SAFE_MARGIN = 10;
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -58,8 +66,23 @@ export const MessageWithReaction = ({
   delete message.quickReplies;
   const [isExceedsScreenHeight, setIsExceedsScreenHeight] = useState(false);
   const [differenceLevel, setDifferenceLevel] = useState(0);
+  const [messageWidth, setMessageWidth] = useState(0);
 
   const isMyMessage = message.user?._id === user?._id;
+
+  // Helper function to get safe horizontal position
+  const getSafeHorizontalPosition = useCallback((basePosition: number, elementWidth: number) => {
+    const leftBound = HORIZONTAL_PADDING;
+    const rightBound = screenWidth - HORIZONTAL_PADDING - elementWidth;
+    
+    if (basePosition < leftBound) {
+      return leftBound;
+    }
+    if (basePosition > rightBound) {
+      return rightBound;
+    }
+    return basePosition;
+  }, []);
 
   // Animation values
   const overlayOpacity = useSharedValue(0);
@@ -142,22 +165,32 @@ export const MessageWithReaction = ({
     }
 
     if (isMyMessage) {
+      // For my messages, calculate safe right position
+      const baseRight = 16;
+      const safeRight = getSafeHorizontalPosition(screenWidth - baseRight - messageWidth, messageWidth);
       return {
         top,
-        right: 16,
+        right: screenWidth - safeRight - messageWidth,
+        maxWidth: MESSAGE_MAX_WIDTH,
+      };
+    } else {
+      // For other messages, calculate safe left position
+      const baseLeft = position.pageX;
+      const safeLeft = getSafeHorizontalPosition(baseLeft, messageWidth);
+      return {
+        top,
+        left: safeLeft,
+        maxWidth: MESSAGE_MAX_WIDTH,
       };
     }
-
-    return {
-      top,
-      left: position.pageX,
-    };
   }, [
     isMyMessage,
     position.pageX,
     position.pageY,
     isExceedsScreenHeight,
     differenceLevel,
+    messageWidth,
+    getSafeHorizontalPosition,
   ]);
 
   const styleReactionIcon = useCallback(() => {
@@ -176,22 +209,30 @@ export const MessageWithReaction = ({
         8;
     }
 
+    const iconWidth = screenWidth * 0.75; // Width from styles
+    
     if (isMyMessage) {
+      const baseRight = 16;
+      const safeRight = getSafeHorizontalPosition(screenWidth - baseRight - iconWidth, iconWidth);
       return {
         top,
-        right: 16,
+        right: screenWidth - safeRight - iconWidth,
+      };
+    } else {
+      const baseLeft = position.pageX;
+      const safeLeft = getSafeHorizontalPosition(baseLeft, iconWidth);
+      return {
+        top,
+        left: safeLeft,
       };
     }
-    return {
-      top,
-      left: position.pageX,
-    };
   }, [
     isExceedsScreenHeight,
     differenceLevel,
     position.pageY,
     position.pageX,
     isMyMessage,
+    getSafeHorizontalPosition,
   ]);
 
   const styleLayoutAction = useCallback(() => {
@@ -205,16 +246,23 @@ export const MessageWithReaction = ({
         position.pageY + position.height - differenceLevel - DIFFERENCE_LEVEL;
     }
 
+    const actionWidth = screenWidth * 0.5; // Approximate width of action buttons
+    
     if (isMyMessage) {
+      const baseRight = 16;
+      const safeRight = getSafeHorizontalPosition(screenWidth - baseRight - actionWidth, actionWidth);
       return {
         top,
-        right: 16,
+        right: screenWidth - safeRight - actionWidth,
+      };
+    } else {
+      const baseLeft = position.pageX;
+      const safeLeft = getSafeHorizontalPosition(baseLeft, actionWidth);
+      return {
+        top,
+        left: safeLeft,
       };
     }
-    return {
-      top,
-      left: position.pageX,
-    };
   }, [
     isMyMessage,
     position.pageX,
@@ -222,21 +270,24 @@ export const MessageWithReaction = ({
     position.height,
     isExceedsScreenHeight,
     differenceLevel,
+    getSafeHorizontalPosition,
   ]);
 
   const onLayout = useCallback(
     (e: LayoutChangeEvent) => {
+      const {height, width} = e.nativeEvent.layout;
       const isHeight =
-        position.pageY + e.nativeEvent.layout.height + position.height + 139 >
-        getScreenHeight();
+         position.pageY + height + position.height + 139 >
+         screenHeight;
 
       setDifferenceLevel(
-        position.pageY +
-          e.nativeEvent.layout.height +
-          position.height -
-          getScreenHeight()
-      );
+         position.pageY +
+           height +
+           position.height -
+           screenHeight
+       );
       setIsExceedsScreenHeight(isHeight);
+      setMessageWidth(width);
     },
     [position.pageY, position.height]
   );
@@ -330,6 +381,7 @@ export const MessageWithReaction = ({
 
         {/* Hiển thị message ở vị trí đã đo */}
         <Animated.View
+          onLayout={onLayout}
           style={[styles.message, styleMessage(), messageAnimatedStyle]}
         >
           {renderFile}
@@ -338,7 +390,6 @@ export const MessageWithReaction = ({
         </Animated.View>
 
         <Animated.View
-          onLayout={onLayout}
           style={[
             styles.layout,
             styleLayoutAction(),
