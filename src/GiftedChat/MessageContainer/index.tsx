@@ -99,9 +99,7 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
 
   const renderTypingIndicator = useCallback(() => {
     if (renderTypingIndicatorProp) return renderTypingIndicatorProp();
-    if (isTyping) return <TypingIndicator />;
-
-    return null;
+    return <TypingIndicator isTyping={isTyping} />;
   }, [isTyping, renderTypingIndicatorProp]);
 
   const ListFooterComponent = useMemo(() => {
@@ -716,6 +714,10 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
           {...listViewProps}
           onLayout={onLayoutList}
           CellRendererComponent={renderCell}
+          maintainVisibleContentPosition={{
+            minIndexForVisible: 0,
+            autoscrollToTopThreshold: 10,
+          }}
         />
       )}
       {isScrollToBottomEnabled ? renderScrollToBottomWrapper() : null}

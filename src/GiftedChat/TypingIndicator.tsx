@@ -3,6 +3,7 @@ import { Animated, View, StyleSheet, type ViewStyle } from 'react-native';
 import Color from './Color';
 
 type Props = {
+  isTyping: boolean;
   size?: number; // đường kính mỗi chấm
   speed?: number; // ms cho 1 nhịp lên/xuống
   dotColor?: string;
@@ -16,6 +17,7 @@ const TypingIndicator = ({
   dotColor = Color.defaultBlue,
   bubbleColor = Color.leftBubbleBackground,
   style,
+  isTyping,
 }: Props) => {
   const v1 = useRef(new Animated.Value(0)).current;
   const v2 = useRef(new Animated.Value(0)).current;
@@ -76,6 +78,9 @@ const TypingIndicator = ({
     <View
       style={[
         styles.container,
+        {
+          opacity: isTyping ? 1 : 0,
+        },
         {
           backgroundColor: bubbleColor,
           paddingVertical: Math.max(4, Math.round(size * 0.8)),
