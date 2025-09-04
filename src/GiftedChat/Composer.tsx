@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useRef,
   useState,
+  useEffect,
 } from 'react';
 import {
   Platform,
@@ -71,6 +72,13 @@ export const Composer = forwardRef(
     const [widthText, setWidthText] = useState(0);
     const [lineCount, setLineCount] = useState(1);
 
+    // Reset lineCount khi text trống (đặc biệt hữu ích trên Android)
+    useEffect(() => {
+      if (!text || text.trim() === '') {
+        setLineCount(1);
+      }
+    }, [text]);
+
     const determineInputSizeChange = useCallback(
       (dimensions: { width: number; height: number }) => {
         // Support earlier versions of React Native on Android.
@@ -93,15 +101,33 @@ export const Composer = forwardRef(
     const handleContentSizeChange = useCallback(
       ({
         nativeEvent: { contentSize },
-      }: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) =>
-        determineInputSizeChange(contentSize),
-      [determineInputSizeChange]
+      }: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) => {
+        determineInputSizeChange(contentSize);
+        
+        // Nếu text rỗng, luôn giữ lineCount = 1
+        if (!text || text.trim() === '') {
+          setLineCount(1);
+          return;
+        }
+        
+        // Tính số dòng dựa trên contentSize height, xử lý đặc biệt cho Android
+        const lineHeight = 22;
+        const androidPadding = Platform.OS === 'android' ? 6 : 12; // Android có padding khác
+        const minHeightForOneLine = lineHeight + androidPadding;
+        
+        let lines = 1;
+        if (contentSize.height > minHeightForOneLine) {
+          lines = Math.max(1, Math.ceil((contentSize.height - androidPadding) / lineHeight));
+        }
+        
+        setLineCount(lines);
+      },
+      [determineInputSizeChange, text]
     );
 
     const handleLayout = (e: LayoutChangeEvent) => {
-      const height = e.nativeEvent.layout.height;
-      const lines = Math.max(1, Math.round(height / 22));
-      setLineCount(lines);
+      // Chỉ xử lý layout, không tính toán lineCount ở đây
+      // lineCount sẽ được tính trong handleContentSizeChange
     };
 
     const borderRadiusByLineCount = useMemo(() => {
@@ -112,14 +138,19 @@ export const Composer = forwardRef(
     }, [lineCount]);
 
     const heightInput = useMemo(() => {
-      if (lineCount === 1) {
-        return composerHeight;
+      // Chiều cao mặc định cho 1 hàng
+      const minHeight = composerHeight ?? 40;
+      const lineHeight = 22;
+      
+      // Chỉ tăng chiều cao khi có nhiều hơn 1 hàng
+      if (lineCount > 1) {
+        const calculatedHeight = lineCount * lineHeight;
+        const maxHeight = MAX_COMPOSER_HEIGHT;
+        return Math.min(calculatedHeight + 12, maxHeight); // +12 cho padding
       }
-      const height = lineCount * 22;
-      if (height > MAX_COMPOSER_HEIGHT / 2) {
-        return MAX_COMPOSER_HEIGHT / 2 + 20;
-      }
-      return height;
+      
+      // Trả về chiều cao mặc định cho 1 hàng
+      return minHeight;
     }, [lineCount, composerHeight]);
 
     return (
