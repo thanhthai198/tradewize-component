@@ -16,7 +16,6 @@ import {
   View,
   Image,
   Text,
-  type LayoutChangeEvent,
 } from 'react-native';
 import {
   MIN_COMPOSER_HEIGHT,
@@ -125,7 +124,7 @@ export const Composer = forwardRef(
       [determineInputSizeChange, text]
     );
 
-    const handleLayout = (e: LayoutChangeEvent) => {
+    const handleLayout = () => {
       // Chỉ xử lý layout, không tính toán lineCount ở đây
       // lineCount sẽ được tính trong handleContentSizeChange
     };

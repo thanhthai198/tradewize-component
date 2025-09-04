@@ -14,7 +14,6 @@ const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 // Constants for horizontal positioning
 const HORIZONTAL_PADDING = 16;
 const MESSAGE_MAX_WIDTH = screenWidth * 0.8;
-const SAFE_MARGIN = 10;
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
