@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -26,7 +32,11 @@ import Item from './components/Item';
 import { LoadEarlier } from '../LoadEarlier';
 import { type IMessage } from '../types';
 import TypingIndicator from '../TypingIndicator';
-import { type MessageContainerProps, type DaysPositions, type AnimatedList } from './types';
+import {
+  type MessageContainerProps,
+  type DaysPositions,
+  type AnimatedList,
+} from './types';
 import { type ItemProps } from './components/Item/types';
 
 import { warning } from '../logging';
@@ -149,7 +159,7 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
       const threshold = 100; // 100 px threshold
       return contentOffset + layoutHeight >= contentSize - threshold;
     },
-    [],
+    []
   );
 
   const doScrollToBottom = useCallback(
@@ -200,7 +210,7 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
       const atBottom = checkIsAtBottom(
         contentOffsetY,
         contentSizeHeight,
-        layoutMeasurementHeight,
+        layoutMeasurementHeight
       );
       runOnJS(setIsAtBottom)(atBottom);
 
@@ -231,7 +241,13 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
         makeScrollToBottomVisible();
       else makeScrollToBottomHidden();
     },
-    [handleOnScrollProp, inverted, scrollToBottomOffset, scrollToBottomOpacity, checkIsAtBottom]
+    [
+      handleOnScrollProp,
+      inverted,
+      scrollToBottomOffset,
+      scrollToBottomOpacity,
+      checkIsAtBottom,
+    ]
   );
 
   const renderItem = useCallback(
@@ -416,7 +432,13 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
         }
       }, 300);
     }
-  }, [infiniteScroll, loadEarlier, onLoadEarlier, isLoadingEarlier, forwardRef]);
+  }, [
+    infiniteScroll,
+    loadEarlier,
+    onLoadEarlier,
+    isLoadingEarlier,
+    forwardRef,
+  ]);
 
   const keyExtractor: any = useCallback(
     (item: unknown) => (item as TMessage)._id.toString(),
@@ -485,28 +507,32 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
     [handleOnScroll]
   );
 
-  const scrollHandlerForScrollView = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;
-    const currentOffset = contentOffset.y;
-    const currentContentHeight = contentSize.height;
-    const currentScrollViewHeight = layoutMeasurement.height;
+  const scrollHandlerForScrollView = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const { contentOffset, contentSize, layoutMeasurement } =
+        event.nativeEvent;
+      const currentOffset = contentOffset.y;
+      const currentContentHeight = contentSize.height;
+      const currentScrollViewHeight = layoutMeasurement.height;
 
-    // Update refs for scroll position tracking
-    scrollPosition.current = currentOffset;
-    contentHeight.current = currentContentHeight;
-    scrollViewHeight.current = currentScrollViewHeight;
+      // Update refs for scroll position tracking
+      scrollPosition.current = currentOffset;
+      contentHeight.current = currentContentHeight;
+      scrollViewHeight.current = currentScrollViewHeight;
 
-    // Check if at the bottom and update state
-    const atBottom = checkIsAtBottom(
-      currentOffset,
-      currentContentHeight,
-      currentScrollViewHeight,
-    );
-    setIsAtBottom(atBottom);
+      // Check if at the bottom and update state
+      const atBottom = checkIsAtBottom(
+        currentOffset,
+        currentContentHeight,
+        currentScrollViewHeight
+      );
+      setIsAtBottom(atBottom);
 
-    // Update animated value for existing functionality
-    scrolledY.value = currentOffset;
-  }, [checkIsAtBottom]);
+      // Update animated value for existing functionality
+      scrolledY.value = currentOffset;
+    },
+    [checkIsAtBottom, scrolledY]
+  );
 
   // Update scroll-to-bottom button visibility based on isAtBottom state
   useEffect(() => {
@@ -680,9 +706,22 @@ function MessageContainer<TMessage extends IMessage = IMessage>(
           {inverted ? ListHeaderComponent : null}
           {messages.length === 0 ? renderChatEmpty() : null}
           {messages.map((item, index) => {
-            const renderedItem = renderItem({ item, index } as ListRenderItemInfo<unknown>);
+            const renderedItem = renderItem({
+              item,
+              index,
+            } as ListRenderItemInfo<unknown>);
             return renderedItem ? (
-              <View key={keyExtractor(item)} onLayout={(event) => renderCell({ item, index, onLayout: () => {}, children: renderedItem } as any).props.onLayout?.(event)}>
+              <View
+                key={keyExtractor(item)}
+                onLayout={(event) =>
+                  renderCell({
+                    item,
+                    index,
+                    onLayout: () => {},
+                    children: renderedItem,
+                  } as any).props.onLayout?.(event)
+                }
+              >
                 {renderedItem}
               </View>
             ) : null;
