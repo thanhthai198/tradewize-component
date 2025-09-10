@@ -111,7 +111,9 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
   const actionSheetRef = useRef<ActionSheetProviderRef>(null);
 
   const messageContainerRef = useMemo(
-    () => props.messageContainerRef || createRef<AnimatedList<TMessage> | ScrollView>(),
+    () =>
+      props.messageContainerRef ||
+      createRef<AnimatedList<TMessage> | ScrollView>(),
     [props.messageContainerRef]
   ) as RefObject<AnimatedList<TMessage> | ScrollView>;
 
@@ -233,7 +235,10 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
       if (!messageContainerRef?.current) return;
 
       // Type-safe check for ScrollView
-      if ('scrollTo' in messageContainerRef.current && 'scrollToEnd' in messageContainerRef.current) {
+      if (
+        'scrollTo' in messageContainerRef.current &&
+        'scrollToEnd' in messageContainerRef.current
+      ) {
         // ScrollView case
         const scrollViewRef = messageContainerRef.current as ScrollView;
         if (inverted) {
@@ -246,7 +251,8 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
         }
       } else if ('scrollToOffset' in messageContainerRef.current) {
         // AnimatedList case
-        const animatedListRef = messageContainerRef.current as AnimatedList<TMessage>;
+        const animatedListRef =
+          messageContainerRef.current as AnimatedList<TMessage>;
         if (inverted) {
           animatedListRef.scrollToOffset({
             offset: 0,

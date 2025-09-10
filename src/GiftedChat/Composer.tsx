@@ -102,23 +102,26 @@ export const Composer = forwardRef(
         nativeEvent: { contentSize },
       }: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) => {
         determineInputSizeChange(contentSize);
-        
+
         // Nếu text rỗng, luôn giữ lineCount = 1
         if (!text || text.trim() === '') {
           setLineCount(1);
           return;
         }
-        
+
         // Tính số dòng dựa trên contentSize height, xử lý đặc biệt cho Android
         const lineHeight = 22;
         const androidPadding = Platform.OS === 'android' ? 6 : 12; // Android có padding khác
         const minHeightForOneLine = lineHeight + androidPadding;
-        
+
         let lines = 1;
         if (contentSize.height > minHeightForOneLine) {
-          lines = Math.max(1, Math.ceil((contentSize.height - androidPadding) / lineHeight));
+          lines = Math.max(
+            1,
+            Math.ceil((contentSize.height - androidPadding) / lineHeight)
+          );
         }
-        
+
         setLineCount(lines);
       },
       [determineInputSizeChange, text]
@@ -140,14 +143,14 @@ export const Composer = forwardRef(
       // Chiều cao mặc định cho 1 hàng
       const minHeight = composerHeight ?? 40;
       const lineHeight = 22;
-      
+
       // Chỉ tăng chiều cao khi có nhiều hơn 1 hàng
       if (lineCount > 1) {
         const calculatedHeight = lineCount * lineHeight;
         const maxHeight = MAX_COMPOSER_HEIGHT;
         return Math.min(calculatedHeight + 12, maxHeight); // +12 cho padding
       }
-      
+
       // Trả về chiều cao mặc định cho 1 hàng
       return minHeight;
     }, [lineCount, composerHeight]);
@@ -178,7 +181,7 @@ export const Composer = forwardRef(
               />
             </ButtonBase>
 
-            <ButtonBase
+            {/* <ButtonBase
               disabled={disableComposer}
               onPress={() => onPressPickMedia?.('pick')}
             >
@@ -188,7 +191,7 @@ export const Composer = forwardRef(
                 source={require('./assets/photo.png')}
                 style={styles.iconPick}
               />
-            </ButtonBase>
+            </ButtonBase> */}
           </>
         )}
 
