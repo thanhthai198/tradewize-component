@@ -17,7 +17,13 @@ const LimitedPhotos = NativeModules.LimitedPhotos
       }
     );
 
-export type Photo = { uri: string; name: string; dateAdded: number };
+export type Photo = {
+  uri: string;
+  name: string;
+  dateAdded: number;
+  type: string;
+  size: number;
+};
 
 export function getAllowedPhotos(): Promise<Photo[]> {
   return LimitedPhotos.getAllowedPhotos();
