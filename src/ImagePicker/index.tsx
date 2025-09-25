@@ -136,6 +136,11 @@ export interface ImagePickerProps {
    * Confirm button text
    */
   confirmButtonText?: string;
+
+  /**
+   * Custom button
+   */
+  customButton?: (showImagePicker: () => void) => React.ReactNode;
 }
 
 const ImagePickerComponent: React.FC<ImagePickerProps> = ({
@@ -164,6 +169,7 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
   useCamera = false,
   confirmButtonStyle,
   confirmButtonText,
+  customButton,
 }) => {
   const [selectedImages, setSelectedImages] = useState<PickerImage[]>([]);
   const [showLimitedPhotosModal, setShowLimitedPhotosModal] = useState(false);
@@ -508,21 +514,29 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
 
   return (
     <View style={style}>
-      <TouchableOpacity
-        style={[styles.button, buttonStyle, disabled && styles.disabledButton]}
-        onPress={showImagePicker}
-        disabled={disabled}
-      >
-        <Text
+      {customButton ? (
+        customButton(showImagePicker)
+      ) : (
+        <TouchableOpacity
           style={[
-            styles.buttonText,
-            buttonTextStyle,
-            disabled && styles.disabledText,
+            styles.button,
+            buttonStyle,
+            disabled && styles.disabledButton,
           ]}
+          onPress={showImagePicker}
+          disabled={disabled}
         >
-          {buttonText}
-        </Text>
-      </TouchableOpacity>
+          <Text
+            style={[
+              styles.buttonText,
+              buttonTextStyle,
+              disabled && styles.disabledText,
+            ]}
+          >
+            {buttonText}
+          </Text>
+        </TouchableOpacity>
+      )}
 
       {isShowSelectedImages && renderSelectedImages()}
 

@@ -96,6 +96,10 @@ export interface ImagePickerProps {
      * Confirm button text
      */
     confirmButtonText?: string;
+    /**
+     * Custom button
+     */
+    customButton?: (showImagePicker: () => void) => React.ReactNode;
 }
 declare const ImagePickerComponent: React.FC<ImagePickerProps>;
 export default ImagePickerComponent;
