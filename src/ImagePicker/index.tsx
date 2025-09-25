@@ -6,360 +6,296 @@ import {
   StyleSheet,
   Alert,
   Image,
-  ActivityIndicator,
+  Platform,
 } from 'react-native';
-import ImagePicker from 'react-native-image-crop-picker';
-import { ButtonBase } from '../ButtonBase';
+import ImagePicker, {
+  type Image as PickerImage,
+} from 'react-native-image-crop-picker';
 
 export interface ImagePickerProps {
   /**
-   * Callback function called when image is selected
+   * Callback function called when an image is selected
    */
-  onImageSelected?: (image: ImageData) => void;
+  onImageSelected?: (image: PickerImage | PickerImage[]) => void;
+
   /**
    * Callback function called when there's an error
    */
-  onError?: (error: string) => void;
+  onError?: (error: any) => void;
+
   /**
-   * Whether to show crop interface
+   * Maximum number of images that can be selected (for multiple selection)
    */
-  enableCrop?: boolean;
+  multiple?: boolean;
+
   /**
-   * Crop width
+   * Maximum number of images that can be selected
    */
-  cropWidth?: number;
+  maxFiles?: number;
+
   /**
-   * Crop height
+   * Whether to show crop options
    */
-  cropHeight?: number;
+  cropping?: boolean;
+
   /**
-   * Maximum file size in bytes
+   * Crop rectangle width
    */
-  maxFileSize?: number;
+  width?: number;
+
   /**
-   * Image quality (0-1)
+   * Crop rectangle height
    */
-  quality?: number;
+  height?: number;
+
   /**
-   * Whether to include base64 data
+   * Minimum image dimensions
+   */
+  minWidth?: number;
+  minHeight?: number;
+
+  /**
+   * Maximum image dimensions
+   */
+  maxWidth?: number;
+  maxHeight?: number;
+
+  /**
+   * Image format
    */
   includeBase64?: boolean;
+
+  /**
+   * Include EXIF data
+   */
+  includeExif?: boolean;
+
+  /**
+   * Media type to pick
+   */
+  mediaType?: 'photo' | 'video' | 'any';
+
   /**
    * Custom button text
    */
   buttonText?: string;
+
   /**
    * Custom button style
    */
   buttonStyle?: any;
+
   /**
-   * Custom text style
+   * Custom button text style
    */
-  textStyle?: any;
+  buttonTextStyle?: any;
+
   /**
-   * Whether to show preview
+   * Container style
    */
-  showPreview?: boolean;
+  style?: any;
+
   /**
-   * Preview image style
-   */
-  previewStyle?: any;
-  /**
-   * Whether to allow multiple selection
-   */
-  multiple?: boolean;
-  /**
-   * Maximum number of images when multiple is true
-   */
-  maxFiles?: number;
-  /**
-   * Whether to compress image
-   */
-  compress?: boolean;
-  /**
-   * Compression quality (0-1)
-   */
-  compressQuality?: number;
-  /**
-   * Whether to show loading indicator
-   */
-  showLoading?: boolean;
-  /**
-   * Custom loading component
-   */
-  loadingComponent?: React.ReactNode;
-  /**
-   * Whether to show action sheet
+   * Whether to show action sheet for source selection
    */
   showActionSheet?: boolean;
+
   /**
    * Custom action sheet options
    */
-  actionSheetOptions?: {
-    title?: string;
-    options?: string[];
-    cancelButtonIndex?: number;
-    destructiveButtonIndex?: number;
-  };
+  actionSheetOptions?: string[];
+
+  /**
+   * Whether to compress images
+   */
+  compressImageQuality?: number;
+
+  /**
+   * Force JPEG format
+   */
+  forceJpg?: boolean;
+
+  /**
+   * Disable the component
+   */
+  disabled?: boolean;
 }
 
-export interface ImageData {
-  uri: string;
-  width: number;
-  height: number;
-  mime: string;
-  size: number;
-  filename?: string;
-  path: string;
-  data?: string; // base64 data if includeBase64 is true
-}
-
-export const ImagePickerComponent: React.FC<ImagePickerProps> = ({
+const ImagePickerComponent: React.FC<ImagePickerProps> = ({
   onImageSelected,
   onError,
-  enableCrop = false,
-  cropWidth = 300,
-  cropHeight = 300,
-  maxFileSize = 10 * 1024 * 1024, // 10MB
-  quality = 0.8,
-  includeBase64 = false,
-  buttonText = 'Chọn ảnh',
-  buttonStyle,
-  textStyle,
-  showPreview = true,
-  previewStyle,
   multiple = false,
-  maxFiles = 5,
-  compress = true,
-  compressQuality = 0.8,
-  showLoading = true,
-  loadingComponent,
+  maxFiles = 10,
+  cropping = false,
+  width = 300,
+  height = 300,
+  minWidth,
+  minHeight,
+  maxWidth,
+  maxHeight,
+  includeBase64 = false,
+  includeExif = false,
+  mediaType = 'photo',
+  buttonText = 'Select Image',
+  buttonStyle,
+  buttonTextStyle,
+  style,
   showActionSheet = true,
-  actionSheetOptions = {
-    title: 'Chọn ảnh từ',
-    options: ['Camera', 'Thư viện ảnh', 'Hủy'],
-    cancelButtonIndex: 2,
-  },
+  actionSheetOptions = ['Camera', 'Gallery', 'Cancel'],
+  compressImageQuality = 0.8,
+  forceJpg = false,
+  disabled = false,
 }) => {
-  const [selectedImages, setSelectedImages] = useState<ImageData[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [selectedImages, setSelectedImages] = useState<PickerImage[]>([]);
 
-  const handleError = useCallback(
+  const showError = useCallback(
     (error: any) => {
       console.error('ImagePicker Error:', error);
-      const errorMessage = error.message || 'Có lỗi xảy ra khi chọn ảnh';
-      onError?.(errorMessage);
-      Alert.alert('Lỗi', errorMessage);
+      if (onError) {
+        onError(error);
+      } else {
+        Alert.alert(
+          'Error',
+          error.message || 'An error occurred while selecting image'
+        );
+      }
     },
     [onError]
   );
 
-  const validateImage = useCallback(
-    (image: any): boolean => {
-      if (image.size > maxFileSize) {
-        const errorMessage = `Kích thước ảnh vượt quá giới hạn ${Math.round(
-          maxFileSize / (1024 * 1024)
-        )}MB`;
-        handleError({ message: errorMessage });
-        return false;
-      }
-      return true;
-    },
-    [maxFileSize, handleError]
-  );
+  const getPickerOptions = useCallback((): any => {
+    const baseOptions: any = {
+      mediaType,
+      includeBase64,
+      includeExif,
+      compressImageQuality,
+      forceJpg,
+    };
 
-  const processImage = useCallback(
-    (image: any): ImageData => {
-      const processedImage: ImageData = {
-        uri: image.path,
-        width: image.width,
-        height: image.height,
-        mime: image.mime,
-        size: image.size,
-        filename: image.filename,
-        path: image.path,
-      };
+    if (cropping) {
+      baseOptions.cropping = true;
+      baseOptions.width = width;
+      baseOptions.height = height;
+    }
 
-      if (includeBase64 && image.data) {
-        processedImage.data = image.data;
-      }
+    if (minWidth || minHeight) {
+      baseOptions.minWidth = minWidth;
+      baseOptions.minHeight = minHeight;
+    }
 
-      return processedImage;
-    },
-    [includeBase64]
-  );
+    if (maxWidth || maxHeight) {
+      baseOptions.maxWidth = maxWidth;
+      baseOptions.maxHeight = maxHeight;
+    }
+
+    if (multiple) {
+      baseOptions.multiple = true;
+      baseOptions.maxFiles = maxFiles;
+    }
+
+    return baseOptions;
+  }, [
+    mediaType,
+    includeBase64,
+    includeExif,
+    compressImageQuality,
+    forceJpg,
+    cropping,
+    width,
+    height,
+    minWidth,
+    minHeight,
+    maxWidth,
+    maxHeight,
+    multiple,
+    maxFiles,
+  ]);
 
   const openCamera = useCallback(async () => {
     try {
-      setIsLoading(true);
-      const options: any = {
-        mediaType: 'photo',
-        quality: quality,
-        includeBase64: includeBase64,
-        compressImageQuality: compress ? compressQuality : 1,
-      };
+      const options = getPickerOptions();
+      const result = await ImagePicker.openCamera(options);
 
-      if (enableCrop) {
-        options.cropping = true;
-        options.width = cropWidth;
-        options.height = cropHeight;
-      }
-
-      const image = await ImagePicker.openCamera(options);
-
-      if (validateImage(image)) {
-        const processedImage = processImage(image);
-        setSelectedImages([processedImage]);
-        onImageSelected?.(processedImage);
+      if (multiple && Array.isArray(result)) {
+        setSelectedImages(result);
+        onImageSelected?.(result);
+      } else if (!multiple && result && !Array.isArray(result)) {
+        setSelectedImages([result]);
+        onImageSelected?.(result);
       }
     } catch (error: any) {
       if (error.code !== 'E_PICKER_CANCELLED') {
-        handleError(error);
+        showError(error);
       }
-    } finally {
-      setIsLoading(false);
     }
-  }, [
-    quality,
-    includeBase64,
-    compress,
-    compressQuality,
-    enableCrop,
-    cropWidth,
-    cropHeight,
-    validateImage,
-    processImage,
-    onImageSelected,
-    handleError,
-  ]);
+  }, [getPickerOptions, multiple, onImageSelected, showError]);
 
   const openGallery = useCallback(async () => {
     try {
-      setIsLoading(true);
-      const options: any = {
-        mediaType: 'photo',
-        quality: quality,
-        includeBase64: includeBase64,
-        compressImageQuality: compress ? compressQuality : 1,
-        multiple: multiple,
-      };
+      const options = getPickerOptions();
+      const result = await ImagePicker.openPicker(options);
 
-      if (multiple && maxFiles > 1) {
-        options.maxFiles = maxFiles;
-      }
-
-      if (enableCrop && !multiple) {
-        options.cropping = true;
-        options.width = cropWidth;
-        options.height = cropHeight;
-      }
-
-      const images = await ImagePicker.openPicker(options);
-      const imageArray = Array.isArray(images) ? images : [images];
-
-      const validImages = imageArray.filter(validateImage);
-      const processedImages = validImages.map(processImage);
-
-      if (processedImages.length > 0) {
-        setSelectedImages(processedImages);
-        if (multiple) {
-          onImageSelected?.(processedImages as any);
-        } else {
-          onImageSelected?.(processedImages[0]!);
-        }
+      if (multiple && Array.isArray(result)) {
+        setSelectedImages(result);
+        onImageSelected?.(result);
+      } else if (!multiple && result && !Array.isArray(result)) {
+        setSelectedImages([result]);
+        onImageSelected?.(result);
       }
     } catch (error: any) {
       if (error.code !== 'E_PICKER_CANCELLED') {
-        handleError(error);
+        showError(error);
       }
-    } finally {
-      setIsLoading(false);
     }
-  }, [
-    quality,
-    includeBase64,
-    compress,
-    compressQuality,
-    multiple,
-    maxFiles,
-    enableCrop,
-    cropWidth,
-    cropHeight,
-    validateImage,
-    processImage,
-    onImageSelected,
-    handleError,
-  ]);
+  }, [getPickerOptions, multiple, onImageSelected, showError]);
 
   const showImagePicker = useCallback(() => {
-    if (showActionSheet) {
+    if (disabled) return;
+
+    if (showActionSheet && Platform.OS === 'ios') {
+      const options = actionSheetOptions;
       Alert.alert(
-        actionSheetOptions.title || 'Chọn ảnh từ',
-        '',
+        'Select Image Source',
+        'Choose how you want to select an image',
         [
           {
-            text: actionSheetOptions.options?.[0] || 'Camera',
+            text: options[0] || 'Camera',
             onPress: openCamera,
           },
           {
-            text: actionSheetOptions.options?.[1] || 'Thư viện ảnh',
+            text: options[1] || 'Gallery',
             onPress: openGallery,
           },
           {
-            text: actionSheetOptions.options?.[2] || 'Hủy',
+            text: options[2] || 'Cancel',
             style: 'cancel',
           },
         ],
         { cancelable: true }
       );
     } else {
+      // For Android or when action sheet is disabled, go directly to gallery
       openGallery();
     }
-  }, [showActionSheet, actionSheetOptions, openCamera, openGallery]);
+  }, [disabled, showActionSheet, actionSheetOptions, openCamera, openGallery]);
 
   const removeImage = useCallback(
     (index: number) => {
       const newImages = selectedImages.filter((_, i) => i !== index);
       setSelectedImages(newImages);
-      if (multiple) {
-        onImageSelected?.(newImages as any);
-      } else if (newImages.length > 0) {
-        onImageSelected?.(newImages[0]!);
-      }
+      onImageSelected?.(newImages);
     },
-    [selectedImages, multiple, onImageSelected]
+    [selectedImages, onImageSelected]
   );
 
-  const renderButtonContent = () => {
-    if (isLoading && showLoading) {
-      if (loadingComponent) {
-        return loadingComponent;
-      }
-
-      return (
-        <View style={styles.buttonLoadingContainer}>
-          <ActivityIndicator size="small" color="#FFFFFF" />
-          <Text style={[styles.buttonText, textStyle, styles.loadingText]}>
-            Đang xử lý...
-          </Text>
-        </View>
-      );
-    }
-
-    return <Text style={[styles.buttonText, textStyle]}>{buttonText}</Text>;
-  };
-
-  const renderPreview = () => {
-    if (!showPreview || selectedImages.length === 0) return null;
+  const renderSelectedImages = () => {
+    if (selectedImages.length === 0) return null;
 
     return (
-      <View style={styles.previewContainer}>
+      <View style={styles.selectedImagesContainer}>
         {selectedImages.map((image, index) => (
           <View key={index} style={styles.imageContainer}>
-            <Image
-              source={{ uri: image.uri }}
-              style={[styles.previewImage, previewStyle]}
-            />
+            <Image source={{ uri: image.path }} style={styles.selectedImage} />
             <TouchableOpacity
               style={styles.removeButton}
               onPress={() => removeImage(index)}
@@ -373,16 +309,24 @@ export const ImagePickerComponent: React.FC<ImagePickerProps> = ({
   };
 
   return (
-    <View style={styles.container}>
-      <ButtonBase
+    <View style={[styles.container, style]}>
+      <TouchableOpacity
+        style={[styles.button, buttonStyle, disabled && styles.disabledButton]}
         onPress={showImagePicker}
-        style={[styles.button, buttonStyle]}
-        disabled={isLoading}
+        disabled={disabled}
       >
-        {renderButtonContent()}
-      </ButtonBase>
+        <Text
+          style={[
+            styles.buttonText,
+            buttonTextStyle,
+            disabled && styles.disabledText,
+          ]}
+        >
+          {buttonText}
+        </Text>
+      </TouchableOpacity>
 
-      {renderPreview()}
+      {renderSelectedImages()}
     </View>
   );
 };
@@ -397,48 +341,45 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     minWidth: 120,
+    alignItems: 'center',
+  },
+  disabledButton: {
+    backgroundColor: '#CCCCCC',
   },
   buttonText: {
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
-    textAlign: 'center',
   },
-  buttonLoadingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+  disabledText: {
+    color: '#999999',
   },
-  loadingText: {
-    marginLeft: 8,
-    opacity: 0.8,
-  },
-  previewContainer: {
+  selectedImagesContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: 15,
     justifyContent: 'center',
+    marginTop: 16,
+    gap: 8,
   },
   imageContainer: {
     position: 'relative',
-    margin: 5,
   },
-  previewImage: {
+  selectedImage: {
     width: 80,
     height: 80,
     borderRadius: 8,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#F0F0F0',
   },
   removeButton: {
     position: 'absolute',
-    top: -5,
-    right: -5,
+    top: -8,
+    right: -8,
     backgroundColor: '#FF3B30',
-    borderRadius: 12,
     width: 24,
     height: 24,
-    justifyContent: 'center',
+    borderRadius: 12,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   removeButtonText: {
     color: '#FFFFFF',

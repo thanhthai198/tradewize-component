@@ -1,37 +1,56 @@
 import React from 'react';
+import { type Image as PickerImage } from 'react-native-image-crop-picker';
 export interface ImagePickerProps {
     /**
-     * Callback function called when image is selected
+     * Callback function called when an image is selected
      */
-    onImageSelected?: (image: ImageData) => void;
+    onImageSelected?: (image: PickerImage | PickerImage[]) => void;
     /**
      * Callback function called when there's an error
      */
-    onError?: (error: string) => void;
+    onError?: (error: any) => void;
     /**
-     * Whether to show crop interface
+     * Maximum number of images that can be selected (for multiple selection)
      */
-    enableCrop?: boolean;
+    multiple?: boolean;
     /**
-     * Crop width
+     * Maximum number of images that can be selected
      */
-    cropWidth?: number;
+    maxFiles?: number;
     /**
-     * Crop height
+     * Whether to show crop options
      */
-    cropHeight?: number;
+    cropping?: boolean;
     /**
-     * Maximum file size in bytes
+     * Crop rectangle width
      */
-    maxFileSize?: number;
+    width?: number;
     /**
-     * Image quality (0-1)
+     * Crop rectangle height
      */
-    quality?: number;
+    height?: number;
     /**
-     * Whether to include base64 data
+     * Minimum image dimensions
+     */
+    minWidth?: number;
+    minHeight?: number;
+    /**
+     * Maximum image dimensions
+     */
+    maxWidth?: number;
+    maxHeight?: number;
+    /**
+     * Image format
      */
     includeBase64?: boolean;
+    /**
+     * Include EXIF data
+     */
+    includeExif?: boolean;
+    /**
+     * Media type to pick
+     */
+    mediaType?: 'photo' | 'video' | 'any';
     /**
      * Custom button text
      */
@@ -41,64 +60,33 @@ export interface ImagePickerProps {
      */
     buttonStyle?: any;
     /**
-     * Custom text style
+     * Custom button text style
      */
-    textStyle?: any;
+    buttonTextStyle?: any;
     /**
-     * Whether to show preview
+     * Container style
      */
-    showPreview?: boolean;
+    style?: any;
     /**
-     * Preview image style
-     */
-    previewStyle?: any;
-    /**
-     * Whether to allow multiple selection
-     */
-    multiple?: boolean;
-    /**
-     * Maximum number of images when multiple is true
-     */
-    maxFiles?: number;
-    /**
-     * Whether to compress image
-     */
-    compress?: boolean;
-    /**
-     * Compression quality (0-1)
-     */
-    compressQuality?: number;
-    /**
-     * Whether to show loading indicator
-     */
-    showLoading?: boolean;
-    /**
-     * Custom loading component
-     */
-    loadingComponent?: React.ReactNode;
-    /**
-     * Whether to show action sheet
+     * Whether to show action sheet for source selection
      */
     showActionSheet?: boolean;
     /**
      * Custom action sheet options
      */
-    actionSheetOptions?: {
-        title?: string;
-        options?: string[];
-        cancelButtonIndex?: number;
-        destructiveButtonIndex?: number;
-    };
+    actionSheetOptions?: string[];
+    /**
+     * Whether to compress images
+     */
+    compressImageQuality?: number;
+    /**
+     * Force JPEG format
+     */
+    forceJpg?: boolean;
+    /**
+     * Disable the component
+     */
+    disabled?: boolean;
 }
-export interface ImageData {
-    uri: string;
-    width: number;
-    height: number;
-    mime: string;
-    size: number;
-    filename?: string;
-    path: string;
-    data?: string;
-}
-export declare const ImagePickerComponent: React.FC<ImagePickerProps>;
+declare const ImagePickerComponent: React.FC<ImagePickerProps>;
 export default ImagePickerComponent;
