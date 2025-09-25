@@ -1,4 +1,5 @@
 import React from 'react';
+import { type StyleProp, type ViewStyle, type TextStyle } from 'react-native';
 import { type Image as PickerImage } from 'react-native-image-crop-picker';
 export interface ImagePickerProps {
     /**
@@ -58,23 +59,15 @@ export interface ImagePickerProps {
     /**
      * Custom button style
      */
-    buttonStyle?: any;
+    buttonStyle?: StyleProp<ViewStyle>;
     /**
      * Custom button text style
      */
-    buttonTextStyle?: any;
+    buttonTextStyle?: StyleProp<TextStyle>;
     /**
      * Container style
      */
-    style?: any;
-    /**
-     * Whether to show action sheet for source selection
-     */
-    showActionSheet?: boolean;
-    /**
-     * Custom action sheet options
-     */
-    actionSheetOptions?: string[];
+    style?: StyleProp<ViewStyle>;
     /**
      * Whether to compress images
      */
@@ -87,6 +80,22 @@ export interface ImagePickerProps {
      * Disable the component
      */
     disabled?: boolean;
+    /**
+     * Whether to show selected images
+     */
+    isShowSelectedImages?: boolean;
+    /**
+     * Whether to use camera
+     */
+    useCamera?: boolean;
+    /**
+     * Confirm button style
+     */
+    confirmButtonStyle?: StyleProp<ViewStyle>;
+    /**
+     * Confirm button text
+     */
+    confirmButtonText?: string;
 }
 declare const ImagePickerComponent: React.FC<ImagePickerProps>;
 export default ImagePickerComponent;

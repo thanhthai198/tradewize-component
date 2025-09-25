@@ -9,6 +9,9 @@ import {
   Platform,
   Modal,
   FlatList,
+  type StyleProp,
+  type ViewStyle,
+  type TextStyle,
 } from 'react-native';
 import ImagePicker, {
   type Image as PickerImage,
@@ -87,27 +90,17 @@ export interface ImagePickerProps {
   /**
    * Custom button style
    */
-  buttonStyle?: any;
+  buttonStyle?: StyleProp<ViewStyle>;
 
   /**
    * Custom button text style
    */
-  buttonTextStyle?: any;
+  buttonTextStyle?: StyleProp<TextStyle>;
 
   /**
    * Container style
    */
-  style?: any;
-
-  /**
-   * Whether to show action sheet for source selection
-   */
-  showActionSheet?: boolean;
-
-  /**
-   * Custom action sheet options
-   */
-  actionSheetOptions?: string[];
+  style?: StyleProp<ViewStyle>;
 
   /**
    * Whether to compress images
@@ -123,6 +116,26 @@ export interface ImagePickerProps {
    * Disable the component
    */
   disabled?: boolean;
+
+  /**
+   * Whether to show selected images
+   */
+  isShowSelectedImages?: boolean;
+
+  /**
+   * Whether to use camera
+   */
+  useCamera?: boolean;
+
+  /**
+   * Confirm button style
+   */
+  confirmButtonStyle?: StyleProp<ViewStyle>;
+
+  /**
+   * Confirm button text
+   */
+  confirmButtonText?: string;
 }
 
 const ImagePickerComponent: React.FC<ImagePickerProps> = ({
@@ -144,11 +157,13 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
   buttonStyle,
   buttonTextStyle,
   style,
-  showActionSheet = true,
-  actionSheetOptions = ['Camera', 'Gallery', 'Cancel'],
   compressImageQuality = 0.8,
   forceJpg = false,
   disabled = false,
+  isShowSelectedImages = false,
+  useCamera = false,
+  confirmButtonStyle,
+  confirmButtonText,
 }) => {
   const [selectedImages, setSelectedImages] = useState<PickerImage[]>([]);
   const [showLimitedPhotosModal, setShowLimitedPhotosModal] = useState(false);
@@ -355,32 +370,12 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
   const showImagePicker = useCallback(() => {
     if (disabled) return;
 
-    if (showActionSheet && Platform.OS === 'ios') {
-      const options = actionSheetOptions;
-      Alert.alert(
-        'Select Image Source',
-        'Choose how you want to select an image',
-        [
-          {
-            text: options[0] || 'Camera',
-            onPress: openCamera,
-          },
-          {
-            text: options[1] || 'Gallery',
-            onPress: openGallery,
-          },
-          {
-            text: options[2] || 'Cancel',
-            style: 'cancel',
-          },
-        ],
-        { cancelable: true }
-      );
+    if (useCamera) {
+      openCamera();
     } else {
-      // For Android or when action sheet is disabled, go directly to gallery
       openGallery();
     }
-  }, [disabled, showActionSheet, actionSheetOptions, openCamera, openGallery]);
+  }, [disabled, openGallery, openCamera, useCamera]);
 
   const removeImage = useCallback(
     (index: number) => {
@@ -512,7 +507,7 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
   };
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={style}>
       <TouchableOpacity
         style={[styles.button, buttonStyle, disabled && styles.disabledButton]}
         onPress={showImagePicker}
@@ -529,7 +524,7 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
         </Text>
       </TouchableOpacity>
 
-      {renderSelectedImages()}
+      {isShowSelectedImages && renderSelectedImages()}
 
       {/* Limited Photos Modal for Android */}
       <Modal
@@ -572,6 +567,7 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
                   styles.confirmButton,
                   selectedLimitedPhotos.size === 0 &&
                     styles.disabledConfirmButton,
+                  confirmButtonStyle,
                 ]}
                 onPress={handleConfirmSelection}
                 disabled={selectedLimitedPhotos.size === 0}
@@ -583,7 +579,8 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
                       styles.disabledConfirmButtonText,
                   ]}
                 >
-                  Confirm ({selectedLimitedPhotos.size})
+                  {confirmButtonText ??
+                    `Confirm (${selectedLimitedPhotos.size})`}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -595,9 +592,6 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-  },
   button: {
     backgroundColor: '#007AFF',
     paddingHorizontal: 20,
@@ -605,6 +599,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     minWidth: 120,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   disabledButton: {
     backgroundColor: '#CCCCCC',
