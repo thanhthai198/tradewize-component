@@ -10815,6 +10815,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-permissions@npm:^5.4.2":
+  version: 5.4.2
+  resolution: "react-native-permissions@npm:5.4.2"
+  peerDependencies:
+    react: ">=18.1.0"
+    react-native: ">=0.70.0"
+    react-native-windows: ">=0.70.0"
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
+  checksum: fac680b7d85fb979806156d6c9f90dee9c8299b83eb9d2d82bee50aec4baa71b0f5d3cf79e8bf02345e67f77d6cb0fbfbe7e54d02b6822de0ae2e0d9323a6614
+  languageName: node
+  linkType: hard
+
 "react-native-reanimated@npm:3.19.0":
   version: 3.19.0
   resolution: "react-native-reanimated@npm:3.19.0"
@@ -12460,6 +12474,7 @@ __metadata:
     react-native-keyboard-controller: 1.17.5
     react-native-modal: 14.0.0-rc.1
     react-native-parsed-text: ^0.0.22
+    react-native-permissions: ^5.4.2
     react-native-reanimated: 3.19.0
     react-native-safe-area-context: 5.5.2
     react-native-svg: ^15.12.1

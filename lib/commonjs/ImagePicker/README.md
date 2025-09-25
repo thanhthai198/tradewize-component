@@ -186,4 +186,3 @@ The component provides built-in error handling with optional custom error callba
 
 - `react-native-image-crop-picker` (>=0.42.0)
 - `react-native` (>=0.60.0)
-
