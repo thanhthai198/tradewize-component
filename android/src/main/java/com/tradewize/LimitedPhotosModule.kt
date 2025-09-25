@@ -36,6 +36,8 @@ class LimitedPhotosModule(reactContext: ReactApplicationContext) :
             MediaStore.Images.Media._ID,
             MediaStore.Images.Media.DISPLAY_NAME,
             MediaStore.Images.Media.DATE_ADDED
+            MediaStore.Images.Media.MIME_TYPE,
+            MediaStore.Images.Media.SIZE  
         )
         val sortOrder = "${MediaStore.Images.Media.DATE_ADDED} DESC"
 
@@ -43,12 +45,16 @@ class LimitedPhotosModule(reactContext: ReactApplicationContext) :
             val idCol = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
             val nameCol = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
             val dateCol = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_ADDED)
-
+            val typeCol = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)
+            val sizeCol = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)
+            
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idCol)
                 val name = cursor.getString(nameCol)
                 val date = cursor.getLong(dateCol)
                 val contentUri = ContentUris.withAppendedId(uri, id)
+                val mimeType = cursor.getString(typeCol) ?: ""
+                val size = cursor.getLong(sizeCol)
 
                 val map = Arguments.createMap()
                 map.putString("uri", contentUri.toString())
