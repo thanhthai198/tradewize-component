@@ -35,7 +35,7 @@ class LimitedPhotosModule(reactContext: ReactApplicationContext) :
         val projection = arrayOf(
             MediaStore.Images.Media._ID,
             MediaStore.Images.Media.DISPLAY_NAME,
-            MediaStore.Images.Media.DATE_ADDED
+            MediaStore.Images.Media.DATE_ADDED,
             MediaStore.Images.Media.MIME_TYPE,
             MediaStore.Images.Media.SIZE  
         )
