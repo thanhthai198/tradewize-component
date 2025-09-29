@@ -143,6 +143,11 @@ export interface ImagePickerProps {
   confirmButtonText?: string;
 
   /**
+   * Title modal
+   */
+  titleModal?: string;
+
+  /**
    * Custom button
    */
   customButton?: (showImagePicker: () => void) => React.ReactNode;
@@ -174,6 +179,7 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
   useCamera = false,
   confirmButtonStyle,
   confirmButtonText,
+  titleModal = 'Select Media',
   customButton,
 }) => {
   const [selectedImages, setSelectedImages] = useState<PickerImage[]>([]);
@@ -411,11 +417,6 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
         } else {
           // Check max files limit
           if (newSelected.size >= maxFiles) {
-            Alert.alert(
-              'Limit Reached',
-              `You can only select up to ${maxFiles} images.`,
-              [{ text: 'OK' }]
-            );
             return;
           }
           newSelected.add(index);
@@ -454,16 +455,15 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
     const selectedPhotos = Array.from(selectedLimitedPhotos).map(
       (index) => limitedPhotos[index]
     );
-    const pickerImages: PickerImage[] = selectedPhotos.map((photo) => ({
+
+    const pickerImages: PickerImage[] = selectedPhotos?.map((photo) => ({
       path: photo.uri || photo.path,
       width: photo.width || 0,
       height: photo.height || 0,
-      mime: photo.mime || 'image/jpeg',
+      mime: photo.mime || photo.type || '',
       size: photo.size || 0,
-      data: photo.data || '',
-      filename: photo.filename || '',
-      creationDate: photo.creationDate || new Date().toISOString(),
-      modificationDate: photo.modificationDate || new Date().toISOString(),
+      filename: photo.name || '',
+      creationDate: photo.dateAdded || new Date().toISOString(),
     }));
 
     setSelectedImages(pickerImages);
@@ -485,7 +485,9 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
           onPress={() => handleLimitedPhotoSelect(item, index)}
         >
           <Image
-            source={{ uri: item.uri || item.path }}
+            source={{
+              uri: item?.mediaType === 'video' ? item.thumbnail : item.uri,
+            }}
             style={styles.limitedPhotoImage}
           />
           {isSelected && (
@@ -493,6 +495,14 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
               <View style={styles.selectionCheckmark}>
                 <Text style={styles.selectionCheckmarkText}>✓</Text>
               </View>
+            </View>
+          )}
+          {item?.mediaType === 'video' && (
+            <View style={styles.videoOverlayContainer}>
+              <Image
+                source={require('../assets/play.png')}
+                style={styles.videoOverlay}
+              />
             </View>
           )}
         </TouchableOpacity>
@@ -560,8 +570,8 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>
               {multiple
-                ? `Select Photos (${selectedLimitedPhotos.size}/${maxFiles})`
-                : 'Select Photo'}
+                ? `${titleModal} (${selectedLimitedPhotos.size}/${maxFiles})`
+                : titleModal}
             </Text>
             <TouchableOpacity
               style={styles.closeButton}
@@ -577,7 +587,7 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
           <FlatList
             data={limitedPhotos}
             renderItem={renderLimitedPhotoItem}
-            keyExtractor={(item, index) => `${item.uri || item.path}-${index}`}
+            keyExtractor={(item, index) => `${item.uri}-${index}`}
             numColumns={3}
             contentContainerStyle={styles.photoGrid}
             showsVerticalScrollIndicator={false}
@@ -707,6 +717,10 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 8,
     overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
   },
   limitedPhotoImage: {
     width: '100%',
@@ -724,19 +738,22 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: 'rgba(0, 122, 255, 0.3)',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end',
+    zIndex: 1,
+    flexDirection: 'row',
+    padding: 8,
   },
   selectionCheckmark: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
   },
   selectionCheckmarkText: {
-    color: '#FFFFFF',
+    color: '#007AFF',
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -764,6 +781,22 @@ const styles = StyleSheet.create({
   },
   disabledConfirmButtonText: {
     color: '#999999',
+  },
+  videoOverlay: {
+    width: 24,
+    height: 24,
+    tintColor: '#FFFFFF',
+    marginLeft: 4,
+  },
+  videoOverlayContainer: {
+    position: 'absolute',
+    padding: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    borderRadius: 1000,
+    width: 40,
+    height: 40,
   },
 });
 

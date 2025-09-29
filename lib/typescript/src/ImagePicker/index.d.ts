@@ -97,6 +97,10 @@ export interface ImagePickerProps {
      */
     confirmButtonText?: string;
     /**
+     * Title modal
+     */
+    titleModal?: string;
+    /**
      * Custom button
      */
     customButton?: (showImagePicker: () => void) => React.ReactNode;
