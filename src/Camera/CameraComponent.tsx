@@ -22,7 +22,6 @@ export interface CameraProps {
   maxRecordingTime?: number; // Thời gian quay video tối đa (giây)
   hasPermission?: boolean; // Permission state passed from parent
   hasAudioPermission?: boolean; // Audio permission state passed from parent
-  clearCamera?: boolean;
 }
 
 export const CameraComponent: React.FC<CameraProps> = ({
@@ -40,7 +39,6 @@ export const CameraComponent: React.FC<CameraProps> = ({
   maxRecordingTime = 60, // Mặc định thời gian tối đa 60 giây
   hasPermission = false,
   hasAudioPermission = false,
-  clearCamera = false,
 }) => {
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
@@ -62,30 +60,6 @@ export const CameraComponent: React.FC<CameraProps> = ({
   // Lấy min/max zoom từ device
   const minZoom = device?.minZoom || 1;
   const maxZoom = device?.maxZoom || 10;
-
-  // Cleanup khi unmount (modal đóng)
-  useEffect(() => {
-    return () => {
-      if (camera?.current) {
-        try {
-          // Nếu đang quay thì dừng lại
-          if (isRecording) {
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-            camera?.current?.stopRecording();
-          }
-        } catch (e) {
-          console.error(e);
-        }
-      }
-
-      // Reset state
-      setIsRecording(false);
-      setIsPaused(false);
-      setRecordingDuration(0);
-      setCanStopRecording(false);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clearCamera]);
 
   const stopRecording = useCallback(async () => {
     if (!camera.current || !isRecording) return;

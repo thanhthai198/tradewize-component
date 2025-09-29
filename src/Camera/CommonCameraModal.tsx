@@ -184,7 +184,6 @@ export const CameraModal: React.FC<CameraModalProps> = ({
       onClose={onClose}
       hasPermission={hasPermission}
       hasAudioPermission={hasAudioPermission}
-      clearCamera={visible}
     />
   );
 
