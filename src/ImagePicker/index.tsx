@@ -12,6 +12,7 @@ import {
   type StyleProp,
   type ViewStyle,
   type TextStyle,
+  Dimensions,
 } from 'react-native';
 import ImagePicker, {
   type Image as PickerImage,
@@ -23,6 +24,8 @@ import {
   RESULTS,
 } from 'react-native-permissions';
 import { getAllowedPhotos } from '../getAllowedPhotos';
+
+const { width } = Dimensions.get('window');
 
 export interface ImagePickerProps {
   /**
@@ -489,6 +492,7 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
               uri: item?.mediaType === 'video' ? item.thumbnail : item.uri,
             }}
             style={styles.limitedPhotoImage}
+            resizeMode="cover"
           />
           {isSelected && (
             <View style={styles.selectionOverlay}>
@@ -509,6 +513,25 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
       );
     },
     [handleLimitedPhotoSelect, selectedLimitedPhotos]
+  );
+
+  // Optimized keyExtractor
+  const keyExtractor = useCallback((item: any, index: number) => {
+    return item?.uri ? `${item.uri}-${index}` : `photo-${index}`;
+  }, []);
+
+  // Calculate item layout for better performance
+  const getItemLayout = useCallback(
+    (_: any, index: number) => {
+      const itemWidth = (width - 40) / 3;
+      const itemHeight = itemWidth; // Square aspect ratio
+      return {
+        length: itemHeight,
+        offset: itemHeight * Math.floor(index / 3),
+        index,
+      };
+    },
+    [width]
   );
 
   const renderSelectedImages = () => {
@@ -587,10 +610,17 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
           <FlatList
             data={limitedPhotos}
             renderItem={renderLimitedPhotoItem}
-            keyExtractor={(item, index) => `${item.uri}-${index}`}
+            keyExtractor={keyExtractor}
             numColumns={3}
             contentContainerStyle={styles.photoGrid}
             showsVerticalScrollIndicator={false}
+            getItemLayout={getItemLayout}
+            windowSize={10}
+            initialNumToRender={15}
+            maxToRenderPerBatch={10}
+            updateCellsBatchingPeriod={50}
+            removeClippedSubviews={true}
+            legacyImplementation={false}
           />
 
           {multiple && (
@@ -712,7 +742,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   limitedPhotoItem: {
-    flex: 1,
+    width: (width - 40) / 3,
     margin: 4,
     aspectRatio: 1,
     borderRadius: 8,
