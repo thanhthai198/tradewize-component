@@ -16,7 +16,12 @@ import {
 import ImagePicker, {
   type Image as PickerImage,
 } from 'react-native-image-crop-picker';
-import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
+import {
+  PERMISSIONS,
+  request,
+  requestMultiple,
+  RESULTS,
+} from 'react-native-permissions';
 import { getAllowedPhotos } from '../getAllowedPhotos';
 
 export interface ImagePickerProps {
@@ -201,20 +206,29 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
   const requestGalleryPermission = useCallback(async (): Promise<boolean> => {
     try {
       if (Platform.OS === 'android') {
-        // For Android 13+ (API 33+), use READ_MEDIA_IMAGES
         if (Platform.Version >= 33) {
-          const result = await request(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES);
-          return result === RESULTS.GRANTED;
+          // Android 13+ cần cả READ_MEDIA_IMAGES và READ_MEDIA_VIDEO
+          const results = await requestMultiple([
+            PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
+            PERMISSIONS.ANDROID.READ_MEDIA_VIDEO,
+          ]);
+
+          const grantedImages =
+            results[PERMISSIONS.ANDROID.READ_MEDIA_IMAGES] === RESULTS.GRANTED;
+          const grantedVideos =
+            results[PERMISSIONS.ANDROID.READ_MEDIA_VIDEO] === RESULTS.GRANTED;
+
+          return grantedImages || grantedVideos; // miễn có 1 quyền là true
         } else {
-          // For older Android versions, use READ_EXTERNAL_STORAGE
+          // Android <= 12 dùng READ_EXTERNAL_STORAGE
           const result = await request(
             PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
           );
           return result === RESULTS.GRANTED;
         }
       } else {
+        // iOS
         const result = await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
-
         return result === RESULTS.GRANTED || result === RESULTS.LIMITED;
       }
     } catch (error) {
@@ -291,11 +305,6 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
       // Request camera permission first
       const hasPermission = await requestCameraPermission();
       if (!hasPermission) {
-        Alert.alert(
-          'Permission Required',
-          'Camera permission is required to take photos. Please enable it in settings.',
-          [{ text: 'OK' }]
-        );
         return;
       }
 
