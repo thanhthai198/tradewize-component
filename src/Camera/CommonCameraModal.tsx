@@ -113,12 +113,6 @@ export const CameraModal: React.FC<CameraModalProps> = ({
 
       return () => clearTimeout(timer);
     } else {
-      // Reset permissions when modal is hidden
-      setHasPermission(false);
-      setHasAudioPermission(false);
-      setIsRequestingPermissions(false);
-      setPermissionDenied(false);
-      setIsLoading(false);
       return undefined;
     }
   }, [visible, checkAndRequestPermissions]);
