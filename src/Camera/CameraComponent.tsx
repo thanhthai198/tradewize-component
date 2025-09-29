@@ -1,11 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
-import type {
-  CameraPermissionStatus,
-  PhotoFile,
-  VideoFile,
-} from 'react-native-vision-camera';
+import type { PhotoFile, VideoFile } from 'react-native-vision-camera';
 import Slider from '@react-native-community/slider';
 import { SnapScrollView } from './CameraModeSelector';
 import RNFS from 'react-native-fs';
@@ -24,6 +20,9 @@ export interface CameraProps {
   isCanPause?: boolean;
   minRecordingTime?: number; // Thời gian quay video tối thiểu (giây)
   maxRecordingTime?: number; // Thời gian quay video tối đa (giây)
+  hasPermission?: boolean; // Permission state passed from parent
+  hasAudioPermission?: boolean; // Audio permission state passed from parent
+  clearCamera?: boolean;
 }
 
 export const CameraComponent: React.FC<CameraProps> = ({
@@ -39,11 +38,10 @@ export const CameraComponent: React.FC<CameraProps> = ({
   isCanPause = true,
   minRecordingTime = 3, // Mặc định thời gian tối thiểu 3 giây
   maxRecordingTime = 60, // Mặc định thời gian tối đa 60 giây
+  hasPermission = false,
+  hasAudioPermission = false,
+  clearCamera = false,
 }) => {
-  const [hasPermission, setHasPermission] = useState<boolean>(false);
-  const [hasAudioPermission, setHasAudioPermission] = useState<boolean>(false);
-  const [isRequestingPermissions, setIsRequestingPermissions] =
-    useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [isCapturing, setIsCapturing] = useState<boolean>(false);
@@ -64,6 +62,30 @@ export const CameraComponent: React.FC<CameraProps> = ({
   // Lấy min/max zoom từ device
   const minZoom = device?.minZoom || 1;
   const maxZoom = device?.maxZoom || 10;
+
+  // Cleanup khi unmount (modal đóng)
+  useEffect(() => {
+    return () => {
+      if (camera?.current) {
+        try {
+          // Nếu đang quay thì dừng lại
+          if (isRecording) {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            camera?.current?.stopRecording();
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      // Reset state
+      setIsRecording(false);
+      setIsPaused(false);
+      setRecordingDuration(0);
+      setCanStopRecording(false);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clearCamera]);
 
   const stopRecording = useCallback(async () => {
     if (!camera.current || !isRecording) return;
@@ -123,82 +145,6 @@ export const CameraComponent: React.FC<CameraProps> = ({
     maxRecordingTime,
     stopRecording,
   ]);
-
-  const requestCameraPermission = useCallback(async () => {
-    try {
-      setIsRequestingPermissions(true);
-      const status: CameraPermissionStatus =
-        await Camera.requestCameraPermission();
-      setHasPermission(status === 'granted');
-
-      if (status !== 'granted') {
-        onError?.('Camera permission is required');
-      }
-    } catch (error) {
-      onError?.('Failed to request camera permission');
-    } finally {
-      setIsRequestingPermissions(false);
-    }
-  }, [onError]);
-
-  const requestMicrophonePermission = useCallback(async () => {
-    try {
-      setIsRequestingPermissions(true);
-      const status = await Camera.requestMicrophonePermission();
-      setHasAudioPermission(status === 'granted');
-
-      if (status !== 'granted' && audio) {
-        onError?.(
-          'Microphone permission is required for video recording with audio'
-        );
-      }
-    } catch (error) {
-      setHasAudioPermission(false);
-      if (audio) {
-        onError?.('Failed to request microphone permission');
-      }
-    } finally {
-      setIsRequestingPermissions(false);
-    }
-  }, [audio, onError]);
-
-  // Check permissions every time component is called
-  const checkPermissions = useCallback(async () => {
-    try {
-      setIsRequestingPermissions(true);
-
-      // Check camera permission
-      const cameraStatus = await Camera.getCameraPermissionStatus();
-      setHasPermission(cameraStatus === 'granted');
-
-      // Check microphone permission if audio is enabled
-      if (audio && (mode === 'video' || mode === 'both')) {
-        const microphoneStatus = await Camera.getMicrophonePermissionStatus();
-        setHasAudioPermission(microphoneStatus === 'granted');
-      }
-
-      // Request permissions if not granted
-      if (cameraStatus !== 'granted') {
-        await requestCameraPermission();
-      }
-
-      if (audio && (mode === 'video' || mode === 'both')) {
-        const microphoneStatus = await Camera.getMicrophonePermissionStatus();
-        if (microphoneStatus !== 'granted') {
-          await requestMicrophonePermission();
-        }
-      }
-    } catch (error) {
-      console.error('Error checking permissions:', error);
-    } finally {
-      setIsRequestingPermissions(false);
-    }
-  }, [audio, mode, requestCameraPermission, requestMicrophonePermission]);
-
-  // Check and request permissions on every render
-  useEffect(() => {
-    checkPermissions();
-  }, [checkPermissions]);
 
   const toggleCameraPosition = useCallback(() => {
     setCameraPosition((prev) => (prev === 'back' ? 'front' : 'back'));
@@ -363,35 +309,14 @@ export const CameraComponent: React.FC<CameraProps> = ({
     );
   }
 
-  if (!hasPermission || isRequestingPermissions) {
+  if (!hasPermission) {
     return (
-      <View style={styles.permissionContainer}>
+      <View style={styles.loadingContainer}>
         <ButtonBase style={styles.closeButtonNotPermission} onPress={onClose}>
           <Text style={styles.closeButtonText}>✕</Text>
         </ButtonBase>
         <View style={styles.itemCenter}>
-          {isRequestingPermissions ? (
-            <>
-              {/* <ActivityIndicator size="large" color="#007AFF" /> */}
-              <Text style={styles.permissionText}>
-                Requesting permissions...
-              </Text>
-            </>
-          ) : (
-            <>
-              <Text style={styles.permissionText}>
-                Camera permission is required
-              </Text>
-              <ButtonBase
-                style={styles.permissionButton}
-                onPress={requestCameraPermission}
-              >
-                <Text style={styles.permissionButtonText}>
-                  Grant Permission
-                </Text>
-              </ButtonBase>
-            </>
-          )}
+          <Text style={styles.loadingText}>No camera permission</Text>
         </View>
       </View>
     );
@@ -511,28 +436,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     marginTop: 10,
     fontSize: 16,
-  },
-  permissionContainer: {
-    flex: 1,
-    backgroundColor: '#000',
-    padding: 20,
-  },
-  permissionText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  permissionButton: {
-    backgroundColor: '#007AFF',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 8,
-  },
-  permissionButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
   },
   audioWarning: {
     position: 'absolute',
