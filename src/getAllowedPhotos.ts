@@ -26,5 +26,5 @@ export type Photo = {
 };
 
 export function getAllowedPhotos(): Promise<Photo[]> {
-  return LimitedPhotos.getAllowedPhotos();
+  return LimitedPhotos.getAllowedMedia();
 }
