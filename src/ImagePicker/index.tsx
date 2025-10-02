@@ -359,7 +359,13 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
           const allowedPhotos = await getAllowedPhotos();
 
           if (allowedPhotos && allowedPhotos.length > 0) {
-            setLimitedPhotos(allowedPhotos);
+            const filteredPhotos =
+              mediaType === 'photo'
+                ? allowedPhotos.filter((photo) =>
+                    photo.type?.startsWith('image/')
+                  )
+                : allowedPhotos;
+            setLimitedPhotos(filteredPhotos);
             setShowLimitedPhotosModal(true);
             return;
           }
@@ -384,11 +390,12 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
       }
     }
   }, [
+    requestGalleryPermission,
     getPickerOptions,
     multiple,
+    mediaType,
     onImageSelected,
     showError,
-    requestGalleryPermission,
   ]);
 
   const showImagePicker = useCallback(() => {
