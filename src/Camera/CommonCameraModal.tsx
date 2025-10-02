@@ -175,9 +175,11 @@ export const CameraModal: React.FC<CameraModalProps> = ({
   const renderCameraComponent = () => (
     <CameraComponent
       {...cameraProps}
+      mode={mode}
       onClose={onClose}
       hasPermission={hasPermission}
       hasAudioPermission={hasAudioPermission}
+      audio={audio}
     />
   );
 
