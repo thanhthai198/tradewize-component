@@ -22,7 +22,7 @@ export const CameraModal: React.FC<CameraModalProps> = ({
   onClose,
   modalProps,
   audio = true,
-  mode = 'both',
+  mode,
   onError,
   titleErrorPermission = 'Camera permission is required',
   txtButtonPermission = 'Grant Permission',
