@@ -724,6 +724,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                   }}
                 />
                 <CameraModal
+                  mode="both"
                   isCanPause={false}
                   onVideoRecorded={async (video) => {
                     const getThumbnail = await generateThumbnails([
