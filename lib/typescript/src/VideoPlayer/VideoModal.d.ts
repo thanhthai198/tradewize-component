@@ -17,6 +17,7 @@ export interface VideoModalProps {
     };
     txtSkipButton?: string;
     txtCloseButton?: string;
+    isRateControl?: boolean;
     initialSubtitle?: LanguageCode;
     isProgressBar?: boolean;
     onError?: (error: any, loading: boolean) => void;

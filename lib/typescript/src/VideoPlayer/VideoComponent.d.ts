@@ -10,6 +10,7 @@ export interface VideoPlayerProps {
     muted?: boolean;
     showControls?: boolean;
     progressUpdateInterval?: number;
+    rate?: number;
     onError?: (error: any, loading: boolean) => void;
     onLoad?: (loading: boolean) => void;
     onEnd?: () => void;

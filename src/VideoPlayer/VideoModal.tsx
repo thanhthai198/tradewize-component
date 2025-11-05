@@ -41,6 +41,7 @@ export interface VideoModalProps {
   subtitle: { [key: string]: string };
   txtSkipButton?: string;
   txtCloseButton?: string;
+  isRateControl?: boolean;
   initialSubtitle?: LanguageCode;
   isProgressBar?: boolean;
   onError?: (error: any, loading: boolean) => void;
@@ -68,6 +69,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
   txtSkipButton = 'Skip',
   txtCloseButton = 'Close',
   initialSubtitle = 'en',
+  isRateControl = true,
   onError,
   onLoad,
   onEnd,
@@ -88,6 +90,8 @@ export const VideoModal: React.FC<VideoModalProps> = ({
     useState<LanguageCode>(initialSubtitle);
   const [showLanguageSelector, setShowLanguageSelector] =
     useState<boolean>(false);
+  const [showRateSelector, setShowRateSelector] = useState<boolean>(false);
+  const [rate, setRate] = useState<number>(1.0);
 
   const resetState = useCallback(() => {
     setProgress(0);
@@ -98,9 +102,10 @@ export const VideoModal: React.FC<VideoModalProps> = ({
   }, []);
 
   const handleClose = useCallback(() => {
+    setRate(1.0);
     resetState();
     onClose();
-  }, [onClose, resetState]);
+  }, [onClose, resetState, setRate]);
 
   const handleBackdropPress = useCallback(() => {
     handleClose();
@@ -195,6 +200,13 @@ export const VideoModal: React.FC<VideoModalProps> = ({
     [loadFileSubtitle]
   );
 
+  const changeRate = useCallback(
+    (rateVideo: number) => {
+      setRate(rateVideo);
+    },
+    [setRate]
+  );
+
   // Get available subtitle languages
   const availableLanguages = Object.keys(subtitle) as LanguageCode[];
 
@@ -246,6 +258,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
           {/* Video Player */}
           <View style={styles.videoContainer}>
             <VideoPlayer
+              rate={rate}
               progressUpdateInterval={100}
               source={source}
               height={getScreenHeight()}
@@ -305,6 +318,46 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                         ]}
                       >
                         {lang.toUpperCase()}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )}
+            </View>
+          )}
+
+          {isRateControl && (
+            <View style={[styles.rateContainer, { top: insets.top + 24 }]}>
+              <TouchableOpacity
+                onPress={() => setShowRateSelector(!showRateSelector)}
+                style={styles.rateButton}
+              >
+                <Text style={styles.rateText}>x{rate.toString()}</Text>
+              </TouchableOpacity>
+
+              {showRateSelector && (
+                <View style={styles.rateDropdown}>
+                  {['0.25', '0.5', '1.0', '1.5', '2.0'].map((rateItem) => (
+                    <TouchableOpacity
+                      key={rateItem}
+                      onPress={() => {
+                        changeRate(Number(rateItem));
+                        setShowRateSelector(false);
+                      }}
+                      style={[
+                        styles.languageOption,
+                        Number(rateItem) === rate &&
+                          styles.languageOptionActive,
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.languageOptionText,
+                          Number(rateItem) === rate &&
+                            styles.languageOptionTextActive,
+                        ]}
+                      >
+                        {rateItem}
                       </Text>
                     </TouchableOpacity>
                   ))}
@@ -482,6 +535,16 @@ const styles = StyleSheet.create({
     minWidth: 60,
     alignItems: 'center',
   },
+  rateDropdown: {
+    position: 'absolute',
+    top: 40,
+    left: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    borderRadius: 6,
+    paddingVertical: 4,
+    width: 60,
+    gap: 4,
+  },
   languageButtonText: {
     color: '#fff',
     fontSize: 14,
@@ -510,6 +573,24 @@ const styles = StyleSheet.create({
   },
   languageOptionTextActive: {
     color: '#ff3b30',
+    fontWeight: '600',
+  },
+  rateContainer: {
+    position: 'absolute',
+    left: 90,
+    zIndex: 10,
+  },
+  rateButton: {
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    width: 60,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+  },
+  rateText: {
+    color: '#fff',
+    fontSize: 14,
     fontWeight: '600',
   },
 });

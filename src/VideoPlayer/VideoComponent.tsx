@@ -22,6 +22,7 @@ export interface VideoPlayerProps {
   muted?: boolean;
   showControls?: boolean;
   progressUpdateInterval?: number;
+  rate?: number;
   onError?: (error: any, loading: boolean) => void;
   onLoad?: (loading: boolean) => void;
   onEnd?: () => void;
@@ -43,6 +44,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   muted = true,
   showControls = true,
   progressUpdateInterval,
+  rate = 1.0,
   onError,
   onLoad,
   onEnd,
@@ -166,6 +168,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
         source={{
           uri: source,
         }}
+        rate={rate}
         style={styles.video}
         resizeMode="contain"
         controls={showControls}
