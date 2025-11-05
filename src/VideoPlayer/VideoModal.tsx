@@ -69,7 +69,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
   txtSkipButton = 'Skip',
   txtCloseButton = 'Close',
   initialSubtitle = 'en',
-  isRateControl = true,
+  isRateControl = false,
   onError,
   onLoad,
   onEnd,
