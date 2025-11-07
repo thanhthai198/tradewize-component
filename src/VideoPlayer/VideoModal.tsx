@@ -524,7 +524,7 @@ const styles = StyleSheet.create({
   },
   languageContainer: {
     position: 'absolute',
-    left: 16,
+    left: 90,
     zIndex: 10,
   },
   languageButton: {
@@ -577,7 +577,7 @@ const styles = StyleSheet.create({
   },
   rateContainer: {
     position: 'absolute',
-    left: 90,
+    left: 16,
     zIndex: 10,
   },
   rateButton: {
