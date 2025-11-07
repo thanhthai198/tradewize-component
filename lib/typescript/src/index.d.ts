@@ -14,9 +14,11 @@ import { CameraComponent, CameraModal, type CameraModalProps, type CameraProps, 
 import { getScreenWidth, getScreenHeight } from './utils';
 import { VideoPlayer, VideoModal, type VideoModalProps, type VideoPlayerProps } from './VideoPlayer';
 import ImagePickerComponent, { type ImagePickerProps } from './ImagePicker';
+import ImageDrawingCanvas from './ImageDrawingCanvas';
+import { type IImageDrawingCanvas } from './ImageDrawingCanvas/types';
 export * from './GiftedChat';
 export * from './IndicatorsMaster';
 export * from './FloatButton';
 export * from './getAllowedPhotos';
-export { ButtonBase, RadioButton, ButtonSwitchToggle, TabView, ScrollTabView, InputBase, OutlinedInput, FlatInput, Collapse, CameraComponent, CameraModal, getScreenWidth, getScreenHeight, VideoPlayer, VideoModal, ImagePickerComponent as ImagePicker, };
-export type { TabItem, ScrollTabViewProps, InputBaseProps, OutlinedInputProps, FlatInputProps, CollapseProps, CollapseVariant, CollapseSize, CollapseIconPosition, CameraProps, PhotoFile, VideoFile, CameraModalProps, VideoPlayerProps, VideoModalProps, ImagePickerProps, };
+export { ButtonBase, RadioButton, ButtonSwitchToggle, TabView, ScrollTabView, InputBase, OutlinedInput, FlatInput, Collapse, CameraComponent, CameraModal, getScreenWidth, getScreenHeight, VideoPlayer, VideoModal, ImagePickerComponent as ImagePicker, ImageDrawingCanvas, };
+export type { TabItem, ScrollTabViewProps, InputBaseProps, OutlinedInputProps, FlatInputProps, CollapseProps, CollapseVariant, CollapseSize, CollapseIconPosition, CameraProps, PhotoFile, VideoFile, CameraModalProps, VideoPlayerProps, VideoModalProps, ImagePickerProps, IImageDrawingCanvas, };

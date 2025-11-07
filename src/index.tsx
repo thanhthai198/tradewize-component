@@ -31,6 +31,8 @@ import {
   type VideoPlayerProps,
 } from './VideoPlayer';
 import ImagePickerComponent, { type ImagePickerProps } from './ImagePicker';
+import ImageDrawingCanvas from './ImageDrawingCanvas';
+import { type IImageDrawingCanvas } from './ImageDrawingCanvas/types';
 
 export * from './GiftedChat';
 export * from './IndicatorsMaster';
@@ -54,6 +56,7 @@ export {
   VideoPlayer,
   VideoModal,
   ImagePickerComponent as ImagePicker,
+  ImageDrawingCanvas,
 };
 export type {
   TabItem,
@@ -72,4 +75,5 @@ export type {
   VideoPlayerProps,
   VideoModalProps,
   ImagePickerProps,
+  IImageDrawingCanvas,
 };
