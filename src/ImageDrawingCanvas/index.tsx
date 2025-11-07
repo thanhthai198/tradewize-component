@@ -301,6 +301,8 @@ const ImageDrawingCanvas = (props: IImageDrawingCanvas) => {
   );
 
   const renderHeaderControls = useMemo(() => {
+    const hasDrawing =
+      paths?.length > 0 || shapes?.length > 0 || inputText?.length > 0;
     if (mode === 'draw') {
       return (
         <View style={styles.headerControls}>
@@ -337,29 +339,43 @@ const ImageDrawingCanvas = (props: IImageDrawingCanvas) => {
         <TouchableOpacity
           style={styles.btnClose}
           onPress={() => {
-            Alert.alert(titleCancel, contentCancel, [
-              {
-                text: txtBtnContinueCancel,
-                style: 'cancel',
-              },
-              {
-                text: txtBtnCancelCancel,
-                style: 'destructive',
-                onPress: () => {
-                  onClose();
-                  setPaths([]);
-                  setCurrentPath(null);
-                  setShapes([]);
-                  setCurrentShape(null);
-                  setShapeStartPos(null);
-                  setColorDraw(colors[0] || '');
-                  setInputText([]);
-                  setHistory([]);
-                  // Xóa tất cả animations
-                  textAnimationsRef.current.clear();
+            if (hasDrawing) {
+              Alert.alert(titleCancel, contentCancel, [
+                {
+                  text: txtBtnContinueCancel,
+                  style: 'cancel',
                 },
-              },
-            ]);
+                {
+                  text: txtBtnCancelCancel,
+                  style: 'destructive',
+                  onPress: () => {
+                    onClose();
+                    setPaths([]);
+                    setCurrentPath(null);
+                    setShapes([]);
+                    setCurrentShape(null);
+                    setShapeStartPos(null);
+                    setColorDraw(colors[0] || '');
+                    setInputText([]);
+                    setHistory([]);
+                    // Xóa tất cả animations
+                    textAnimationsRef.current.clear();
+                  },
+                },
+              ]);
+            } else {
+              onClose();
+              setPaths([]);
+              setCurrentPath(null);
+              setShapes([]);
+              setCurrentShape(null);
+              setShapeStartPos(null);
+              setColorDraw(colors[0] || '');
+              setInputText([]);
+              setHistory([]);
+              // Xóa tất cả animations
+              textAnimationsRef.current.clear();
+            }
           }}
         >
           <Text style={styles.txtClose}>X</Text>
@@ -415,16 +431,18 @@ const ImageDrawingCanvas = (props: IImageDrawingCanvas) => {
       </View>
     );
   }, [
+    paths?.length,
+    shapes?.length,
+    inputText?.length,
     mode,
     handleUndo,
     handleDoneDraw,
-    onClose,
-    contentCancel,
-    paths?.length,
-    titleCancel,
-    txtBtnCancelCancel,
-    txtBtnContinueCancel,
     txtBtnDoneEdit,
+    titleCancel,
+    contentCancel,
+    txtBtnContinueCancel,
+    txtBtnCancelCancel,
+    onClose,
   ]);
 
   const renderFooterControls = useMemo(() => {
@@ -493,43 +511,52 @@ const ImageDrawingCanvas = (props: IImageDrawingCanvas) => {
         </View>
       );
     }
-
+    const hasDrawing =
+      paths?.length > 0 || shapes?.length > 0 || inputText?.length > 0;
     return (
       <View style={styles.footerDraw}>
-        <TouchableOpacity
-          style={styles.btnDone}
-          onPress={async () => {
-            const uri = await handleCapture();
-            if (uri && onSave) {
-              onSave(uri);
-            }
-            handleDoneDraw();
-            onClose();
-            setPaths([]);
-            setCurrentPath(null);
-            setShapes([]);
-            setCurrentShape(null);
-            setShapeStartPos(null);
-            setColorDraw(colors[0] || '');
-            setInputText([]);
-            setHistory([]);
-            // Xóa tất cả animations
-            textAnimationsRef.current.clear();
-          }}
-        >
-          <Text style={[styles.txtDone, { color: 'black' }]}>{txtBtnDone}</Text>
-        </TouchableOpacity>
+        {hasDrawing && (
+          <TouchableOpacity
+            style={styles.btnDone}
+            onPress={async () => {
+              const uri = await handleCapture();
+              if (uri && onSave) {
+                onSave(uri);
+              }
+
+              handleDoneDraw();
+              onClose();
+              setPaths([]);
+              setCurrentPath(null);
+              setShapes([]);
+              setCurrentShape(null);
+              setShapeStartPos(null);
+              setColorDraw(colors[0] || '');
+              setInputText([]);
+              setHistory([]);
+              // Xóa tất cả animations
+              textAnimationsRef.current.clear();
+            }}
+          >
+            <Text style={[styles.txtDone, { color: 'black' }]}>
+              {txtBtnDone}
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   }, [
     mode,
+    txtBtnDone,
     colorDraw,
     colorText,
+    paths.length,
+    shapes.length,
+    inputText.length,
+    handleDoneDraw,
+    onClose,
     handleCapture,
     onSave,
-    onClose,
-    handleDoneDraw,
-    txtBtnDone,
   ]);
 
   if (!visible) {
