@@ -802,7 +802,7 @@ const ImageDrawingCanvas = (props: IImageDrawingCanvas) => {
               </View>
             </ViewShot>
 
-            <View style={[styles.footer, { bottom: keyboardHeight * 0.8 }]}>
+            <View style={[styles.footer, { bottom: keyboardHeight * 0.85 }]}>
               {renderFooterControls}
             </View>
           </View>
@@ -1023,7 +1023,7 @@ const ImageDrawingCanvas = (props: IImageDrawingCanvas) => {
           </View>
         </ViewShot>
 
-        <View style={[styles.footer, { bottom: keyboardHeight * 0.7 }]}>
+        <View style={[styles.footer, { bottom: keyboardHeight * 0.75 }]}>
           {renderFooterControls}
         </View>
       </View>
