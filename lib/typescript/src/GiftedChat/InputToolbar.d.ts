@@ -33,5 +33,6 @@ export interface InputToolbarProps<TMessage extends IMessage> {
     onBlurInput?: () => void;
     messageContentReaction?: string;
     isMe?: boolean;
+    onEditFileImage?: (file: FileMessage) => void;
 }
 export declare function InputToolbar<TMessage extends IMessage = IMessage>(props: InputToolbarProps<TMessage>): React.JSX.Element;

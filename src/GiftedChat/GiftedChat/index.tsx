@@ -62,6 +62,7 @@ import { generateThumbnails, normalizeFileUri } from '../utils';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { VideoModal } from '../../VideoPlayer/VideoModal';
 import { CameraModal } from '../../Camera';
+import ImageDrawingCanvas from '../../ImageDrawingCanvas';
 
 dayjs.extend(localizedFormat);
 
@@ -160,7 +161,9 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
     };
   } | null>(null);
   const [fileMedia, setFileMedia] = useState<FileMessage[]>([]);
-
+  const [fileMediaEdit, setFileMediaEdit] = useState<boolean>(false);
+  const [fileMediaEditLocal, setFileMediaEditLocal] =
+    useState<FileMessage | null>(null);
   const keyboard = useReanimatedKeyboardAnimation();
   const trackingKeyboardMovement = useSharedValue(false);
   const debounceEnableTypingTimeoutId =
@@ -410,6 +413,8 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
         });
       }
 
+      console.log('newMessagesWithReaction', newMessagesWithReaction);
+
       setMessageReaction(null);
       onSend?.(newMessagesWithReaction);
 
@@ -525,6 +530,10 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
 
     return (
       <InputToolbar
+        onEditFileImage={(file: FileMessage) => {
+          setFileMediaEdit(true);
+          setFileMediaEditLocal(file);
+        }}
         isMe={(user as User)?._id === messageReaction?.user?._id}
         onFocusInput={onFocusInput}
         onBlurInput={onBlurInput}
@@ -772,6 +781,23 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                   }}
                   visible={isShowCameraModal}
                   onClose={() => setIsShowCameraModal(false)}
+                />
+                <ImageDrawingCanvas
+                  visible={fileMediaEdit}
+                  uriImage={fileMediaEditLocal?.uri || ''}
+                  onClose={() => setFileMediaEdit(false)}
+                  onSave={(uri: string) => {
+                    setFileMedia((prev) => {
+                      const newFileMedia = prev.map((item) => {
+                        if (item.id === fileMediaEditLocal?.id) {
+                          return { ...item, uri: uri, thumbnailPreview: uri };
+                        }
+                        return item;
+                      });
+                      return newFileMedia;
+                    });
+                    setFileMediaEditLocal(null);
+                  }}
                 />
               </View>
             </Animated.View>
