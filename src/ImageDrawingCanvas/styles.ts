@@ -9,6 +9,10 @@ export const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
+  containerModal: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
   containerContent: {
     flex: 1,
   },
@@ -57,6 +61,10 @@ export const styles = StyleSheet.create({
   },
   footer: {
     height: Dimensions.get('window').height * 0.1,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   btnEaser: {
     padding: 8,
@@ -72,7 +80,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 100,
-    borderWidth: 2,
     marginRight: 8,
   },
   colorDot: {
@@ -106,6 +113,7 @@ export const styles = StyleSheet.create({
     zIndex: 10,
     width: Dimensions.get('window').width,
     position: 'absolute',
+    maxHeight: 100,
   },
   movableBox: {
     position: 'absolute',
@@ -133,5 +141,10 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 12,
     marginLeft: 'auto',
+  },
+  colorSelected: {
+    padding: 2,
+    borderColor: 'white',
+    borderWidth: 2,
   },
 });

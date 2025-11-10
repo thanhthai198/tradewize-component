@@ -11,14 +11,15 @@ import {
   Dimensions,
   Image,
   Keyboard,
+  Modal,
   PanResponder,
   Platform,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
+  type KeyboardEvent,
 } from 'react-native';
 import { styles } from './styles';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -52,6 +53,7 @@ const fontSize = 22;
 const ImageDrawingCanvas = (props: IImageDrawingCanvas) => {
   const {
     visible,
+    isModal,
     uriImage,
     onClose,
     onSave,
@@ -91,6 +93,8 @@ const ImageDrawingCanvas = (props: IImageDrawingCanvas) => {
   const [editingTextId, setEditingTextId] = useState<string | null>(null);
   const [editingTextValue, setEditingTextValue] = useState<string>('');
   const [colorText, setColorText] = useState<string>(colors[0] || '');
+
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   const clipPath = useMemo(() => {
     const path = Skia.Path.Make();
@@ -220,6 +224,24 @@ const ImageDrawingCanvas = (props: IImageDrawingCanvas) => {
       );
     }
   }, [currentInputText, showTextInput, colorText]);
+
+  useEffect(() => {
+    const onKeyboardShow = (e: KeyboardEvent) => {
+      setKeyboardHeight(e.endCoordinates.height);
+    };
+
+    const onKeyboardHide = () => {
+      setKeyboardHeight(0);
+    };
+
+    const showSub = Keyboard.addListener('keyboardDidShow', onKeyboardShow);
+    const hideSub = Keyboard.addListener('keyboardDidHide', onKeyboardHide);
+
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
 
   const pan = useMemo(
     () =>
@@ -457,7 +479,11 @@ const ImageDrawingCanvas = (props: IImageDrawingCanvas) => {
             />
           </TouchableOpacity> */}
 
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <ScrollView
+            keyboardShouldPersistTaps="always"
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          >
             {colors.map((color) => (
               <TouchableOpacity
                 onPress={() => {
@@ -466,16 +492,10 @@ const ImageDrawingCanvas = (props: IImageDrawingCanvas) => {
                 key={color}
                 style={[
                   styles.btnColor,
-                  colorDraw === color && { padding: 2, borderColor: 'white' },
+                  colorDraw === color && styles.colorSelected,
                 ]}
               >
-                <View
-                  style={[
-                    styles.colorDot,
-                    { backgroundColor: color },
-                    colorDraw === color && { borderWidth: 0 },
-                  ]}
-                />
+                <View style={[styles.colorDot, { backgroundColor: color }]} />
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -486,7 +506,11 @@ const ImageDrawingCanvas = (props: IImageDrawingCanvas) => {
     if (mode === 'text') {
       return (
         <View style={styles.footerDraw}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <ScrollView
+            keyboardShouldPersistTaps="always"
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          >
             {colors.map((color) => (
               <TouchableOpacity
                 onPress={() => {
@@ -495,16 +519,10 @@ const ImageDrawingCanvas = (props: IImageDrawingCanvas) => {
                 key={color}
                 style={[
                   styles.btnColor,
-                  colorText === color && { padding: 2, borderColor: 'white' },
+                  colorText === color && styles.colorSelected,
                 ]}
               >
-                <View
-                  style={[
-                    styles.colorDot,
-                    { backgroundColor: color },
-                    colorText === color && { borderWidth: 0 },
-                  ]}
-                />
+                <View style={[styles.colorDot, { backgroundColor: color }]} />
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -563,227 +581,452 @@ const ImageDrawingCanvas = (props: IImageDrawingCanvas) => {
     return null;
   }
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          Keyboard.dismiss();
-          handleDoneDraw();
-        }}
-      >
-        <View style={styles.containerContent}>
-          {renderHeaderControls}
+  if (isModal) {
+    return (
+      <Modal visible={visible} transparent>
+        <SafeAreaView style={styles.containerModal}>
+          <View style={styles.containerContent}>
+            {renderHeaderControls}
 
-          <ViewShot
-            style={{ flex: 1 }}
-            ref={viewShotRef}
-            options={{
-              format: 'jpg',
-              quality: 0.9,
-            }}
-          >
-            <View style={styles.canvasContainer}>
-              <Canvas
-                ref={canvasRef as any}
-                style={{ width: IMG_WIDTH, height: IMG_HEIGHT }}
-                {...pan.panHandlers}
-              >
-                <Group clip={clipPath}>
-                  {/* Image nền */}
-                  {image && (
-                    <SkiaImage
-                      image={image}
-                      x={0}
-                      y={0}
-                      width={IMG_WIDTH}
-                      height={IMG_HEIGHT}
-                      fit="cover"
-                    />
-                  )}
+            <ViewShot
+              style={{ flex: 1 }}
+              ref={viewShotRef}
+              options={{
+                format: 'jpg',
+                quality: 0.9,
+              }}
+            >
+              <View style={styles.canvasContainer}>
+                <Canvas
+                  ref={canvasRef as any}
+                  style={{ width: IMG_WIDTH, height: IMG_HEIGHT }}
+                  {...pan.panHandlers}
+                >
+                  <Group clip={clipPath}>
+                    {/* Image nền */}
+                    {image && (
+                      <SkiaImage
+                        image={image}
+                        x={0}
+                        y={0}
+                        width={IMG_WIDTH}
+                        height={IMG_HEIGHT}
+                        fit="contain"
+                      />
+                    )}
 
-                  {/* Nét vẽ */}
-                  {paths.map((pathWithColor, i) => (
-                    <Path
-                      key={`path-${i}`}
-                      path={pathWithColor.path}
-                      color={pathWithColor.color}
-                      style="stroke"
-                      strokeWidth={4}
-                    />
-                  ))}
-                  {currentPath && (
-                    <Path
-                      path={currentPath}
-                      color={colorDraw}
-                      style="stroke"
-                      strokeWidth={4}
-                    />
-                  )}
+                    {/* Nét vẽ */}
+                    {paths.map((pathWithColor, i) => (
+                      <Path
+                        key={`path-${i}`}
+                        path={pathWithColor.path}
+                        color={pathWithColor.color}
+                        style="stroke"
+                        strokeWidth={4}
+                      />
+                    ))}
+                    {currentPath && (
+                      <Path
+                        path={currentPath}
+                        color={colorDraw}
+                        style="stroke"
+                        strokeWidth={4}
+                      />
+                    )}
 
-                  {/* Hình vẽ */}
-                  {shapes.map((shape, i) => {
-                    if (shape.type === 'rect' && shape.width && shape.height) {
-                      return (
+                    {/* Hình vẽ */}
+                    {shapes.map((shape, i) => {
+                      if (
+                        shape.type === 'rect' &&
+                        shape.width &&
+                        shape.height
+                      ) {
+                        return (
+                          <Rect
+                            key={`rect-${i}`}
+                            x={shape.x}
+                            y={shape.y}
+                            width={shape.width}
+                            height={shape.height}
+                            color="green"
+                            style="stroke"
+                            strokeWidth={3}
+                          />
+                        );
+                      }
+                      if (shape.type === 'circle' && shape.radius) {
+                        return (
+                          <Circle
+                            key={`circle-${i}`}
+                            cx={shape.x}
+                            cy={shape.y}
+                            r={shape.radius}
+                            color="blue"
+                            style="stroke"
+                            strokeWidth={3}
+                          />
+                        );
+                      }
+                      return <React.Fragment key={`empty-${i}`} />;
+                    })}
+
+                    {/* Hình đang kéo */}
+                    {currentShape?.type === 'rect' &&
+                      currentShape.width &&
+                      currentShape.height && (
                         <Rect
-                          key={`rect-${i}`}
-                          x={shape.x}
-                          y={shape.y}
-                          width={shape.width}
-                          height={shape.height}
+                          x={currentShape.x}
+                          y={currentShape.y}
+                          width={currentShape.width}
+                          height={currentShape.height}
                           color="green"
                           style="stroke"
                           strokeWidth={3}
+                          opacity={1}
                         />
-                      );
-                    }
-                    if (shape.type === 'circle' && shape.radius) {
-                      return (
-                        <Circle
-                          key={`circle-${i}`}
-                          cx={shape.x}
-                          cy={shape.y}
-                          r={shape.radius}
-                          color="blue"
-                          style="stroke"
-                          strokeWidth={3}
-                        />
-                      );
-                    }
-                    return <React.Fragment key={`empty-${i}`} />;
-                  })}
-
-                  {/* Hình đang kéo */}
-                  {currentShape?.type === 'rect' &&
-                    currentShape.width &&
-                    currentShape.height && (
-                      <Rect
-                        x={currentShape.x}
-                        y={currentShape.y}
-                        width={currentShape.width}
-                        height={currentShape.height}
-                        color="green"
+                      )}
+                    {currentShape?.type === 'circle' && currentShape.radius && (
+                      <Circle
+                        cx={currentShape.x}
+                        cy={currentShape.y}
+                        r={currentShape.radius}
+                        color="blue"
                         style="stroke"
                         strokeWidth={3}
                         opacity={1}
                       />
                     )}
-                  {currentShape?.type === 'circle' && currentShape.radius && (
-                    <Circle
-                      cx={currentShape.x}
-                      cy={currentShape.y}
-                      r={currentShape.radius}
-                      color="blue"
+                  </Group>
+                </Canvas>
+
+                {(mode === 'text' || inputText.length > 0) && (
+                  <View>
+                    {inputText?.map((element) => {
+                      // Lấy hoặc tạo animation value cho text này
+                      if (!textAnimationsRef.current.has(element.id)) {
+                        textAnimationsRef.current.set(
+                          element.id,
+                          new Animated.ValueXY({ x: element.x, y: element.y })
+                        );
+                      }
+                      const panValue = textAnimationsRef.current.get(
+                        element.id
+                      );
+                      const panResponder = createPanResponder(
+                        element.id,
+                        element.text,
+                        element.color
+                      );
+                      const isEditing = editingTextId === element.id;
+
+                      return (
+                        <Animated.View
+                          key={element.id}
+                          {...(!isEditing ? panResponder.panHandlers : {})}
+                          style={[
+                            styles.movableBox,
+                            {
+                              transform:
+                                panValue?.getTranslateTransform() ?? [],
+                            },
+                          ]}
+                        >
+                          {isEditing ? (
+                            <TextInput
+                              style={[
+                                styles.textOverlay,
+                                { color: colorText, fontSize },
+                              ]}
+                              value={editingTextValue}
+                              onChangeText={setEditingTextValue}
+                              selectionColor={colorText}
+                              autoFocus
+                              multiline
+                              onBlur={() => {
+                                // Lưu text và màu mới khi mất focus
+                                setInputText((prev) =>
+                                  prev.map((item) =>
+                                    item.id === element.id
+                                      ? {
+                                          ...item,
+                                          text: editingTextValue,
+                                          color: colorText,
+                                        }
+                                      : item
+                                  )
+                                );
+                                setMode(null);
+                                setEditingTextId(null);
+                                setEditingTextValue('');
+                              }}
+                            />
+                          ) : (
+                            <Text
+                              style={[
+                                styles.textOverlay,
+                                { color: element.color, fontSize },
+                              ]}
+                            >
+                              {element.text}
+                            </Text>
+                          )}
+                        </Animated.View>
+                      );
+                    })}
+                  </View>
+                )}
+
+                {showTextInput && (
+                  <>
+                    <View style={styles.dimOverlay} pointerEvents="none" />
+                    <TextInput
+                      // key={colorText}
+                      style={[
+                        styles.textInputOverlay,
+                        {
+                          fontSize,
+                          top: IMG_HEIGHT / 2,
+                          color: colorText,
+                        },
+                      ]}
+                      value={currentInputText}
+                      onChangeText={setCurrentInputText}
+                      selectionColor={colorText}
+                      autoFocus
+                      onFocus={() => setShowTextInput(true)}
+                      onBlur={() => setShowTextInput(false)}
+                      multiline
+                    />
+                  </>
+                )}
+              </View>
+            </ViewShot>
+
+            <View style={[styles.footer, { bottom: keyboardHeight * 0.8 }]}>
+              {renderFooterControls}
+            </View>
+          </View>
+        </SafeAreaView>
+      </Modal>
+    );
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.containerContent}>
+        {renderHeaderControls}
+
+        <ViewShot
+          style={{ flex: 1 }}
+          ref={viewShotRef}
+          options={{
+            format: 'jpg',
+            quality: 0.9,
+          }}
+        >
+          <View style={styles.canvasContainer}>
+            <Canvas
+              ref={canvasRef as any}
+              style={{ width: IMG_WIDTH, height: IMG_HEIGHT }}
+              {...pan.panHandlers}
+            >
+              <Group clip={clipPath}>
+                {/* Image nền */}
+                {image && (
+                  <SkiaImage
+                    image={image}
+                    x={0}
+                    y={0}
+                    width={IMG_WIDTH}
+                    height={IMG_HEIGHT}
+                    fit="contain"
+                  />
+                )}
+
+                {/* Nét vẽ */}
+                {paths.map((pathWithColor, i) => (
+                  <Path
+                    key={`path-${i}`}
+                    path={pathWithColor.path}
+                    color={pathWithColor.color}
+                    style="stroke"
+                    strokeWidth={4}
+                  />
+                ))}
+                {currentPath && (
+                  <Path
+                    path={currentPath}
+                    color={colorDraw}
+                    style="stroke"
+                    strokeWidth={4}
+                  />
+                )}
+
+                {/* Hình vẽ */}
+                {shapes.map((shape, i) => {
+                  if (shape.type === 'rect' && shape.width && shape.height) {
+                    return (
+                      <Rect
+                        key={`rect-${i}`}
+                        x={shape.x}
+                        y={shape.y}
+                        width={shape.width}
+                        height={shape.height}
+                        color="green"
+                        style="stroke"
+                        strokeWidth={3}
+                      />
+                    );
+                  }
+                  if (shape.type === 'circle' && shape.radius) {
+                    return (
+                      <Circle
+                        key={`circle-${i}`}
+                        cx={shape.x}
+                        cy={shape.y}
+                        r={shape.radius}
+                        color="blue"
+                        style="stroke"
+                        strokeWidth={3}
+                      />
+                    );
+                  }
+                  return <React.Fragment key={`empty-${i}`} />;
+                })}
+
+                {/* Hình đang kéo */}
+                {currentShape?.type === 'rect' &&
+                  currentShape.width &&
+                  currentShape.height && (
+                    <Rect
+                      x={currentShape.x}
+                      y={currentShape.y}
+                      width={currentShape.width}
+                      height={currentShape.height}
+                      color="green"
                       style="stroke"
                       strokeWidth={3}
                       opacity={1}
                     />
                   )}
-                </Group>
-              </Canvas>
-
-              {(mode === 'text' || inputText.length > 0) && (
-                <View>
-                  {inputText?.map((element) => {
-                    // Lấy hoặc tạo animation value cho text này
-                    if (!textAnimationsRef.current.has(element.id)) {
-                      textAnimationsRef.current.set(
-                        element.id,
-                        new Animated.ValueXY({ x: element.x, y: element.y })
-                      );
-                    }
-                    const panValue = textAnimationsRef.current.get(element.id);
-                    const panResponder = createPanResponder(
-                      element.id,
-                      element.text,
-                      element.color
-                    );
-                    const isEditing = editingTextId === element.id;
-
-                    return (
-                      <Animated.View
-                        key={element.id}
-                        {...(!isEditing ? panResponder.panHandlers : {})}
-                        style={[
-                          styles.movableBox,
-                          {
-                            transform: panValue?.getTranslateTransform() ?? [],
-                          },
-                        ]}
-                      >
-                        {isEditing ? (
-                          <TextInput
-                            style={[
-                              styles.textOverlay,
-                              { color: colorText, fontSize },
-                            ]}
-                            value={editingTextValue}
-                            onChangeText={setEditingTextValue}
-                            selectionColor={colorText}
-                            autoFocus
-                            multiline
-                            onBlur={() => {
-                              // Lưu text và màu mới khi mất focus
-                              setInputText((prev) =>
-                                prev.map((item) =>
-                                  item.id === element.id
-                                    ? {
-                                        ...item,
-                                        text: editingTextValue,
-                                        color: colorText,
-                                      }
-                                    : item
-                                )
-                              );
-                              setMode(null);
-                              setEditingTextId(null);
-                              setEditingTextValue('');
-                            }}
-                          />
-                        ) : (
-                          <Text
-                            style={[
-                              styles.textOverlay,
-                              { color: element.color, fontSize },
-                            ]}
-                          >
-                            {element.text}
-                          </Text>
-                        )}
-                      </Animated.View>
-                    );
-                  })}
-                </View>
-              )}
-
-              {showTextInput && (
-                <>
-                  <View style={styles.dimOverlay} pointerEvents="none" />
-                  <TextInput
-                    key={colorText}
-                    style={[
-                      styles.textInputOverlay,
-                      {
-                        fontSize,
-                        top: IMG_HEIGHT / 2,
-                        color: colorText,
-                      },
-                    ]}
-                    value={currentInputText}
-                    onChangeText={setCurrentInputText}
-                    selectionColor={colorText}
-                    autoFocus
-                    onFocus={() => setShowTextInput(true)}
-                    onBlur={() => setShowTextInput(false)}
-                    multiline
+                {currentShape?.type === 'circle' && currentShape.radius && (
+                  <Circle
+                    cx={currentShape.x}
+                    cy={currentShape.y}
+                    r={currentShape.radius}
+                    color="blue"
+                    style="stroke"
+                    strokeWidth={3}
+                    opacity={1}
                   />
-                </>
-              )}
-            </View>
-          </ViewShot>
+                )}
+              </Group>
+            </Canvas>
 
-          <View style={styles.footer}>{renderFooterControls}</View>
+            {(mode === 'text' || inputText.length > 0) && (
+              <View>
+                {inputText?.map((element) => {
+                  // Lấy hoặc tạo animation value cho text này
+                  if (!textAnimationsRef.current.has(element.id)) {
+                    textAnimationsRef.current.set(
+                      element.id,
+                      new Animated.ValueXY({ x: element.x, y: element.y })
+                    );
+                  }
+                  const panValue = textAnimationsRef.current.get(element.id);
+                  const panResponder = createPanResponder(
+                    element.id,
+                    element.text,
+                    element.color
+                  );
+                  const isEditing = editingTextId === element.id;
+
+                  return (
+                    <Animated.View
+                      key={element.id}
+                      {...(!isEditing ? panResponder.panHandlers : {})}
+                      style={[
+                        styles.movableBox,
+                        {
+                          transform: panValue?.getTranslateTransform() ?? [],
+                        },
+                      ]}
+                    >
+                      {isEditing ? (
+                        <TextInput
+                          style={[
+                            styles.textOverlay,
+                            { color: colorText, fontSize },
+                          ]}
+                          value={editingTextValue}
+                          onChangeText={setEditingTextValue}
+                          selectionColor={colorText}
+                          autoFocus
+                          multiline
+                          onBlur={() => {
+                            // Lưu text và màu mới khi mất focus
+                            setInputText((prev) =>
+                              prev.map((item) =>
+                                item.id === element.id
+                                  ? {
+                                      ...item,
+                                      text: editingTextValue,
+                                      color: colorText,
+                                    }
+                                  : item
+                              )
+                            );
+                            setMode(null);
+                            setEditingTextId(null);
+                            setEditingTextValue('');
+                          }}
+                        />
+                      ) : (
+                        <Text
+                          style={[
+                            styles.textOverlay,
+                            { color: element.color, fontSize },
+                          ]}
+                        >
+                          {element.text}
+                        </Text>
+                      )}
+                    </Animated.View>
+                  );
+                })}
+              </View>
+            )}
+
+            {showTextInput && (
+              <>
+                <View style={styles.dimOverlay} pointerEvents="none" />
+                <TextInput
+                  // key={colorText}
+                  style={[
+                    styles.textInputOverlay,
+                    {
+                      fontSize,
+                      top: IMG_HEIGHT / 2,
+                      color: colorText,
+                    },
+                  ]}
+                  value={currentInputText}
+                  onChangeText={setCurrentInputText}
+                  selectionColor={colorText}
+                  autoFocus
+                  onFocus={() => setShowTextInput(true)}
+                  onBlur={() => setShowTextInput(false)}
+                  multiline
+                />
+              </>
+            )}
+          </View>
+        </ViewShot>
+
+        <View style={[styles.footer, { bottom: keyboardHeight * 0.7 }]}>
+          {renderFooterControls}
         </View>
-      </TouchableWithoutFeedback>
+      </View>
     </SafeAreaView>
   );
 };

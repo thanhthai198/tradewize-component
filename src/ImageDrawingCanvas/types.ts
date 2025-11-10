@@ -1,6 +1,7 @@
 export interface IImageDrawingCanvas {
   visible: boolean;
   uriImage: string;
+  isModal?: boolean;
   titleCancel?: string;
   contentCancel?: string;
   txtBtnContinueCancel?: string;

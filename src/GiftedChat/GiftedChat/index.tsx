@@ -783,6 +783,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                   onClose={() => setIsShowCameraModal(false)}
                 />
                 <ImageDrawingCanvas
+                  isModal
                   visible={fileMediaEdit}
                   uriImage={fileMediaEditLocal?.uri || ''}
                   onClose={() => setFileMediaEdit(false)}

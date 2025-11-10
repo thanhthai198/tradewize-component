@@ -7,6 +7,10 @@ export declare const styles: {
         right: number;
         bottom: number;
     };
+    containerModal: {
+        flex: number;
+        backgroundColor: string;
+    };
     containerContent: {
         flex: number;
     };
@@ -55,6 +59,10 @@ export declare const styles: {
     };
     footer: {
         height: number;
+        position: "absolute";
+        bottom: number;
+        left: number;
+        right: number;
     };
     btnEaser: {
         padding: number;
@@ -70,7 +78,6 @@ export declare const styles: {
         alignItems: "center";
         justifyContent: "center";
         borderRadius: number;
-        borderWidth: number;
         marginRight: number;
     };
     colorDot: {
@@ -104,6 +111,7 @@ export declare const styles: {
         zIndex: number;
         width: number;
         position: "absolute";
+        maxHeight: number;
     };
     movableBox: {
         position: "absolute";
@@ -131,5 +139,10 @@ export declare const styles: {
         backgroundColor: string;
         borderRadius: number;
         marginLeft: "auto";
+    };
+    colorSelected: {
+        padding: number;
+        borderColor: string;
+        borderWidth: number;
     };
 };
