@@ -62,7 +62,7 @@ import { generateThumbnails, normalizeFileUri } from '../utils';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { VideoModal } from '../../VideoPlayer/VideoModal';
 import { CameraModal } from '../../Camera';
-import ImageDrawingCanvas from '../../ImageDrawingCanvas';
+// import ImageDrawingCanvas from '../../ImageDrawingCanvas';
 
 dayjs.extend(localizedFormat);
 
@@ -161,9 +161,9 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
     };
   } | null>(null);
   const [fileMedia, setFileMedia] = useState<FileMessage[]>([]);
-  const [fileMediaEdit, setFileMediaEdit] = useState<boolean>(false);
-  const [fileMediaEditLocal, setFileMediaEditLocal] =
-    useState<FileMessage | null>(null);
+  // const [fileMediaEdit, setFileMediaEdit] = useState<boolean>(false);
+  // const [fileMediaEditLocal, setFileMediaEditLocal] =
+  //   useState<FileMessage | null>(null);
   const keyboard = useReanimatedKeyboardAnimation();
   const trackingKeyboardMovement = useSharedValue(false);
   const debounceEnableTypingTimeoutId =
@@ -530,10 +530,10 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
 
     return (
       <InputToolbar
-        onEditFileImage={(file: FileMessage) => {
-          setFileMediaEdit(true);
-          setFileMediaEditLocal(file);
-        }}
+        // onEditFileImage={(file: FileMessage) => {
+        //   setFileMediaEdit(true);
+        //   setFileMediaEditLocal(file);
+        // }}
         isMe={(user as User)?._id === messageReaction?.user?._id}
         onFocusInput={onFocusInput}
         onBlurInput={onBlurInput}
@@ -782,7 +782,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                   visible={isShowCameraModal}
                   onClose={() => setIsShowCameraModal(false)}
                 />
-                <ImageDrawingCanvas
+                {/* <ImageDrawingCanvas
                   isModal
                   visible={fileMediaEdit}
                   uriImage={fileMediaEditLocal?.uri || ''}
@@ -799,7 +799,7 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                     });
                     setFileMediaEditLocal(null);
                   }}
-                />
+                /> */}
               </View>
             </Animated.View>
           ) : (

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import {
-  Image,
+  // Image,
   StyleSheet,
   Text,
   TextInput,
@@ -78,7 +78,7 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
     onBlurInput,
     messageContentReaction,
     isMe,
-    onEditFileImage,
+    // onEditFileImage,
   } = props;
 
   const actionsFragment = useMemo(() => {
@@ -183,7 +183,7 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
                 </View>
               )}
 
-              {item?.typeFile === 'image' && (
+              {/* {item?.typeFile === 'image' && (
                 <TouchableOpacity
                   onPress={() => {
                     onEditFileImage?.(item);
@@ -203,7 +203,7 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
                     style={styles.editFileImageIcon}
                   />
                 </TouchableOpacity>
-              )}
+              )} */}
 
               {item.typeFile === 'video' && (
                 <View style={styles.previewFileItemVideo}>
@@ -217,7 +217,7 @@ export function InputToolbar<TMessage extends IMessage = IMessage>(
         })}
       </View>
     );
-  }, [fileMedia, onRemoveFile, onPressFile, onEditFileImage]);
+  }, [fileMedia, onRemoveFile, onPressFile]);
 
   const renderMessageReaction = useCallback(() => {
     if (!messageReaction?.text && !messageReaction?.file) return null;
