@@ -285,7 +285,13 @@ export const VideoModal: React.FC<VideoModalProps> = ({
 
           {/* Language Selector */}
           {isSubtitle && availableLanguages.length > 1 && !error && (
-            <View style={[styles.languageContainer, { top: insets.top + 24 }]}>
+            <View
+              style={[
+                styles.languageContainer,
+                // eslint-disable-next-line react-native/no-inline-styles
+                { top: insets.top + 24, left: isRateControl ? 90 : 16 },
+              ]}
+            >
               <TouchableOpacity
                 onPress={() => setShowLanguageSelector(!showLanguageSelector)}
                 style={styles.languageButton}
@@ -524,7 +530,6 @@ const styles = StyleSheet.create({
   },
   languageContainer: {
     position: 'absolute',
-    left: 90,
     zIndex: 10,
   },
   languageButton: {
