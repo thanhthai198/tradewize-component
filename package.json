@@ -225,7 +225,6 @@
     "version": "0.46.0"
   },
   "dependencies": {
-    "@shopify/react-native-skia": "^2.3.10",
     "@types/lodash": "^4.17.20",
     "lodash": "^4.17.21",
     "react-native-permissions": "^5.4.4",
