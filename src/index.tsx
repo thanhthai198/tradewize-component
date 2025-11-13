@@ -30,7 +30,6 @@ import {
   type VideoModalProps,
   type VideoPlayerProps,
 } from './VideoPlayer';
-import ImagePickerComponent, { type ImagePickerProps } from './ImagePicker';
 
 export * from './GiftedChat';
 export * from './IndicatorsMaster';
@@ -53,7 +52,6 @@ export {
   getScreenHeight,
   VideoPlayer,
   VideoModal,
-  ImagePickerComponent as ImagePicker,
 };
 export type {
   TabItem,
@@ -71,5 +69,4 @@ export type {
   CameraModalProps,
   VideoPlayerProps,
   VideoModalProps,
-  ImagePickerProps,
 };
