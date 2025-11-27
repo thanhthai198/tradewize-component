@@ -3,7 +3,9 @@ import type { LanguageCode } from '../types';
 export interface VideoModalProps {
     visible: boolean;
     onClose: () => void;
-    source: string;
+    source: string | {
+        [key: string]: string;
+    };
     title?: string;
     autoPlay?: boolean;
     loop?: boolean;
@@ -20,6 +22,7 @@ export interface VideoModalProps {
     isRateControl?: boolean;
     initialSubtitle?: LanguageCode;
     isProgressBar?: boolean;
+    refreshOnSubtitleChange?: boolean;
     onError?: (error: any, loading: boolean) => void;
     onLoad?: (loading: boolean) => void;
     onEnd?: () => void;
@@ -28,5 +31,6 @@ export interface VideoModalProps {
         playableDuration: number;
         seekableDuration: number;
     }) => void;
+    handleChangeSubtitleLanguage?: (language: LanguageCode) => void;
 }
 export declare const VideoModal: React.FC<VideoModalProps>;

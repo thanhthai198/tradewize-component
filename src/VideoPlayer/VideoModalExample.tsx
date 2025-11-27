@@ -85,6 +85,10 @@ export const VideoModalExample: React.FC = () => {
         onClose={closeVideoModal}
         subtitle={selectedVideo?.subtitle || {}}
         source={selectedVideo?.source || ''}
+        // source={{
+        //   en: 'https://vz-88b9f9c3-e13.b-cdn.net/dc9106b5-c945-4f13-98c0-4595dc7c7236/playlist.m3u8',
+        //   es: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+        // }}
         title="Video Player"
         autoPlay={true}
         // onError={(error) => console.error('Video error:', error)}
