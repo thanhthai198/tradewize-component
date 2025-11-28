@@ -29,7 +29,7 @@ const formatTime = (seconds: number): string => {
 export interface VideoModalProps {
   visible: boolean;
   onClose: () => void;
-  source: string;
+  source: string | { [key: string]: string };
   title?: string;
   autoPlay?: boolean;
   loop?: boolean;
@@ -44,6 +44,7 @@ export interface VideoModalProps {
   isRateControl?: boolean;
   initialSubtitle?: LanguageCode;
   isProgressBar?: boolean;
+  refreshOnSubtitleChange?: boolean;
   onError?: (error: any, loading: boolean) => void;
   onLoad?: (loading: boolean) => void;
   onEnd?: () => void;
@@ -52,6 +53,7 @@ export interface VideoModalProps {
     playableDuration: number;
     seekableDuration: number;
   }) => void;
+  handleChangeSubtitleLanguage?: (language: LanguageCode) => void;
 }
 
 export const VideoModal: React.FC<VideoModalProps> = ({
@@ -75,6 +77,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
   onEnd,
   onProgress,
   isProgressBar = true,
+  refreshOnSubtitleChange = false,
 }) => {
   const insets = useSafeAreaInsets();
   const buttonOpacity = useRef(new Animated.Value(1)).current;
@@ -190,14 +193,35 @@ export const VideoModal: React.FC<VideoModalProps> = ({
     [subtitle, currentSubtitleLanguage]
   );
 
+  // Get the current video source based on selected language
+  const getCurrentVideoSource = useCallback((): string => {
+    if (typeof source === 'string') {
+      return source;
+    }
+    // If source is an object, get the URI for the current language
+    return (
+      source[currentSubtitleLanguage] ||
+      source[initialSubtitle] ||
+      Object.values(source)[0] ||
+      ''
+    );
+  }, [source, currentSubtitleLanguage, initialSubtitle]);
+
   const changeSubtitleLanguage = useCallback(
     async (language: LanguageCode) => {
       setCurrentSubtitleLanguage(language);
       setCurrentSubtitle(''); // Clear current subtitle when changing language
       setSubtitleLoaded(false);
+      // Reset video state to refresh component only if refreshOnSubtitleChange is true
+      if (refreshOnSubtitleChange) {
+        setProgress(0);
+        setCurrentTime(0);
+        setDuration(0);
+        setSubtitles([]);
+      }
       await loadFileSubtitle(language);
     },
-    [loadFileSubtitle]
+    [loadFileSubtitle, refreshOnSubtitleChange]
   );
 
   const changeRate = useCallback(
@@ -258,9 +282,14 @@ export const VideoModal: React.FC<VideoModalProps> = ({
           {/* Video Player */}
           <View style={styles.videoContainer}>
             <VideoPlayer
+              key={
+                refreshOnSubtitleChange || typeof source === 'object'
+                  ? `video-${currentSubtitleLanguage}-${subtitleLoaded}`
+                  : undefined
+              }
               rate={rate}
               progressUpdateInterval={100}
-              source={source}
+              source={getCurrentVideoSource()}
               height={getScreenHeight()}
               width="100%"
               autoPlay={isSubtitle ? subtitleLoaded && autoPlay : autoPlay}
