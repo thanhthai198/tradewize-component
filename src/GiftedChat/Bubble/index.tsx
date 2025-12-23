@@ -432,7 +432,7 @@ const Bubble = <TMessage extends IMessage = IMessage>(
         stylesCommon.fill,
         styles[position].container,
         containerStyle && containerStyle[position],
-        { marginBottom: currentMessage?.isLast ? 32 : 8, maxWidth: '90%' },
+        { marginBottom: currentMessage?.isLast ? 12 : 8, maxWidth: '90%' },
       ]}
       onLayout={(e) => {
         if (currentMessage?._id) {

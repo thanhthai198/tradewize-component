@@ -15,7 +15,7 @@
       }
     ],
     "isShowName": false,
-    "isLast": false,
+    "isLast": true,
     "errorMessage": "Upload failed"
   },
   {

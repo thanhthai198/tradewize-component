@@ -153,7 +153,7 @@ export function Avatar<TMessage extends IMessage = IMessage>(
         styles[position].container,
         renderAvatarOnTop && styles[position].onTop,
         containerStyle?.[position],
-        { marginBottom: currentMessage?.isLast ? 32 : 0 },
+        { marginBottom: currentMessage?.isLast ? 12 : 0 },
       ]}
       onLayout={onLayout}
     >
