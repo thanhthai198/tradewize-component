@@ -413,8 +413,6 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
         });
       }
 
-      console.log('newMessagesWithReaction', newMessagesWithReaction);
-
       setMessageReaction(null);
       onSend?.(newMessagesWithReaction);
 
@@ -782,24 +780,6 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
                   visible={isShowCameraModal}
                   onClose={() => setIsShowCameraModal(false)}
                 />
-                {/* <ImageDrawingCanvas
-                  isModal
-                  visible={fileMediaEdit}
-                  uriImage={fileMediaEditLocal?.uri || ''}
-                  onClose={() => setFileMediaEdit(false)}
-                  onSave={(uri: string) => {
-                    setFileMedia((prev) => {
-                      const newFileMedia = prev.map((item) => {
-                        if (item.id === fileMediaEditLocal?.id) {
-                          return { ...item, uri: uri, thumbnailPreview: uri };
-                        }
-                        return item;
-                      });
-                      return newFileMedia;
-                    });
-                    setFileMediaEditLocal(null);
-                  }}
-                /> */}
               </View>
             </Animated.View>
           ) : (

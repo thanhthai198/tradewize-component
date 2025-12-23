@@ -74,6 +74,10 @@ const TypingIndicator = ({
     marginHorizontal: Math.max(1, Math.round(size * 0.33)),
   };
 
+  if (!isTyping) {
+    return <View style={styles.space} />;
+  }
+
   return (
     <View
       style={[
@@ -109,6 +113,9 @@ const styles = StyleSheet.create({
     borderColor: Color.defaultColor,
     marginBottom: 8,
     marginLeft: 8,
+  },
+  space: {
+    height: 12,
   },
 });
 
