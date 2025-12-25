@@ -406,7 +406,12 @@ export const VideoModal: React.FC<VideoModalProps> = ({
           )}
 
           {!isControlsMuted && (
-            <View style={[styles.mutedContainer, { top: insets.top + 84 }]}>
+            <View
+              style={[
+                styles.mutedContainer,
+                { top: showSkipButton ? insets.top + 84 : insets.top + 24 },
+              ]}
+            >
               <TouchableOpacity onPress={() => setIsMuted(!isMuted)}>
                 <Image
                   tintColor="#fff"
@@ -655,7 +660,7 @@ const styles = StyleSheet.create({
     width: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 4,
+    paddingVertical: 6,
     borderRadius: 8,
   },
   mutedIcon: {
