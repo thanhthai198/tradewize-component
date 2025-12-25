@@ -6,6 +6,7 @@ import {
   StatusBar,
   Text,
   Animated,
+  Image,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { VideoPlayer } from './VideoComponent';
@@ -45,6 +46,7 @@ export interface VideoModalProps {
   initialSubtitle?: LanguageCode;
   isProgressBar?: boolean;
   refreshOnSubtitleChange?: boolean;
+  isControlsMuted?: boolean;
   onError?: (error: any, loading: boolean) => void;
   onLoad?: (loading: boolean) => void;
   onEnd?: () => void;
@@ -78,6 +80,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
   onProgress,
   isProgressBar = true,
   refreshOnSubtitleChange = false,
+  isControlsMuted = false,
 }) => {
   const insets = useSafeAreaInsets();
   const buttonOpacity = useRef(new Animated.Value(1)).current;
@@ -95,6 +98,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
     useState<boolean>(false);
   const [showRateSelector, setShowRateSelector] = useState<boolean>(false);
   const [rate, setRate] = useState<number>(1.0);
+  const [isMuted, setIsMuted] = useState<boolean>(muted);
 
   const resetState = useCallback(() => {
     setProgress(0);
@@ -294,7 +298,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
               width="100%"
               autoPlay={isSubtitle ? subtitleLoaded && autoPlay : autoPlay}
               loop={loop}
-              muted={muted}
+              muted={isMuted}
               showControls={showControls}
               onError={handleVideoError}
               onLoad={handleVideoLoad}
@@ -398,6 +402,22 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                   ))}
                 </View>
               )}
+            </View>
+          )}
+
+          {!isControlsMuted && (
+            <View style={[styles.mutedContainer, { top: insets.top + 84 }]}>
+              <TouchableOpacity onPress={() => setIsMuted(!isMuted)}>
+                <Image
+                  tintColor="#fff"
+                  source={
+                    !isMuted
+                      ? require('./assets/sound_on.png')
+                      : require('./assets/volume_mute.png')
+                  }
+                  style={styles.mutedIcon}
+                />
+              </TouchableOpacity>
             </View>
           )}
 
@@ -626,5 +646,20 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     fontWeight: '600',
+  },
+  mutedContainer: {
+    position: 'absolute',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    right: 16,
+    zIndex: 10,
+    width: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+  mutedIcon: {
+    width: 24,
+    height: 24,
   },
 });
